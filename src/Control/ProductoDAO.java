@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import java.sql.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 
@@ -20,6 +19,7 @@ import java.util.List;
 public class ProductoDAO {
     
      SentenciaSQL sentencia = new SentenciaSQL();
+     Validaciones validaciones = new Validaciones();
      String query;
      String queryCodigo ="";
      ResultSet resultset;
@@ -32,11 +32,11 @@ public class ProductoDAO {
         producto.setTipoProducto("fre");
         producto.setCantidad(15);
         producto.setFabricante("Japan");
-        producto.setFechaIngreso(new SimpleDateFormat("dd-MM-yyyy").parse("05-05-2017"));
+        producto.setFechaIngreso(validaciones.transformarFecha("05-05-2017"));
         producto.setValor(10000);
         producto.setEstado("Activo");
         
-        queryCodigo = "select count(cod_producto) conteo from producto";
+        queryCodigo = "select MAX(cod_producto) conteo from producto";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
       
@@ -56,14 +56,14 @@ public class ProductoDAO {
         sentencia.gestionarRegistro(query);
     }
     
-    public void modificarProducto(Producto producto){
+    public void modificarProducto(Producto producto) throws ParseException{
         
         producto.setNombreProdcto("pastillas");
         producto.setDescripcion("compatibles con wave y splendor");
         producto.setTipoProducto("fre");
         producto.setCantidad(5);
         producto.setFabricante("honda");
-        producto.setFechaIngreso(Date.valueOf("01-05-2015"));
+        producto.setFechaIngreso(validaciones.transformarFecha("01-05-2015"));
         producto.setValor(10000);
         producto.setEstado("Activo");
         producto.setCodProducto(1);
@@ -83,7 +83,7 @@ public class ProductoDAO {
     
     }
     
-    public void eliminarProducto(String codProducto){
+    public void eliminarProducto(Integer codProducto){
             
             query = "DELETE FROM producto " +
                     "WHERE cod_producto = "+codProducto+"";
@@ -96,8 +96,9 @@ public class ProductoDAO {
         
             query = "SELECT cod_producto, nombre_producto, descripcion,"
                     + " tipo_producto, cantidad, fabricante, fecha_ingreso,"
-                    + " valor, estado " +
-                      " FROM producto ORDER BY cod_producto ASC";
+                    + " valor, estado " 
+                    +" FROM producto WHERE estado = 'Activo'"
+                    + " ORDER BY cod_producto ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
@@ -109,8 +110,10 @@ public class ProductoDAO {
             
             query = "SELECT cod_producto, nombre_producto, descripcion,"
                     + " tipo_producto, cantidad, fabricante, fecha_ingreso,"
-                    + " valor, estado " +
-                      " FROM producto WHERE cod_producto = "+codProducto+" ORDER BY cod_producto ASC";
+                    + " valor, estado " 
+                    + " FROM producto WHERE cod_producto = "+codProducto+""
+                    + " AND estado = 'Activo' "
+                    + " ORDER BY cod_producto ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
@@ -181,10 +184,11 @@ public class ProductoDAO {
         ProductoDAO p = new ProductoDAO();
         Producto producto = new Producto();
         
-       // p.registrarProducto(producto);
-       //p.consultarProducto();
-       p.consultarProductoCodProducto(1);
-        
+        //p.registrarProducto(producto);
+        //p.consultarProducto();
+        //p.consultarProductoCodProducto(1);
+        //p.modificarProducto(producto);
+        //p.eliminarProducto(3);
 
     }
 

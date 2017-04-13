@@ -28,7 +28,7 @@ public class PersonaDAO {
         persona.setTipoDocumento("CC");
         persona.setNumeroDocumento("155555");
         
-        queryCodigo = "select count(cod_persona) conteo from persona";
+        queryCodigo = "select MAX(cod_persona) conteo from persona";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
       
