@@ -9,7 +9,9 @@ import java.util.Date;
  */
 public class Producto {
     
-    private Integer codProducto, cantidad, valor;
+    private Integer codProducto, cantidad;
+    
+    private double valor;
     
     private String nombreProdcto, descripcion, tipoProducto, fabricante, estado;
     
@@ -34,11 +36,11 @@ public class Producto {
         this.cantidad = cantidad;
     }
 
-    public Integer getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

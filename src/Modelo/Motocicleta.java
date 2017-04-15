@@ -5,7 +5,7 @@ package Modelo;
  *
  * @author jose luis Rodriguez
  */
-public class motocilceta {
+public class Motocicleta {
     
     private Integer codMotocicleta, codCliente;
     
@@ -14,7 +14,7 @@ public class motocilceta {
     
     private Cliente cliente;
 
-    public motocilceta() {
+    public Motocicleta() {
     }
 
     public Integer getCodMotocicleta() {

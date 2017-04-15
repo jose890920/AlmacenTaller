@@ -7,7 +7,9 @@ package Modelo;
  */
 public class DetallePago {
     
-    private Integer codDetallePago, codPago,valorServicio, descuentoServicio;
+    private Integer codDetallePago, codPago;
+    
+    private double valorServicio, descuentoServicio;
     
     private String tipoServicio;
     
@@ -32,19 +34,19 @@ public class DetallePago {
         this.codPago = codPago;
     }
 
-    public Integer getValorServicio() {
+    public double getValorServicio() {
         return valorServicio;
     }
 
-    public void setValorServicio(Integer valorServicio) {
+    public void setValorServicio(double valorServicio) {
         this.valorServicio = valorServicio;
     }
 
-    public Integer getDescuentoServicio() {
+    public double getDescuentoServicio() {
         return descuentoServicio;
     }
 
-    public void setDescuentoServicio(Integer descuentoServicio) {
+    public void setDescuentoServicio(double descuentoServicio) {
         this.descuentoServicio = descuentoServicio;
     }
 

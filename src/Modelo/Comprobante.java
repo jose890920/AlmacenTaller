@@ -9,8 +9,9 @@ import java.util.Date;
  */
 public class Comprobante {
     
-    private Integer codComprobante, codCompra, codVenta, valor, descuento, iva,
-                    valorTotal;
+    private Integer codComprobante, codCompra, codVenta ;
+    
+    private double valor, descuento, iva, valorTotal;
     
     private Date fechaComprobante;
     
@@ -47,35 +48,35 @@ public class Comprobante {
         this.codVenta = codVenta;
     }
 
-    public Integer getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
-    public Integer getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Integer descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 
-    public Integer getIva() {
+    public double getIva() {
         return iva;
     }
 
-    public void setIva(Integer iva) {
+    public void setIva(double iva) {
         this.iva = iva;
     }
 
-    public Integer getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Integer valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

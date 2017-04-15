@@ -9,7 +9,9 @@ import java.util.Date;
  */
 public class PagoEmpleado {
     
-    private Integer codPago, codEmpleado, valorPago, descuento;
+    private Integer codPago, codEmpleado;
+    
+    private double  valorPago, descuento;
     
     private Date fechaPago;
     
@@ -36,19 +38,19 @@ public class PagoEmpleado {
         this.codEmpleado = codEmpleado;
     }
 
-    public Integer getValorPago() {
+    public double getValorPago() {
         return valorPago;
     }
 
-    public void setValorPago(Integer valorPago) {
+    public void setValorPago(double valorPago) {
         this.valorPago = valorPago;
     }
 
-    public Integer getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Integer descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 

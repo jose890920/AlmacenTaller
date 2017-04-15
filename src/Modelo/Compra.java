@@ -9,7 +9,9 @@ import java.util.Date;
  */
 public class Compra {
     
-    private Integer codCompra, codProveedor, codEmpleado, valorTotal;
+    private Integer codCompra, codProveedor, codEmpleado;
+    
+    private double valorTotal;
     
     private Date fechaCompra;
     
@@ -46,11 +48,11 @@ public class Compra {
         this.codEmpleado = codEmpleado;
     }
 
-    public Integer getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Integer valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

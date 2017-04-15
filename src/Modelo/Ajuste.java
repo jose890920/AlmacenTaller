@@ -9,7 +9,9 @@ import java.util.Date;
  */
 public class Ajuste {
     
-        private Integer codAjuste, codEmpleado, valorTotal;
+        private Integer codAjuste, codEmpleado ;
+        
+        private double valorTotal;
     
     private Date fechaAjuste;
     
@@ -36,11 +38,11 @@ public class Ajuste {
         this.codEmpleado = codEmpleado;
     }
 
-    public Integer getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Integer valorTotal) {
+    public void setValorTotal(double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

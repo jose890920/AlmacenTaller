@@ -7,8 +7,9 @@ package Modelo;
  */
 public class DetalleCompra {
     
-    private Integer codDetalleCompra, codCompra, codProducto, cantidadProducto,
-                    valorUnitario, valorConjunto, descuento;
+    private Integer codDetalleCompra, codCompra, codProducto, cantidadProducto;
+    
+    private double valorUnitario, valorConjunto, descuento;
     
     private Compra compra;
     
@@ -49,27 +50,27 @@ public class DetalleCompra {
         this.cantidadProducto = cantidadProducto;
     }
 
-    public Integer getValorUnitario() {
+    public double getValorUnitario() {
         return valorUnitario;
     }
 
-    public void setValorUnitario(Integer valorUnitario) {
+    public void setValorUnitario(double valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
 
-    public Integer getValorConjunto() {
+    public double getValorConjunto() {
         return valorConjunto;
     }
 
-    public void setValorConjunto(Integer valorConjunto) {
+    public void setValorConjunto(double valorConjunto) {
         this.valorConjunto = valorConjunto;
     }
 
-    public Integer getDescuento() {
+    public double getDescuento() {
         return descuento;
     }
 
-    public void setDescuento(Integer descuento) {
+    public void setDescuento(double descuento) {
         this.descuento = descuento;
     }
 

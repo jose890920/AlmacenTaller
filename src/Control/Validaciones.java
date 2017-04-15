@@ -21,4 +21,32 @@ public class Validaciones {
         
     }
     
+    public double calcularValorConjunto(double valorUnitario, double unidades){
+        
+                return valorUnitario * unidades;
+    }
+    
+    public double calcularDescuento(double descuento, double valorConjunto){
+    
+     return(descuento * valorConjunto)/100;
+    }
+    
+    public double calcularValorTotal(double iva, double valor, double descuento){
+    
+        return calcularIva(iva, calcularSubTotal(valor, descuento)) +
+                calcularSubTotal(valor, descuento);
+        
+    }
+    
+    public double  calcularIva(double iva, double valor){
+    
+        return (valor * iva)/100;
+        
+    }
+    
+    public double calcularSubTotal(double valor, double descuento){
+    
+    return valor - descuento;
+    };
+    
 }
