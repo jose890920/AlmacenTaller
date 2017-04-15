@@ -31,7 +31,7 @@ public class TipoProducto implements CatalogoI{
         this.valor = valor;
     }
 
-   
-
     
+   
+   
 }
