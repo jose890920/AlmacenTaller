@@ -61,7 +61,8 @@ public class TipoMotocicletaDAO extends CatalogoDAO{
     
     public void modificarTipoMotocicleta(TipoMotocicleta tipomotocicleta){
     
-        query =  "UPDATE tipo_motocicleta " 
+        
+        query =  "UPDATE tipo_motocicleta "  
                 +" SET valor = '"+tipomotocicleta.getValor()+"' " 
                 +" WHERE llave = '"+tipomotocicleta.getLlave()+"'";
         
