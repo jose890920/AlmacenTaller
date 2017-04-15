@@ -5,6 +5,8 @@
  */
 package Control;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,6 +49,16 @@ public class Validaciones {
     public double calcularSubTotal(double valor, double descuento){
     
     return valor - descuento;
-    };
+    }
+    
+        public boolean validarExistenciaRegistro(ResultSet resultSet) throws SQLException{
+    
+    
+            if (!resultSet.next()) {
+                return true;
+            }
+            
+            return false;
+    }
     
 }
