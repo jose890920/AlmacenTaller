@@ -162,7 +162,7 @@ public class UsuarioDAO {
         UsuarioDAO u = new UsuarioDAO();
         Usuario usuario = new Usuario();
         
-          //u.registrarUsuario(usuario);
+          u.registrarUsuario(usuario);
           //u.modificarUsuario(usuario);
           //u.consultarUsuario();
           //u.consultarUsuarioCodUsuario(2);

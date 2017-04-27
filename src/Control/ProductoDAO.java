@@ -29,7 +29,7 @@ public class ProductoDAO {
      
         producto.setNombreProdcto("Bandas");
         producto.setDescripcion("compatibles con eco deluxe y splendor");
-        producto.setTipoProducto("fre");
+        producto.setTipoProducto("frenos");
         producto.setCantidad(15);
         producto.setFabricante("Japan");
         producto.setFechaIngreso(validaciones.transformarFecha("05-05-2017"));
@@ -60,7 +60,7 @@ public class ProductoDAO {
         
         producto.setNombreProdcto("pastillas");
         producto.setDescripcion("compatibles con wave y splendor");
-        producto.setTipoProducto("fre");
+        producto.setTipoProducto("frenos");
         producto.setCantidad(5);
         producto.setFabricante("honda");
         producto.setFechaIngreso(validaciones.transformarFecha("01-05-2015"));
@@ -184,7 +184,7 @@ public class ProductoDAO {
         ProductoDAO p = new ProductoDAO();
         Producto producto = new Producto();
         
-        //p.registrarProducto(producto);
+        p.registrarProducto(producto);
         //p.consultarProducto();
         //p.consultarProductoCodProducto(1);
         //p.modificarProducto(producto);

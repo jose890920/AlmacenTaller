@@ -78,7 +78,7 @@ public class TipoAjusteDAO extends CatalogoDAO{
         
         t.setLlave("DEV");
         t.setValor("Devolucion");
-        //td.registrarTipoAjuste(t);
+        td.registrarTipoAjuste(t);
         //td.consultarTiposAjuste();
         //td.consultarTipoAjusteLlave("dev".toUpperCase());
         //td.modificarTipoAjuste(t);

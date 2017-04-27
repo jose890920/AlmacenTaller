@@ -79,7 +79,7 @@ public class TipoUsuarioDAO extends CatalogoDAO{
         t.setLlave("MEC");
         t.setValor("MECANICO");
         //td.registrarTipoUsuario(t);
-        //td.consultarTiposUsuario();
+        td.consultarTiposUsuario();
         //td.consultarTipoUsuarioLlave("root".toUpperCase());
         //td.modificarTipoUsuario(t);
         //td.eliminarTipoUsuario("mec".toUpperCase());

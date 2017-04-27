@@ -25,7 +25,7 @@ public class AjusteDAO {
      
         ajuste.setCodEmpleado(2);
         ajuste.setValorTotal(50_000);
-        ajuste.setTipoAjuste("AVR");
+        ajuste.setTipoAjuste("Devolucion");
         ajuste.setFechaAjuste(validaciones.transformarFecha("05-05-2017"));
         ajuste.setEstado("Activo");
         
@@ -50,7 +50,7 @@ public class AjusteDAO {
         
         ajuste.setCodEmpleado(2);
         ajuste.setValorTotal(55_000);
-        ajuste.setTipoAjuste("DSC");
+        ajuste.setTipoAjuste("Devolucion");
         ajuste.setFechaAjuste(validaciones.transformarFecha("01-05-2017"));
         ajuste.setEstado("inactivo");
         ajuste.setCodAjuste(1);
@@ -162,7 +162,7 @@ public class AjusteDAO {
         AjusteDAO a = new AjusteDAO();
         Ajuste ajuste = new Ajuste();
         
-        //a.registrarAjuste(ajuste);
+        a.registrarAjuste(ajuste);
        // a.consultarAjuste();
         //a.modificarAjuste(ajuste);
         //a.consultarAjusteCodAjuste(2);

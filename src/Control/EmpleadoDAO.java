@@ -174,7 +174,7 @@ public class EmpleadoDAO {
         EmpleadoDAO c = new EmpleadoDAO();
         Empleado empleado = new Empleado();
         
-          //c.registrarEmpleado(empleado);
+          c.registrarEmpleado(empleado);
           //c.modificarEmpleado(empleado);
           //c.consultarEmpleado();
           //c.consultarEmpleadoCodEmpleado(2);

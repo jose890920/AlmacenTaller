@@ -30,7 +30,7 @@ public class MotocicletaDAO {
         motocicleta.setMarca("suzuki");
         motocicleta.setCilindraje("124");
         motocicleta.setLinea("Best");
-        motocicleta.setTipoMotocicleta("SEM");
+        motocicleta.setTipoMotocicleta("Semiautomatica");
         
         queryCodigo = "select MAX(cod_motocicleta) conteo from motocicleta";
         
@@ -60,7 +60,7 @@ public class MotocicletaDAO {
         motocicleta.setMarca("suzuki");
         motocicleta.setCilindraje("114");
         motocicleta.setLinea("VivaR");
-        motocicleta.setTipoMotocicleta("SEM");
+        motocicleta.setTipoMotocicleta("Semiautomatica");
         motocicleta.setCodMotocicleta(1);
     
     query =    "UPDATE motocicleta " 
@@ -182,7 +182,7 @@ public class MotocicletaDAO {
         MotocicletaDAO p = new MotocicletaDAO();
         Motocicleta motocicleta = new Motocicleta();
         
-        //p.registrarMotocicleta(motocicleta);
+        p.registrarMotocicleta(motocicleta);
         //p.consultarMotocicleta();
         //p.consultarMotocicletaCodMotocicleta(1);
         //p.modificarMotocicleta(motocicleta);

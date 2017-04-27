@@ -70,6 +70,12 @@ public class CatalogoDAO {
         } catch (Exception e) {
             System.out.println(e);
         }
+                 for (Map.Entry<String, String> mapeo : registros.entrySet()) {
+                     
+                     System.out.println(""+mapeo.getValue());
+
+             
+         }
         System.out.println(registros);
            
           return registros;

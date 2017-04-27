@@ -25,7 +25,7 @@ public class PersonaDAO {
         persona.setTelefono("3554545");
         persona.setCelular("3154554545");
         persona.setEmail("jcu@gmail.com");
-        persona.setTipoDocumento("CC");
+        persona.setTipoDocumento("CEDULA DE CIUDADANIA");
         persona.setNumeroDocumento("155555");
         
         queryCodigo = "select MAX(cod_persona) conteo from persona";
@@ -52,7 +52,7 @@ public class PersonaDAO {
         persona.setTelefono("3555545");
         persona.setCelular("3154555545");
         persona.setEmail("jc@gmail.com");
-        persona.setTipoDocumento("CC");
+        persona.setTipoDocumento("CEDULA DE CIUDADANIA");
         persona.setNumeroDocumento("155555");
     
     query =    "UPDATE persona" +
@@ -161,11 +161,11 @@ public class PersonaDAO {
         PersonaDAO p = new PersonaDAO();
         Persona persona = new Persona();
         
-       // p.registrarPersona(persona);
+      p.registrarPersona(persona);
         //p.modificarPersona(persona);
         //p.eliminarPersona("155555");
         //p.consultarPersona();
-        p.consultarPersonaNumeroDocumento("12345");
+        //p.consultarPersonaNumeroDocumento("12345");
     }
     
 }
