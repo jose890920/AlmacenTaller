@@ -20,20 +20,19 @@ public class SentenciaSQL {
     Statement statement;
     PreparedStatement preparedStatement;
     
-    public void gestionarRegistro(String sentenciaSql){
+    public String gestionarRegistro(String sentenciaSql){
     
         try {
             conexionBd = conector.conectar();
             preparedStatement = conexionBd.prepareStatement(sentenciaSql);
             if (preparedStatement.executeUpdate() > 0) {
-                System.out.println("Se modifico la tabla");
+                return("Se modifico la tabla");
                 
-            }else{
-                    System.out.println("No se modifico la tabla");
-                }
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
+          return("No se modifico la tabla");
     }
     
     public ResultSet gestionarConsulta(String sentenciaSql){

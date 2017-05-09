@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class ProductoDAO {
+public class ProductoDAO extends ConstantesAlmacenyTaller{
     
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -26,16 +26,6 @@ public class ProductoDAO {
      
     public void registrarProducto(Producto producto)throws SQLException, ParseException{
 
-     
-        producto.setNombreProdcto("Bandas");
-        producto.setDescripcion("compatibles con eco deluxe y splendor");
-        producto.setTipoProducto("frenos");
-        producto.setCantidad(15);
-        producto.setFabricante("Japan");
-        producto.setFechaIngreso(validaciones.transformarFecha("05-05-2017"));
-        producto.setValor(10000);
-        producto.setEstado("Activo");
-        
         queryCodigo = "select MAX(cod_producto) conteo from producto";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -56,18 +46,8 @@ public class ProductoDAO {
         sentencia.gestionarRegistro(query);
     }
     
-    public void modificarProducto(Producto producto) throws ParseException{
-        
-        producto.setNombreProdcto("pastillas");
-        producto.setDescripcion("compatibles con wave y splendor");
-        producto.setTipoProducto("frenos");
-        producto.setCantidad(5);
-        producto.setFabricante("honda");
-        producto.setFechaIngreso(validaciones.transformarFecha("01-05-2015"));
-        producto.setValor(10000);
-        producto.setEstado("Activo");
-        producto.setCodProducto(1);
-    
+    public String modificarProducto(Producto producto) throws ParseException{
+
     query =    "UPDATE producto " 
             + " SET  nombre_producto='"+producto.getNombreProdcto()+"',"
             + " descripcion='"+producto.getDescripcion()+"',"
@@ -77,9 +57,9 @@ public class ProductoDAO {
             + " fecha_ingreso='"+producto.getFechaIngreso()+"',"
             + " valor="+producto.getValor()+","
             + " estado='"+producto.getEstado()+"'" 
-            + " WHERE cod_producto = "+producto.getCodProducto()+"";
+            + " WHERE nombre_producto = '"+producto.getNombreProdcto()+"'";
     
-    sentencia.gestionarRegistro(query);
+   return sentencia.gestionarRegistro(query);
     
     }
     
@@ -106,13 +86,13 @@ public class ProductoDAO {
          return mapearProductos(resultset);
     }
     
-        public Producto consultarProductoCodProducto(Integer codProducto){
+        public Producto consultarProductoCodProducto(String nombreProducto){
             
             query = "SELECT cod_producto, nombre_producto, descripcion,"
                     + " tipo_producto, cantidad, fabricante, fecha_ingreso,"
                     + " valor, estado " 
-                    + " FROM producto WHERE cod_producto = "+codProducto+""
-                    + " AND estado = 'Activo' "
+                    + " FROM producto WHERE nombre_producto = '"+nombreProducto+"'"
+                    + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
                     + " ORDER BY cod_producto ASC";
             
             resultset = sentencia.gestionarConsulta(query);
@@ -171,7 +151,7 @@ public class ProductoDAO {
                 System.out.println(" producto "+producto.getNombreProdcto());
                 System.out.println(" Producto "+producto.getFechaIngreso());
                 
-            }
+            }else{return null;}
             } catch (Exception e) {
             }
       
@@ -184,7 +164,7 @@ public class ProductoDAO {
         ProductoDAO p = new ProductoDAO();
         Producto producto = new Producto();
         
-        p.registrarProducto(producto);
+        //p.registrarProducto(producto);
         //p.consultarProducto();
         //p.consultarProductoCodProducto(1);
         //p.modificarProducto(producto);

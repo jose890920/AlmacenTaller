@@ -26,7 +26,7 @@ public class VentaDAO {
         venta.setCodEmpleado(2);
         venta.setCodCliente(2);
         venta.setValorTotal(50_000);
-        venta.setFechaVenta(validaciones.transformarFecha("05-05-2017"));
+        venta.setFechaVenta(validaciones.transformarFechatoDate("05-05-2017"));
         venta.setEstado("Activo");
         
         queryCodigo = "select MAX(cod_venta) conteo from venta";
@@ -50,7 +50,7 @@ public class VentaDAO {
         venta.setCodEmpleado(2);
         venta.setCodCliente(2);
         venta.setValorTotal(55_000);
-        venta.setFechaVenta(validaciones.transformarFecha("01-05-2017"));
+        venta.setFechaVenta(validaciones.transformarFechatoDate("01-05-2017"));
         venta.setEstado("inactivo");
         venta.setCodVenta(1);
     

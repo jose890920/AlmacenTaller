@@ -26,7 +26,7 @@ public class CompraDAO {
         compra.setCodEmpleado(2);
         compra.setCodProveedor(2);
         compra.setValorTotal(50_000);
-        compra.setFechaCompra(validaciones.transformarFecha("05-05-2017"));
+        compra.setFechaCompra(validaciones.transformarFechatoDate("05-05-2017"));
         compra.setEstado("Activo");
         
         queryCodigo = "select MAX(cod_compra) conteo from compra";
@@ -50,7 +50,7 @@ public class CompraDAO {
         compra.setCodEmpleado(2);
         compra.setCodProveedor(2);
         compra.setValorTotal(55_000);
-        compra.setFechaCompra(validaciones.transformarFecha("01-05-2017"));
+        compra.setFechaCompra(validaciones.transformarFechatoDate("01-05-2017"));
         compra.setEstado("inactivo");
         compra.setCodCompra(1);
     

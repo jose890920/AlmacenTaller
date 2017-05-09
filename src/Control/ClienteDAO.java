@@ -24,7 +24,7 @@ public class ClienteDAO {
 
      
         cliente.setCodPersona(1);
-        cliente.setFechaNacimiento(validaciones.transformarFecha("05-05-2017"));
+        cliente.setFechaNacimiento(validaciones.transformarFechatoDate("05-05-2017"));
         cliente.setSexo("M");
         cliente.setBarrio("Napoles");
         cliente.setTieneMotocicleta("S");
@@ -51,7 +51,7 @@ public class ClienteDAO {
     public void modificarCliente(Cliente cliente) throws ParseException{
         
         cliente.setCodPersona(1);
-        cliente.setFechaNacimiento(validaciones.transformarFecha("05-01-2017"));
+        cliente.setFechaNacimiento(validaciones.transformarFechatoDate("05-01-2017"));
         cliente.setSexo("F");
         cliente.setBarrio("Alto Napoles");
         cliente.setTieneMotocicleta("N");

@@ -24,9 +24,9 @@ public class AjusteDAO {
 
      
         ajuste.setCodEmpleado(2);
-        ajuste.setValorTotal(50_000);
+        ajuste.setValorTotal(55_550);
         ajuste.setTipoAjuste("Devolucion");
-        ajuste.setFechaAjuste(validaciones.transformarFecha("05-05-2017"));
+        ajuste.setFechaAjuste(validaciones.transformarFechatoDate("05/05/2017"));
         ajuste.setEstado("Activo");
         
         queryCodigo = "select MAX(cod_ajuste) conteo from ajuste";
@@ -51,7 +51,7 @@ public class AjusteDAO {
         ajuste.setCodEmpleado(2);
         ajuste.setValorTotal(55_000);
         ajuste.setTipoAjuste("Devolucion");
-        ajuste.setFechaAjuste(validaciones.transformarFecha("01-05-2017"));
+        ajuste.setFechaAjuste(validaciones.transformarFechatoDate("01-05-2017"));
         ajuste.setEstado("inactivo");
         ajuste.setCodAjuste(1);
     

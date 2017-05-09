@@ -27,7 +27,7 @@ public class PagoEmpleadoDAO {
         pagoEmpleado.setCodEmpleado(2);
         pagoEmpleado.setDescuento(100_000);
         pagoEmpleado.setValorPago(850_000 - pagoEmpleado.getDescuento());
-        pagoEmpleado.setFechaPago(validaciones.transformarFecha("05-05-2017"));
+        pagoEmpleado.setFechaPago(validaciones.transformarFechatoDate("05-05-2017"));
         pagoEmpleado.setEstado("Activo");
         
         queryCodigo = "select MAX(cod_pago) conteo from pago_Empleado";
@@ -52,7 +52,7 @@ public class PagoEmpleadoDAO {
         pagoEmpleado.setCodEmpleado(2);
         pagoEmpleado.setDescuento(200_000);
         pagoEmpleado.setValorPago(750_000 - pagoEmpleado.getDescuento());
-        pagoEmpleado.setFechaPago(validaciones.transformarFecha("01-05-2017"));
+        pagoEmpleado.setFechaPago(validaciones.transformarFechatoDate("01-05-2017"));
         pagoEmpleado.setEstado("inactivo");
         pagoEmpleado.setCodPago(1);
     

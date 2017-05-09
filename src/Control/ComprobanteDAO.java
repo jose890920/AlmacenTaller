@@ -30,7 +30,7 @@ public class ComprobanteDAO {
         comprobante.setIva(19);
         comprobante.setValorTotal(validaciones.calcularValorTotal(comprobante.getIva(),
                 comprobante.getValor(),comprobante.getDescuento()));
-        comprobante.setFechaComprobante(validaciones.transformarFecha("05-05-2017"));
+        comprobante.setFechaComprobante(validaciones.transformarFechatoDate("05-05-2017"));
         comprobante.setEstado("Activo");
         
         queryCodigo = "select MAX(cod_comprobante) conteo from comprobante";
@@ -61,7 +61,7 @@ public class ComprobanteDAO {
         comprobante.setIva(19);
         comprobante.setValorTotal(validaciones.calcularValorTotal(comprobante.getIva(),
                 comprobante.getValor(),comprobante.getDescuento()));
-        comprobante.setFechaComprobante(validaciones.transformarFecha("05-05-2017"));
+        comprobante.setFechaComprobante(validaciones.transformarFechatoDate("05-05-2017"));
         comprobante.setEstado("inactivo");
         comprobante.setCodComprobante(1);
     

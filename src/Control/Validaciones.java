@@ -6,16 +6,21 @@
 package Control;
 
 
+import Modelo.Producto;
+import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -23,10 +28,11 @@ import javax.swing.JTextField;
  * @author jose luis Rodriguez
  */
 public class Validaciones {
+    
     javax.swing.JComboBox combobox = null;
-    public Date transformarFecha(String fecha) throws ParseException{
+    public Date transformarFechatoDate(String fecha) throws ParseException{
 
-        return new SimpleDateFormat("dd-MM-yyyy").parse(fecha);
+        return new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
         
     }
     
@@ -138,16 +144,19 @@ public class Validaciones {
              char c=ke.getKeyChar(); 
              boolean flag = false;
          
-          if(Character.isLetter(c)) { 
+          if(Character.isLetter(c) ||
+             Character.isSpace(c)     ) { 
               
               text.setBackground(Color.red);
               ke.consume(); 
               text.setText("Solo se permiten Numeros");
               flag = true;
           }else{
-              text.setBackground(Color.red);
-              if(text.getText().trim().equals("Solo se permiten Numeros")){
+              
+              if(text.getText().trim().equals("Solo se permiten Numero") ||
+                      text.getText().trim().equals("Solo se permiten Numeros")){
                   text.setText("");
+                  text.setBackground(Color.white);
               }
          
           String cadena = (""+c).toUpperCase();
@@ -211,6 +220,97 @@ public class Validaciones {
          }
          return false;
      }
-      
+     
+
+     public boolean validaTextArea(JTextArea textArea){
+         if (textArea.getText().trim().equalsIgnoreCase("")) {
+             textArea.setText("Campo Obligatorio");
+             textArea.setBackground(Color.red);
+             textArea.setColumns(12);
+             return true;
+         }
+         return false;
      }
+      
+     
+     public void validarEnfoque(JTextArea textArea){
+        if (textArea.getText().toString().trim().equalsIgnoreCase("Campo Obligatorio") ||
+            textArea.getText().toString().trim().equalsIgnoreCase("Solo se permiten Letras") ||
+            textArea.getText().toString().trim().equalsIgnoreCase("Solo se permiten Numeros")) {
+            textArea.setBackground(Color.white);
+             textArea.setText("");
+         }
+     }
+     
+
+     
+
+     
+          public boolean ordenarValidaciones(boolean validacion1, boolean validacion2){
+     
+         if (validacion1 || validacion2) {
+            return true; 
+         }
+
+     return false;
+     }
+    
+          
+          public void validarCantidadCaracteresTexto(KeyEvent ke, JTextField text,int cantidad) {
+          if(text.getText().trim().length() > cantidad-1){
+          
+          ke.consume();
+          }
+          }
+          
+          public int validarSaltodeLinea(KeyEvent ke,JTextArea text,int cantidad){
+              
+          if(cantidad > 25){
+          
+          ke.consume();
+          text.setText(text.getText()+"\n");
+          cantidad=0;
+          
+          }
+          return cantidad;
+          }
+          
+          public boolean validarCantidadCaracteresTexto(KeyEvent ke, JTextArea text,int cantidad) {
+          if(text.getText().trim().length() > cantidad-1){
+          
+          ke.consume();
+          return true;
+          }
+          return false;
+          }
+          
+          public String transformarFechatoString(Date fecha) throws ParseException{
+              DateFormat formato = DateFormat.getDateInstance();
+              return formato.format(fecha);
+          }
+          
+          public void validarCampoFecha(KeyEvent ke){
+               char c=ke.getKeyChar(); 
+               System.out.println("entre");
+          if(Character.isLetter(c)){
+          ke.consume();
+          }
+          }
+          
+          public void mapearProductoVista(Producto producto,JTextField nombre,
+                      JTextArea descripcion,JComboBox tipoProducto, JTextField cantidad,
+                      JDateChooser fecha,JTextField valor,JTextField fabricante){
+          nombre.setText(producto.getNombreProdcto().trim());
+          descripcion.setText(producto.getDescripcion().trim());
+          tipoProducto.setSelectedItem(producto.getTipoProducto().trim());
+          cantidad.setText(producto.getCantidad().toString().trim());
+          fecha.setDate(producto.getFechaIngreso());
+          valor.setText(String.valueOf(producto.getValor()));
+          fabricante.setText(producto.getFabricante().trim());
+          }
+          
+          
+          
+     }
+
     

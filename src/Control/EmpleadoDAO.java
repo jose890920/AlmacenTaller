@@ -24,9 +24,9 @@ public class EmpleadoDAO {
 
      
         empleado.setCodPersona(1);
-        empleado.setFechaIngreso(validaciones.transformarFecha("05-05-2017"));
+        empleado.setFechaIngreso(validaciones.transformarFechatoDate("05-05-2017"));
         empleado.setEstadoCivil("Soltero");
-        empleado.setFechaNacimiento(validaciones.transformarFecha("05-05-1995"));
+        empleado.setFechaNacimiento(validaciones.transformarFechatoDate("05-05-1995"));
         empleado.setSexo("M");
         empleado.setCiudad("Cali");
         empleado.setEstado("Activo");
@@ -52,9 +52,9 @@ public class EmpleadoDAO {
     public void modificarEmpleado(Empleado empleado) throws ParseException{
         
         empleado.setCodPersona(1);
-        empleado.setFechaIngreso(validaciones.transformarFecha("05-01-2017"));
+        empleado.setFechaIngreso(validaciones.transformarFechatoDate("05-01-2017"));
         empleado.setEstadoCivil("Soltero");
-        empleado.setFechaNacimiento(validaciones.transformarFecha("05-01-1995"));
+        empleado.setFechaNacimiento(validaciones.transformarFechatoDate("05-01-1995"));
         empleado.setSexo("F");
         empleado.setCiudad("CalI");
         empleado.setEstado("inactivo");
