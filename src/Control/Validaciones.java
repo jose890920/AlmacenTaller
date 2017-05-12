@@ -9,6 +9,8 @@ package Control;
 import Modelo.Producto;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,14 +22,23 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 
 /**
  *
  * @author jose luis Rodriguez
  */
 public class Validaciones {
+
+             Timer t = new Timer(4000, new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+          
+      }
+  });
     
     javax.swing.JComboBox combobox = null;
     public Date transformarFechatoDate(String fecha) throws ParseException{
@@ -310,6 +321,64 @@ public class Validaciones {
           }
           
           
+          public void notificarMensajeconTimer(JLabel etiqueta){
+             
+              
+        
+         t = new Timer(2000, limpiarCampo(etiqueta));
+        t.start();
+          
+          }
+          
+          public ActionListener limpiarCampo(JLabel etiqueta){
+          
+              return new ActionListener() {
+                  
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               
+           etiqueta.setText("");
+              paraTimer();
+           }
+       };
+          }
+          
+          public void paraTimer(){
+          t.stop();
+          }
+          
+          public void limpiarCamposProducto(JTextField nombre,JTextField valor,
+                  JTextField fabricante,JTextField cantidad,JTextArea descripcion,
+                  JDateChooser fecha, JComboBox tipo){
+              
+            nombre.setText("");
+            descripcion.setText("");
+            valor.setText("");
+            cantidad.setText("");tipo.setSelectedItem("-- Select --");
+            fabricante.setText("");
+            fecha.setDate(null);
+            
+            
+          
+          
+          }
+          
+          public String validarCamposProducto(JTextField nombre,JTextField valor,
+                  JTextField fabricante,JTextField cantidad,JTextArea descripcion,
+                  JDateChooser fecha, JComboBox tipo){
+              if (nombre.getText().trim().equals("") || nombre.getText()== null ||
+                  fabricante.getText().trim().equals("") || fabricante.getText() == null ||
+                  descripcion.getText().trim().equals("") || descripcion.getText().trim() == null ||
+                  valor.getText().trim().equals("") || valor.getText().trim() == null ||
+                  cantidad.getText().trim().equals("") || cantidad.getText().trim() == null ||
+                  fecha.getDate() == null || fecha.getDate().compareTo(new Date()) != -1 ||
+                  tipo.getSelectedItem().equals("-- Select --")) {
+                  
+                    return "Valide los Campos Obligatorios";   
+              }
+                    return "";   
+
+          }
           
      }
 
