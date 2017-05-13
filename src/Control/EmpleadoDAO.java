@@ -2,6 +2,7 @@
 package Control;
 
 import Modelo.Empleado;
+import Modelo.Persona;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ public class EmpleadoDAO {
      
     public void registrarEmpleado(Empleado empleado)throws SQLException, ParseException{
 
-     
+     /*
         empleado.setCodPersona(1);
         empleado.setFechaIngreso(validaciones.transformarFechatoDate("05-05-2017"));
         empleado.setEstadoCivil("Soltero");
@@ -30,7 +31,7 @@ public class EmpleadoDAO {
         empleado.setSexo("M");
         empleado.setCiudad("Cali");
         empleado.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_empleado) conteo from empleado";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -49,7 +50,7 @@ public class EmpleadoDAO {
          sentencia.gestionarRegistro(query);
     }
     
-    public void modificarEmpleado(Empleado empleado) throws ParseException{
+    public String modificarEmpleado(Empleado empleado) throws ParseException{
         
         empleado.setCodPersona(1);
         empleado.setFechaIngreso(validaciones.transformarFechatoDate("05-01-2017"));
@@ -70,7 +71,7 @@ public class EmpleadoDAO {
             + " estado='"+empleado.getEstado()+"'"
             + " WHERE cod_empleado = "+empleado.getCodEmpleado()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -96,14 +97,15 @@ public class EmpleadoDAO {
          return mapearEmpleados(resultset);
     }
     
-        public Empleado consultarEmpleadoCodEmpleado(Integer codEmpleado){
+        public Empleado consultarEmpleadoCodEmpleado(String documentoEmpleado){
             
             query = "SELECT cod_empleado, cod_persona_e, fecha_ingreso,"
                     + " estado_civil, fecha_nacimiento, sexo,"
-                    + " ciudad, estado, nombres " 
+                    + " ciudad, estado, nombres, apellidos,direccion, telefono,"
+                    + " celular, tipo_documento, numero_documento " 
                     +" FROM empleado, persona WHERE cod_persona_e = cod_persona"
                     + " AND estado = 'Activo' "
-                    + " AND cod_empleado = "+codEmpleado+" ORDER BY cod_empleado ASC";            
+                    + " AND numero_documento = '"+documentoEmpleado+"' ORDER BY cod_empleado ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
             return  mapearEmpleado(resultset);
@@ -144,6 +146,7 @@ public class EmpleadoDAO {
                 public Empleado mapearEmpleado(ResultSet resultset){
                 
                 Empleado empleado = new Empleado();
+                Persona persona = new Persona();
             try {
                     
               if(resultset.next()){
@@ -156,6 +159,14 @@ public class EmpleadoDAO {
                 empleado.setEstadoCivil(resultset.getString("estado_civil"));
                 empleado.setFechaIngreso(resultset.getDate("fecha_ingreso"));
                 empleado.setEstado(resultset.getString("estado"));
+                persona.setNombres(resultset.getString("nombres"));
+                persona.setApellidos(resultset.getString("apellidos"));
+                persona.setDireccion(resultset.getString("direccion"));
+                persona.setTelefono(resultset.getString("telefono"));
+                persona.setCelular(resultset.getString("celular"));
+                persona.setTipoDocumento(resultset.getString("tipo_documento"));
+                persona.setNumeroDocumento(resultset.getString("numero_documento"));
+                empleado.setPersona(persona);
 
                 System.out.println(" empleado "+empleado.getCiudad());
                 System.out.println(" empleado "+empleado.getEstadoCivil());
@@ -174,10 +185,10 @@ public class EmpleadoDAO {
         EmpleadoDAO c = new EmpleadoDAO();
         Empleado empleado = new Empleado();
         
-          c.registrarEmpleado(empleado);
+         // c.registrarEmpleado(empleado);
           //c.modificarEmpleado(empleado);
           //c.consultarEmpleado();
-          //c.consultarEmpleadoCodEmpleado(2);
+          //c.consultarEmpleadoCodEmpleado("5");
           //c.eliminarEmpleado(1);
           
 

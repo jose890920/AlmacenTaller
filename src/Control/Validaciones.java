@@ -6,6 +6,8 @@
 package Control;
 
 
+import Modelo.Empleado;
+import Modelo.Persona;
 import Modelo.Producto;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
@@ -23,6 +25,7 @@ import java.util.Map.Entry;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -31,7 +34,7 @@ import javax.swing.Timer;
  *
  * @author jose luis Rodriguez
  */
-public class Validaciones {
+public class Validaciones extends ConstantesAlmacenyTaller{
 
              Timer t = new Timer(4000, new ActionListener() {
       @Override
@@ -379,6 +382,135 @@ public class Validaciones {
                     return "";   
 
           }
+          
+          public void ocultarCampo(JTextField campo, JComboBox combo,JLabel etiqueta){
+          
+             if (combo.getSelectedItem().equals("OTRA")) {
+                    
+                    campo.setBackground(Color.white);
+                    campo.setVisible(true);
+                    etiqueta.setVisible(true);            
+            }else{
+                    campo.setText("");
+                    campo.setVisible(false);
+                    etiqueta.setVisible(false);
+        }
+          
+          }
+          
+          
+                    public String validarCamposEmpleado(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JRadioButton femenino,JRadioButton masculino,JDateChooser fechaIngreso,
+                  JDateChooser fechaNacimiento, JComboBox estadoCivil, JComboBox ciudad,
+                  JTextField otraCiudad){
+              if (nombres.getText().trim().equals("") || nombres.getText()== null ||
+                  apellidos.getText().trim().equals("") || apellidos.getText() == null ||
+                  tipoDocumento.getSelectedItem().equals("-- Select --")||
+                  estadoCivil.getSelectedItem().equals("-- Select --")||
+                  ciudad.getSelectedItem().equals("-- Select --")||
+                  numeroDocumento.getText().trim().equals("") || numeroDocumento.getText().trim() == null ||
+                  direccion.getText().trim().equals("") || direccion.getText().trim() == null ||
+                      (!femenino.isSelected() && !masculino.isSelected())||
+                  fechaIngreso.getDate() == null || fechaIngreso.getDate().compareTo(new Date()) != -1 ||
+                  fechaNacimiento.getDate() == null  
+                  ) {
+
+                  
+                    return "Valide los Campos Obligatorios";   
+              }
+                    if (!compararFechas(fechaIngreso.getDate(), fechaNacimiento.getDate()).equals("")) {
+                            return compararFechas(fechaIngreso.getDate(), fechaNacimiento.getDate());
+                        }
+                       
+                    return "";   
+
+          }
+                    
+                    public String validarEleccionGenero(JRadioButton femenino, JRadioButton masculino){
+                        if (femenino.isSelected()) {
+                            return CONSTANTE_GENERO_FEMENINO;
+                        } else {
+                             if (masculino.isSelected()) {
+                            return CONSTANTE_GENERO_MASCULINO;
+                             }
+                        }
+                    return "";
+                    }
+                    
+                    public String obtenerCiudadEmpleado(JTextField ciudad, JComboBox combo){
+                        
+                        if (combo.getSelectedItem().toString().equals("OTRA")) {
+                            return ciudad.getText();
+                        }
+                    return combo.getSelectedItem().toString();
+                    }
+                    
+                    public String compararFechas(Date fecha1, Date fecha2){
+
+                    double anios = ((fecha1.getTime()-fecha2.getTime())/(1000*60*60*24))/365;
+                        if (anios >= 18) {
+                            return "";
+                        }
+                    
+                    
+                    return "El Empleado Debe Ser Mayor de Edad";
+                    }
+                    
+                    public void mapearEmpleado(Empleado empleado, JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular,
+                  JRadioButton femenino,JRadioButton masculino,JDateChooser fechaIngreso,
+                  JDateChooser fechaNacimiento, JComboBox estadoCivil, JComboBox ciudad,
+                  JTextField otraCiudad){
+                    
+                       
+                        
+                        nombres.setText(empleado.getPersona().getNombres().trim());
+                        apellidos.setText(empleado.getPersona().getApellidos().trim());
+                        if (validarCiudad(ciudad, otraCiudad, empleado.getCiudad())) {
+                            ciudad.setSelectedItem(empleado.getCiudad().trim());
+                            otraCiudad.setVisible(false);
+                        }else{
+                            otraCiudad.setVisible(true);
+                            otraCiudad.setText(empleado.getCiudad().trim());
+                            ciudad.setSelectedItem("OTRA");
+                        }
+                        tipoDocumento.setSelectedItem(empleado.getPersona().getTipoDocumento().trim());
+                        numeroDocumento.setText(empleado.getPersona().getNumeroDocumento().trim());
+                        direccion.setText(empleado.getPersona().getDireccion().trim());
+                        telefono.setText(empleado.getPersona().getTelefono().trim());
+                        celular.setText(empleado.getPersona().getCelular().trim());
+                        if (mapearGenero(empleado.getSexo()).equals(CONSTANTE_GENERO_FEMENINO)) {
+                            femenino.setSelected(true);
+                        }else{
+                            masculino.setSelected(true);
+                        }
+                        fechaIngreso.setDate(empleado.getFechaIngreso());
+                        fechaNacimiento.setDate(empleado.getFechaNacimiento());
+                        estadoCivil.setSelectedItem(empleado.getEstadoCivil().trim());
+                    }
+                    
+                    public boolean validarCiudad(JComboBox ciudad, JTextField otraCiudad,String valor){
+                        
+                          
+                        for (int i = 1; i < ciudad.getItemCount()-1; i++) {
+                            System.out.println(" "+ciudad.getItemAt(i));
+                            if (valor.equals(ciudad.getItemAt(i))) {
+                                return true;
+                            }
+                        }
+                    return false;
+                    }
+                    
+                    public String mapearGenero(String genero){
+                    
+                        if (genero.equals(CONSTANTE_GENERO_FEMENINO)) {
+                            return CONSTANTE_GENERO_FEMENINO;
+                        }
+                        return CONSTANTE_GENERO_MASCULINO;
+                    
+                    }
           
      }
 

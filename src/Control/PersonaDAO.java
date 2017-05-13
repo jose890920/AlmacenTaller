@@ -18,7 +18,8 @@ public class PersonaDAO {
      String queryCodigo ="";
      ResultSet resultset;
      
-    public void registrarPersona(Persona persona)throws SQLException{
+    public int registrarPersona(Persona persona)throws SQLException{
+     /*
         persona.setNombres("juan");
         persona.setApellidos("cuadrado");
         persona.setDireccion("calle 5a");
@@ -27,7 +28,7 @@ public class PersonaDAO {
         persona.setEmail("jcu@gmail.com");
         persona.setTipoDocumento("CEDULA DE CIUDADANIA");
         persona.setNumeroDocumento("155555");
-        
+       */ 
         queryCodigo = "select MAX(cod_persona) conteo from persona";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -42,6 +43,7 @@ public class PersonaDAO {
                 + "'"+persona.getEmail()+"','"+persona.getTipoDocumento()+"',"
                 + "'"+persona.getNumeroDocumento()+"')";
     sentencia.gestionarRegistro(query);
+    return persona.getCodPersona();
     }
     
     public void modificarPersona(Persona persona){

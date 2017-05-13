@@ -235,7 +235,7 @@ public class ProductoGUI extends javax.swing.JDialog {
                 fechaIngresoDateKeyTyped(evt);
             }
         });
-        jPanel1.add(fechaIngresoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 180, 20));
+        jPanel1.add(fechaIngresoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 180, 24));
 
         valorProductoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         valorProductoTxt.setMaximumSize(new java.awt.Dimension(6, 10));

@@ -19,5 +19,7 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_ESTADO_POR_DEFECTO = "ACTIVO";
     public final int CONSTANTE_CANTIDAD_POR_DEFECTO = 5;
     public final int CONSTANTE_VALOR_POR_DEFECTO = 10;
+    public final String CONSTANTE_GENERO_FEMENINO = "F";
+    public final String CONSTANTE_GENERO_MASCULINO = "M";
     
 }
