@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class EmpleadoDAO {
+public class EmpleadoDAO extends ConstantesAlmacenyTaller{
     
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -51,7 +51,7 @@ public class EmpleadoDAO {
     }
     
     public String modificarEmpleado(Empleado empleado) throws ParseException{
-        
+       /* 
         empleado.setCodPersona(1);
         empleado.setFechaIngreso(validaciones.transformarFechatoDate("05-01-2017"));
         empleado.setEstadoCivil("Soltero");
@@ -60,16 +60,16 @@ public class EmpleadoDAO {
         empleado.setCiudad("CalI");
         empleado.setEstado("inactivo");
         empleado.setCodEmpleado(1);
-    
+    */
     query =    "UPDATE empleado " 
-            + " SET  cod_persona_e="+empleado.getCodPersona()+","
-            + " fecha_ingreso='"+empleado.getFechaIngreso()+"',"
+            + " SET fecha_ingreso='"+empleado.getFechaIngreso()+"',"
             + " estado_civil='"+empleado.getEstadoCivil()+"',"
             + " fecha_nacimiento='"+empleado.getFechaNacimiento()+"',"
             + " sexo='"+empleado.getSexo()+"',"
-            + " ciudad='"+empleado.getCiudad()+"'," 
+            + " ciudad='"+empleado.getCiudad()+"',"
             + " estado='"+empleado.getEstado()+"'"
-            + " WHERE cod_empleado = "+empleado.getCodEmpleado()+"";
+            + " from persona  WHERE cod_persona_e = cod_persona and "
+            + " numero_documento = '"+empleado.getPersona().getNumeroDocumento()+"'";
     
     return sentencia.gestionarRegistro(query);
     
@@ -89,7 +89,7 @@ public class EmpleadoDAO {
             query = "SELECT cod_empleado, cod_persona_e, fecha_ingreso,"
                     + " estado_civil, fecha_nacimiento, sexo,"
                     + " ciudad, estado " 
-                    +" FROM empleado WHERE estado = 'Activo' ORDER BY cod_empleado ASC";
+                    +" FROM empleado WHERE estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' ORDER BY cod_empleado ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
@@ -97,16 +97,20 @@ public class EmpleadoDAO {
          return mapearEmpleados(resultset);
     }
     
-        public Empleado consultarEmpleadoCodEmpleado(String documentoEmpleado){
+        public Empleado consultarEmpleadoCodEmpleado(String documentoEmpleado) throws SQLException{
             
             query = "SELECT cod_empleado, cod_persona_e, fecha_ingreso,"
                     + " estado_civil, fecha_nacimiento, sexo,"
                     + " ciudad, estado, nombres, apellidos,direccion, telefono,"
                     + " celular, tipo_documento, numero_documento " 
                     +" FROM empleado, persona WHERE cod_persona_e = cod_persona"
-                    + " AND estado = 'Activo' "
+                    + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
                     + " AND numero_documento = '"+documentoEmpleado+"' ORDER BY cod_empleado ASC";            
             resultset = sentencia.gestionarConsulta(query);
+            
+            if (!resultset.next()) {
+                return null;
+            }
             
             return  mapearEmpleado(resultset);
     }
@@ -178,9 +182,9 @@ public class EmpleadoDAO {
       
         return empleado;
         }
-    
-    
-    
+                
+     
+        
     public static void main(String[] args) throws SQLException, ParseException {
         EmpleadoDAO c = new EmpleadoDAO();
         Empleado empleado = new Empleado();
@@ -193,4 +197,6 @@ public class EmpleadoDAO {
           
 
     }
+    
+ 
 }

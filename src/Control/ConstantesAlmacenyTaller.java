@@ -21,5 +21,7 @@ public class ConstantesAlmacenyTaller {
     public final int CONSTANTE_VALOR_POR_DEFECTO = 10;
     public final String CONSTANTE_GENERO_FEMENINO = "F";
     public final String CONSTANTE_GENERO_MASCULINO = "M";
+    public final String CONSTANTE_PAIS_POR_DEFECTO = "COLOMBIA";
+    public final int CONSTANTE_VALOR_ANIO_POR_DEFECTO = 4;
     
 }

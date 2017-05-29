@@ -47,7 +47,7 @@ public class PersonaDAO {
     }
     
     public void modificarPersona(Persona persona){
-        
+        /*
                 persona.setNombres("juangui");
         persona.setApellidos("cuadradosqui");
         persona.setDireccion("calle 5aa");
@@ -56,14 +56,14 @@ public class PersonaDAO {
         persona.setEmail("jc@gmail.com");
         persona.setTipoDocumento("CEDULA DE CIUDADANIA");
         persona.setNumeroDocumento("155555");
-    
+    */
     query =    "UPDATE persona" +
         "	SET  nombres='"+persona.getNombres()+"', apellidos='"+persona.getApellidos()+"',"
             + " direccion='"+persona.getDireccion()+"', telefono='"+persona.getTelefono()+"',"
             + " celular='"+persona.getCelular()+"', correo='"+persona.getEmail()+"',"
             + " tipo_documento='"+persona.getTipoDocumento()+"',"
-            + " numero_documento = '"+persona.getNumeroDocumento()+"' " +
-        "	WHERE numero_documento = '"+persona.getNumeroDocumento()+"'";
+            + " numero_documento = '"+persona.getNumeroDocumento()+"' " 
+            + " WHERE numero_documento = '"+persona.getNumeroDocumento()+"'";
     
     sentencia.gestionarRegistro(query);
     

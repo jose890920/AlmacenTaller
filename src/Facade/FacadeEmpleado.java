@@ -25,6 +25,7 @@ public class FacadeEmpleado {
    
     public String modificarEmpleado(Empleado empleado) throws SQLException, ParseException{
        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+       personaDAO.modificarPersona(empleado.getPersona());
        return empleadoDAO.modificarEmpleado(empleado);
    } 
       

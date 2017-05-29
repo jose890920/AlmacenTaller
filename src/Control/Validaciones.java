@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -496,7 +497,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                           
                         for (int i = 1; i < ciudad.getItemCount()-1; i++) {
                             System.out.println(" "+ciudad.getItemAt(i));
-                            if (valor.equals(ciudad.getItemAt(i))) {
+                            if (valor.trim().equals(ciudad.getItemAt(i))) {
                                 return true;
                             }
                         }
@@ -509,6 +510,34 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                             return CONSTANTE_GENERO_FEMENINO;
                         }
                         return CONSTANTE_GENERO_MASCULINO;
+                    
+                    }
+                   
+
+                    
+                    
+                    public void limpiarCamposEmpleado(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular,
+                  ButtonGroup buttonGroupGenero,JDateChooser fechaIngreso,
+                  JDateChooser fechaNacimiento, JComboBox estadoCivil, JComboBox ciudad,
+                  JTextField otraCiudad){
+                        
+                        nombres.setText("");
+                        apellidos.setText("");
+                        numeroDocumento.setText("");
+                        direccion.setText("");
+                        telefono.setText("");
+                        celular.setText("");
+                        otraCiudad.setText("");
+                        tipoDocumento.setSelectedItem("-- Select --");
+                        buttonGroupGenero.clearSelection();
+                        fechaIngreso.setDate(null);
+                        fechaNacimiento.setDate(null);
+                        estadoCivil.setSelectedItem("-- Select --");
+                        ciudad.setSelectedItem("-- Select --");
+                        
+                    
                     
                     }
           

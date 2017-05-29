@@ -15,6 +15,16 @@ public class Cliente {
     private String sexo, barrio, tieneMotocicleta, estado;
     
     private Persona persona;
+    
+    private Motocicleta motocicleta;
+
+    public Motocicleta getMotocicleta() {
+        return motocicleta;
+    }
+
+    public void setMotocicleta(Motocicleta motocicleta) {
+        this.motocicleta = motocicleta;
+    }
 
     public Cliente() {
     }

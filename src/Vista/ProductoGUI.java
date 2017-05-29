@@ -22,15 +22,14 @@ import org.jvnet.substance.SubstanceLookAndFeel;
  * @author jose luis Rodriguez
  */
 public class ProductoGUI extends javax.swing.JDialog {
-    
+
     Validaciones validaciones = new Validaciones();
     TipoProductoDAO tipoProductoDAO = new TipoProductoDAO();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
     FacadeProducto facadeProducto = new FacadeProducto();
     Producto producto = new Producto();
     int contador = 0;
-    
-    
+
     /**
      * Creates new form ProductoGUI2
      */
@@ -38,7 +37,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         validaciones.adicionarItems(tipoProductoCombo,
-        tipoProductoDAO.consultarTiposProducto());
+                tipoProductoDAO.consultarTiposProducto());
         this.setLocationRelativeTo(null);
         this.setTitle("Gestion Productos");
         modificarBtn.setEnabled(false);
@@ -84,6 +83,8 @@ public class ProductoGUI extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jTabbedPane1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -412,7 +413,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         validarSonido(validaciones.validarSoloLetras(evt, nombreProductoTxt));
         validaciones.minusculaToMayuscula(evt);
         validaciones.validarCantidadCaracteresTexto(evt, nombreProductoTxt,
-            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+                constantes.CONSTANTE_TEXTO_POR_DEFECTO);
     }//GEN-LAST:event_nombreProductoTxtKeyTyped
 
     private void descripcionTxtAreaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_descripcionTxtAreaFocusGained
@@ -426,10 +427,12 @@ public class ProductoGUI extends javax.swing.JDialog {
     private void descripcionTxtAreaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descripcionTxtAreaKeyTyped
         contador++;
         if (!validaciones.validarCantidadCaracteresTexto(evt, descripcionTxtArea,
-            constantes.CONSTANTE_TOTAL_DESCRIPCION)) {
-        validaciones.minusculaToMayuscula(evt);
-        contador = validaciones.validarSaltodeLinea(evt, descripcionTxtArea, contador);
-        }else{contador = 0;}
+                constantes.CONSTANTE_TOTAL_DESCRIPCION)) {
+            validaciones.minusculaToMayuscula(evt);
+            contador = validaciones.validarSaltodeLinea(evt, descripcionTxtArea, contador);
+        } else {
+            contador = 0;
+        }
 
     }//GEN-LAST:event_descripcionTxtAreaKeyTyped
 
@@ -469,7 +472,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         validarSonido(validaciones.validarSoloNumeros(evt, cantidadProductoTxt));
         validaciones.minusculaToMayuscula(evt);
         validaciones.validarCantidadCaracteresTexto(evt, cantidadProductoTxt,
-            constantes.CONSTANTE_CANTIDAD_POR_DEFECTO);
+                constantes.CONSTANTE_CANTIDAD_POR_DEFECTO);
     }//GEN-LAST:event_cantidadProductoTxtKeyTyped
 
     private void fabricanteTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fabricanteTxtFocusGained
@@ -495,7 +498,7 @@ public class ProductoGUI extends javax.swing.JDialog {
     private void fabricanteTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fabricanteTxtKeyTyped
         validaciones.minusculaToMayuscula(evt);
         validaciones.validarCantidadCaracteresTexto(evt, fabricanteTxt,
-            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+                constantes.CONSTANTE_TEXTO_POR_DEFECTO);
     }//GEN-LAST:event_fabricanteTxtKeyTyped
 
     private void fechaIngresoDateKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaIngresoDateKeyTyped
@@ -525,24 +528,25 @@ public class ProductoGUI extends javax.swing.JDialog {
     private void valorProductoTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_valorProductoTxtKeyTyped
         validarSonido(validaciones.validarSoloNumeros(evt, valorProductoTxt));
         validaciones.validarCantidadCaracteresTexto(evt, valorProductoTxt,
-            constantes.CONSTANTE_VALOR_POR_DEFECTO);
+                constantes.CONSTANTE_VALOR_POR_DEFECTO);
     }//GEN-LAST:event_valorProductoTxtKeyTyped
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
             if (validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
-                fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
-                tipoProductoCombo).equals("")) {
-            facadeProducto.registrarProducto(mapearProducto());
-        }else{mensajeLbl.setText(validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
-            fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
-            tipoProductoCombo));
-    validaciones.notificarMensajeconTimer(mensajeLbl);
-    }
+                    fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
+                    tipoProductoCombo).equals("")) {
+                facadeProducto.registrarProducto(mapearProducto());
+            } else {
+                mensajeLbl.setText(validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
+                        fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
+                        tipoProductoCombo));
+                validaciones.notificarMensajeconTimer(mensajeLbl);
+            }
 
-    } catch (SQLException ex) {
-        Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -553,15 +557,15 @@ public class ProductoGUI extends javax.swing.JDialog {
         try {
             producto = new Producto();
             producto.setNombreProdcto(nombreProductoTxt.getText());
-            if (!validaciones.validarCampoVacio(nombreProductoTxt) &&
-                facadeProducto.consultarProducto(producto) != null ) {
+            if (!validaciones.validarCampoVacio(nombreProductoTxt)
+                    && facadeProducto.consultarProducto(producto) != null) {
 
                 validaciones.mapearProductoVista(facadeProducto.consultarProducto(producto),
-                    nombreProductoTxt, descripcionTxtArea,tipoProductoCombo,
-                    cantidadProductoTxt, fechaIngresoDate,
-                    valorProductoTxt, fabricanteTxt);
+                        nombreProductoTxt, descripcionTxtArea, tipoProductoCombo,
+                        cantidadProductoTxt, fechaIngresoDate,
+                        valorProductoTxt, fabricanteTxt);
                 modificarBtn.setEnabled(true);
-            }else{
+            } else {
                 modificarBtn.setEnabled(false);
             }
 
@@ -574,8 +578,18 @@ public class ProductoGUI extends javax.swing.JDialog {
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
         try {
+            if (validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
+                    fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
+                    tipoProductoCombo).equals("")) {
 
-            mensajeLbl.setText(facadeProducto.modificarProducto(mapearProducto()));
+                mensajeLbl.setText(facadeProducto.modificarProducto(mapearProducto()));
+
+            } else {
+                mensajeLbl.setText(validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
+                        fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
+                        tipoProductoCombo));
+
+            }
             validaciones.notificarMensajeconTimer(mensajeLbl);
 
         } catch (SQLException ex) {
@@ -621,8 +635,8 @@ public class ProductoGUI extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JDialog.setDefaultLookAndFeelDecorated(true); 
-                SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");                
+                JDialog.setDefaultLookAndFeelDecorated(true);
+                SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");
                 ProductoGUI dialog = new ProductoGUI(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -667,17 +681,16 @@ public class ProductoGUI extends javax.swing.JDialog {
     private javax.swing.JTextField valorProductoTxt;
     // End of variables declaration//GEN-END:variables
 
+    public void validarSonido(boolean flag) {
+        if (flag) {
+            getToolkit().beep();
 
-     public void validarSonido(boolean flag){
-         if (flag) {
-              getToolkit().beep();
-             
-         }else{
-             
-         }
-     } 
-     
-     public Producto mapearProducto(){
+        } else {
+
+        }
+    }
+
+    public Producto mapearProducto() {
         producto.setNombreProdcto(nombreProductoTxt.getText());
         producto.setDescripcion(descripcionTxtArea.getText());
         producto.setTipoProducto(tipoProductoCombo.getSelectedItem().toString());
@@ -687,7 +700,6 @@ public class ProductoGUI extends javax.swing.JDialog {
         producto.setValor(Double.parseDouble(valorProductoTxt.getText()));
         producto.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
         return producto;
-     }
-
+    }
 
 }

@@ -12,7 +12,7 @@ public class Motocicleta {
     private String placa, paisMatricula, modelo, marca, cilindraje, linea,
                    tipoMotocicleta;
     
-    private Cliente cliente;
+    
 
     public Motocicleta() {
     }
@@ -89,13 +89,7 @@ public class Motocicleta {
         this.tipoMotocicleta = tipoMotocicleta;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    
     
     
     
