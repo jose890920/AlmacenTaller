@@ -6,8 +6,10 @@
 package Vista;
 
 import Control.ConstantesAlmacenyTaller;
+import Control.TipoMotocicletaDAO;
 import Control.Validaciones;
 import Modelo.Cliente;
+import Modelo.Motocicleta;
 import java.awt.Color;
 import javax.swing.JDialog;
 import org.jvnet.substance.SubstanceLookAndFeel;
@@ -17,9 +19,11 @@ import org.jvnet.substance.SubstanceLookAndFeel;
  * @author jose luis Rodriguez
  */
 public class MotocicletaGUI extends javax.swing.JDialog {
+    Motocicleta moto = new Motocicleta();
     static Cliente cliente = new Cliente();
     Validaciones validaciones = new Validaciones();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
+    TipoMotocicletaDAO tipoMotocicletaDAO = new TipoMotocicletaDAO();
     /**
      * Creates new form MotocicletaGUI
      */
@@ -27,6 +31,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.cliente= cliente;
+        cliente.setMotocicleta(moto);
+        validaciones.adicionarItems(tipoMotocicletaCombo,
+        tipoMotocicletaDAO.consultarTiposMotocicleta());
         
         this.setTitle("Informacion Motocicleta");
         this.setLocationRelativeTo(null);
@@ -65,6 +72,10 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         jLabel32 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonGuardarMotocicleta = new javax.swing.JButton();
+        tipoMotocicletaCombo = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -104,7 +115,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 0, 0));
         jLabel22.setText("*");
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, 10));
+        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, 10));
 
         paisTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         paisTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -132,11 +143,11 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 paisTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(paisTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 180, -1));
+        getContentPane().add(paisTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, -1));
 
         jLabel23.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel23.setText("Pais");
-        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, -1, -1));
+        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         jRadioButtonOtro.setText("Otro?");
         jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
@@ -144,7 +155,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 jRadioButtonOtroActionPerformed(evt);
             }
         });
-        getContentPane().add(jRadioButtonOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, -1, -1));
+        getContentPane().add(jRadioButtonOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
 
         modeloTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         modeloTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -172,7 +183,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 modeloTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 180, -1));
+        getContentPane().add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 0, 0));
@@ -181,12 +192,12 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
         jLabel25.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel25.setText("Modelo");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 0, 0));
         jLabel26.setText("*");
-        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, 10));
+        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, 10));
 
         marcaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         marcaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "AUTECO", "KAWASAKI", "YAMAHA", "SUZUKI", "KTM", "AKT", "HONDA", "HERO", "OTRA" }));
@@ -205,16 +216,16 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 marcaComboActionPerformed(evt);
             }
         });
-        getContentPane().add(marcaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, 180, -1));
+        getContentPane().add(marcaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 180, -1));
 
         jLabel27.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel27.setText("Marca");
-        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(255, 0, 0));
         jLabel28.setText("*");
-        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 160, -1, 10));
+        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, -1, 10));
 
         cilindrajeTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         cilindrajeTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -270,7 +281,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 lineaTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(lineaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 180, -1));
+        getContentPane().add(lineaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 180, -1));
 
         jLabel29.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel29.setText("Cilindraje");
@@ -283,12 +294,12 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
         jLabel31.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel31.setText("Linea");
-        getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
+        getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(255, 0, 0));
         jLabel32.setText("*");
-        getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, -1, 10));
+        getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, 10));
 
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"))); // NOI18N
@@ -304,6 +315,44 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/motocicleta.png"))); // NOI18N
         jLabel1.setText("Motocicleta");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+
+        jButtonGuardarMotocicleta.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButtonGuardarMotocicleta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        jButtonGuardarMotocicleta.setText("Guardar");
+        jButtonGuardarMotocicleta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarMotocicletaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonGuardarMotocicleta, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 145, 55));
+
+        tipoMotocicletaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        tipoMotocicletaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        tipoMotocicletaCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tipoMotocicletaComboItemStateChanged(evt);
+            }
+        });
+        tipoMotocicletaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tipoMotocicletaComboFocusLost(evt);
+            }
+        });
+        tipoMotocicletaCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tipoMotocicletaComboActionPerformed(evt);
+            }
+        });
+        getContentPane().add(tipoMotocicletaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, -1));
+
+        jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel10.setText("Tipo de Motocicleta");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel16.setText("*");
+        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 10));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -332,7 +381,6 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
     private void placaTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_placaTxtKeyTyped
 
-        validarSonido(validaciones.validarSoloLetras(evt, placaTxt));
         validaciones.minusculaToMayuscula(evt);
         validaciones.validarCantidadCaracteresTexto(evt, placaTxt,
             constantes.CONSTANTE_TEXTO_POR_DEFECTO);
@@ -417,13 +465,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_marcaComboFocusLost
 
     private void marcaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_marcaComboActionPerformed
-        MotocicletaGUI motocicletaGUI = new MotocicletaGUI(null, true, cliente);
-        if (marcaCombo.getSelectedItem().equals("SI")) {
-            //tieneMotocicletaCombo.setEnabled(false);
-
-            motocicletaGUI.setVisible(true);
-
-        }
+ 
     }//GEN-LAST:event_marcaComboActionPerformed
 
     private void cilindrajeTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cilindrajeTxtFocusGained
@@ -486,6 +528,31 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonGuardarMotocicletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarMotocicletaActionPerformed
+        
+        if (mapeoMotocicleta()) {
+            validarSonido(mapeoMotocicleta());
+        }else{
+           
+            mapeoMotocicleta();
+            dispose();
+        }
+
+           
+    }//GEN-LAST:event_jButtonGuardarMotocicletaActionPerformed
+
+    private void tipoMotocicletaComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboItemStateChanged
+        validarSonido(validaciones.validaCombo(tipoMotocicletaCombo));
+    }//GEN-LAST:event_tipoMotocicletaComboItemStateChanged
+
+    private void tipoMotocicletaComboFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboFocusLost
+        validarSonido(validaciones.validaCombo(tipoMotocicletaCombo));
+    }//GEN-LAST:event_tipoMotocicletaComboFocusLost
+
+    private void tipoMotocicletaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tipoMotocicletaComboActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -533,7 +600,10 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cilindrajeTxt;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonGuardarMotocicleta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -552,6 +622,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private javax.swing.JTextField modeloTxt;
     private javax.swing.JTextField paisTxt;
     private javax.swing.JTextField placaTxt;
+    private javax.swing.JComboBox<String> tipoMotocicletaCombo;
     // End of variables declaration//GEN-END:variables
 
      public void validarSonido(boolean flag){
@@ -562,5 +633,30 @@ public class MotocicletaGUI extends javax.swing.JDialog {
              
          }
      } 
+     
+     public boolean mapeoMotocicleta(){
+         if ((!placaTxt.getText().equals("") && placaTxt.getText() !=null) &&
+             (!paisTxt.getText().equals("") && paisTxt.getText() !=null) &&
+             (!modeloTxt.getText().equals("") && modeloTxt.getText() !=null) &&
+             (!cilindrajeTxt.getText().equals("") && cilindrajeTxt.getText() !=null)&&
+             (!lineaTxt.getText().equals("") && lineaTxt.getText() !=null) &&
+             (!tipoMotocicletaCombo.getSelectedItem().toString().equals("") && 
+               tipoMotocicletaCombo.getSelectedItem() !=null) &&   
+             (!marcaCombo.getSelectedItem().toString().equals("") && 
+               marcaCombo.getSelectedItem() !=null)) {
+             
+                    moto.setPlaca(placaTxt.getText());
+                    moto.setPaisMatricula(paisTxt.getText());
+                    moto.setModelo(modeloTxt.getText());
+                    moto.setCilindraje(cilindrajeTxt.getText());
+                    moto.setLinea(lineaTxt.getText());
+                    moto.setMarca(marcaCombo.getSelectedItem().toString());
+                    moto.setTipoMotocicleta(tipoMotocicletaCombo.getSelectedItem().toString());
+                    return false;
+             
+         }
+         return true;
+     
+     }
 
 }

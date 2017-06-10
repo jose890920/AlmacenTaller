@@ -71,6 +71,7 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         fechaNacimientoDate = new com.toedter.calendar.JDateChooser();
         jLabel21 = new javax.swing.JLabel();
@@ -84,8 +85,10 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel26 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        mensajeLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -335,7 +338,15 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel17.setText("*");
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, 10));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 300));
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 300));
 
         jTabbedPane1.addTab("Información Personal", jPanel2);
 
@@ -427,28 +438,16 @@ public class ClienteGUI extends javax.swing.JDialog {
 
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 610, 330));
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 606, -1));
+
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clientes.png"))); // NOI18N
         jLabel1.setText("Clientes");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 336, 234, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(366, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(22, 22, 22))
-        );
+        mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 350, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -684,6 +683,24 @@ public class ClienteGUI extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tieneMotocicletaComboActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       if (cliente.getMotocicleta().getMarca() == null) {
+            mensajeLbl.setText("Es Nulo");
+        }else{
+                System.out.println(cliente.getMotocicleta().getCilindraje());
+                System.out.println(cliente.getMotocicleta().getMarca());
+                System.out.println(cliente.getMotocicleta().getLinea());
+                System.out.println(cliente.getMotocicleta().getModelo());
+                System.out.println(cliente.getMotocicleta().getPaisMatricula());
+                System.out.println(cliente.getMotocicleta().getPlaca());
+                System.out.println(cliente.getMotocicleta().getTipoMotocicleta());
+        
+        mensajeLbl.setText("");
+        }
+
+       
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -735,6 +752,7 @@ public class ClienteGUI extends javax.swing.JDialog {
     private javax.swing.JTextField celularTxt;
     private javax.swing.JTextField direccionTxt;
     private com.toedter.calendar.JDateChooser fechaNacimientoDate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -761,6 +779,7 @@ public class ClienteGUI extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButtonFemenino;
     private javax.swing.JRadioButton jRadioButtonMasculino;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel mensajeLbl;
     private javax.swing.JTextField nombresTxt;
     private javax.swing.JTextField numeroDocumentoTxt;
     private javax.swing.JTextField telefonoTxt;
