@@ -6,6 +6,7 @@
 package Control;
 
 
+import Modelo.Cliente;
 import Modelo.Empleado;
 import Modelo.Persona;
 import Modelo.Producto;
@@ -540,7 +541,84 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                     
                     
                     }
-          
+                    
+                    
+                    
+         public String validarCamposCliente(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular, JDateChooser fechaNacimiento,
+                  JComboBox tieneMotocicleta, JTextField barrio, JRadioButton femenino,
+                  JRadioButton masculino){
+                        
+                        if (nombres.getText().equals("") || nombres.getText() == null  ||
+                            apellidos.getText().equals("") || 
+                            apellidos.getText() == null ||
+                            numeroDocumento.getText().equals("") || 
+                            numeroDocumento.getText() == null ||
+                            direccion.getText().equals("") ||
+                            direccion.getText() == null ||
+                            (!femenino.isSelected() && !masculino.isSelected())||
+                            tipoDocumento.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO) ||
+                            tieneMotocicleta.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)) {
+                            
+                            return CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO;
+                            
+                        }
+                    
+                    return "";
+                    
+                    
+        }
+                    
+                    
+        public String validarTieneMotocicleta(String seleccion){
+                        if (seleccion.equals("SI")) {
+                            return CONSTANTE_SELECCION_SI_POR_DEFECTO;
+                        } else {
+                             if (seleccion.equals("NO")) {
+                            return CONSTANTE_SELECCION_NO_POR_DEFECTO;
+                             }
+                        }
+                    return "";
+        }
+      
+        
+        
+        public void mapearCliente(Cliente cliente, JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular,JRadioButton femenino,
+                  JRadioButton masculino,JDateChooser fechaNacimiento, JComboBox tieneMotocicleta,
+                  JTextField barrio){
+                    
+                       
+                        
+                        nombres.setText(cliente.getPersona().getNombres().trim());
+                        apellidos.setText(cliente.getPersona().getApellidos().trim());
+
+                        tipoDocumento.setSelectedItem(cliente.getPersona().getTipoDocumento().trim());
+                        numeroDocumento.setText(cliente.getPersona().getNumeroDocumento().trim());
+                        direccion.setText(cliente.getPersona().getDireccion().trim());
+                        telefono.setText(cliente.getPersona().getTelefono().trim());
+                        celular.setText(cliente.getPersona().getCelular().trim());
+                        if (mapearGenero(cliente.getSexo()).equals(CONSTANTE_GENERO_FEMENINO)) {
+                            femenino.setSelected(true);
+                        }else{
+                            masculino.setSelected(true);
+                        }
+                        fechaNacimiento.setDate(cliente.getFechaNacimiento());
+                        if (cliente.getTieneMotocicleta().trim().equals(CONSTANTE_SELECCION_SI_POR_DEFECTO)) {
+                            tieneMotocicleta.setSelectedItem("SI");
+                        }else{
+                            tieneMotocicleta.setSelectedItem("NO");
+                        }
+                        barrio.setText(cliente.getBarrio().trim());
+        
+        }
+        
+        
+        
+        
+        
      }
 
     

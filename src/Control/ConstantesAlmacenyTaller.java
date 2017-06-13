@@ -23,5 +23,10 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_GENERO_MASCULINO = "M";
     public final String CONSTANTE_PAIS_POR_DEFECTO = "COLOMBIA";
     public final int CONSTANTE_VALOR_ANIO_POR_DEFECTO = 4;
+    public final String CONSTANTE_COMBO_POR_DEFECTO = "-- Select --";
+    public final String CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO = "Validar Campos Obligatorios";
+    public final String CONSTANTE_SELECCION_SI_POR_DEFECTO = "S";
+    public final String CONSTANTE_SELECCION_NO_POR_DEFECTO = "N";
+    
     
 }

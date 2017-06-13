@@ -22,7 +22,7 @@ public class MotocicletaDAO {
      
     public void registrarMotocicleta(Motocicleta motocicleta)throws SQLException, ParseException{
 
-     
+     /*
         motocicleta.setCodCliente(2);
         motocicleta.setPlaca("KPL14B");
         motocicleta.setPaisMatricula("Colombia");
@@ -31,7 +31,7 @@ public class MotocicletaDAO {
         motocicleta.setCilindraje("124");
         motocicleta.setLinea("Best");
         motocicleta.setTipoMotocicleta("Semiautomatica");
-        
+        */
         queryCodigo = "select MAX(cod_motocicleta) conteo from motocicleta";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);

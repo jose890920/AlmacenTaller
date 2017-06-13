@@ -8,7 +8,13 @@ package Vista;
 import Control.ConstantesAlmacenyTaller;
 import Control.TipoDocumentoDAO;
 import Control.Validaciones;
+import Facade.FacadeCliente;
 import Modelo.Cliente;
+import Modelo.Persona;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -20,7 +26,10 @@ public class ClienteGUI extends javax.swing.JDialog {
     Validaciones validaciones = new Validaciones();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
     TipoDocumentoDAO tipoDocumentoDAO = new TipoDocumentoDAO();
+    Persona persona = new Persona();
     Cliente cliente = new Cliente();
+    FacadeCliente facadeCliente = new FacadeCliente();
+    boolean flagModal = false;
     
     
     /**
@@ -35,6 +44,8 @@ public class ClienteGUI extends javax.swing.JDialog {
         buttonGroupGenero.add(jRadioButtonMasculino);
         this.setTitle("Gestion Clientes");
         this.setLocationRelativeTo(null);
+        registrarBtn.setEnabled(false);
+        modificarBtn.setEnabled(false);
         
     }
 
@@ -71,7 +82,6 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         fechaNacimientoDate = new com.toedter.calendar.JDateChooser();
         jLabel21 = new javax.swing.JLabel();
@@ -84,6 +94,9 @@ public class ClienteGUI extends javax.swing.JDialog {
         tieneMotocicletaCombo = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        registrarBtn = new javax.swing.JButton();
+        modificarBtn = new javax.swing.JButton();
+        consultarBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
 
@@ -338,14 +351,6 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel17.setText("*");
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, 10));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 250, -1, -1));
-
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 600, 300));
 
         jTabbedPane1.addTab("Información Personal", jPanel2);
@@ -364,15 +369,15 @@ public class ClienteGUI extends javax.swing.JDialog {
 
         jRadioButtonMasculino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jRadioButtonMasculino.setText("Masculino");
-        jPanel3.add(jRadioButtonMasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, -1, -1));
+        jPanel3.add(jRadioButtonMasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
         jRadioButtonFemenino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jRadioButtonFemenino.setText("Femenino");
-        jPanel3.add(jRadioButtonFemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
+        jPanel3.add(jRadioButtonFemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, -1, -1));
 
         jLabel25.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel25.setText("Genero");
-        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
 
         barrioTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         barrioTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -423,16 +428,46 @@ public class ClienteGUI extends javax.swing.JDialog {
                 tieneMotocicletaComboActionPerformed(evt);
             }
         });
-        jPanel3.add(tieneMotocicletaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 180, -1));
+        jPanel3.add(tieneMotocicletaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 180, -1));
 
         jLabel26.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel26.setText("¿Tiene Motocicleta?");
-        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 0, 0));
         jLabel24.setText("*");
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, 10));
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 10));
+
+        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        registrarBtn.setText("Registrar");
+        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 145, 55));
+
+        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        modificarBtn.setText("Modificar");
+        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 145, 55));
+
+        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        consultarBtn.setText("Consultar");
+        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 145, 55));
 
         jTabbedPane1.addTab("Datos Complementarios", jPanel3);
 
@@ -671,35 +706,105 @@ public class ClienteGUI extends javax.swing.JDialog {
 
     private void tieneMotocicletaComboFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tieneMotocicletaComboFocusLost
         validarSonido(validaciones.validaCombo(tieneMotocicletaCombo));
+
     }//GEN-LAST:event_tieneMotocicletaComboFocusLost
 
     private void tieneMotocicletaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tieneMotocicletaComboActionPerformed
-             MotocicletaGUI motocicletaGUI = new MotocicletaGUI(null, true, cliente);
-        if (tieneMotocicletaCombo.getSelectedItem().equals("SI")) {
-            //tieneMotocicletaCombo.setEnabled(false);
+        if (!flagModal) {
+            MotocicletaGUI motocicletaGUI = new MotocicletaGUI(null, true, cliente);
+            if (tieneMotocicletaCombo.getSelectedItem().equals("SI")) {
+                //tieneMotocicletaCombo.setEnabled(false);
 
-                motocicletaGUI.setVisible(true);
+                    motocicletaGUI.setVisible(true);
 
-        }
+            }
+        }else{
+                System.out.println("entre "+flagModal);
+                flagModal = false;
+            }
+      
     }//GEN-LAST:event_tieneMotocicletaComboActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       if (cliente.getMotocicleta().getMarca() == null) {
-            mensajeLbl.setText("Es Nulo");
+    private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
+
+        try {
+            persona.setNumeroDocumento(numeroDocumentoTxt.getText());
+            cliente.setPersona(persona);
+
+            if (validaciones.validarCamposCliente(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, fechaNacimientoDate,
+                tieneMotocicletaCombo, barrioTxt, jRadioButtonFemenino,
+                jRadioButtonMasculino).equals("") &&
+                facadeCliente.consultarCliente(cliente) == null) {
+
+            facadeCliente.registrarCliente(mapearCliente());
+
         }else{
-                System.out.println(cliente.getMotocicleta().getCilindraje());
-                System.out.println(cliente.getMotocicleta().getMarca());
-                System.out.println(cliente.getMotocicleta().getLinea());
-                System.out.println(cliente.getMotocicleta().getModelo());
-                System.out.println(cliente.getMotocicleta().getPaisMatricula());
-                System.out.println(cliente.getMotocicleta().getPlaca());
-                System.out.println(cliente.getMotocicleta().getTipoMotocicleta());
-        
-        mensajeLbl.setText("");
+                mensajeLbl.setText(validaciones.validarCamposCliente(nombresTxt, apellidosTxt,
+                tipoDocumentoCombo, numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt,
+                fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt, jRadioButtonFemenino,
+                jRadioButtonMasculino));
+
+    }
+    validaciones.notificarMensajeconTimer(mensajeLbl);
+
+    }   catch (SQLException | ParseException ex) {
+        Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_registrarBtnActionPerformed
+
+    private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
+        try {
+
+            if (validaciones.validarCamposCliente(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, fechaNacimientoDate,
+                tieneMotocicletaCombo, barrioTxt, jRadioButtonFemenino,
+                jRadioButtonMasculino).equals("")){
+            mensajeLbl.setText(facadeCliente.modificarCliente(mapearCliente()));
+
+        }else{
+
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
         }
 
-       
-    }//GEN-LAST:event_jButton1ActionPerformed
+        validaciones.notificarMensajeconTimer(mensajeLbl);
+
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_modificarBtnActionPerformed
+
+    private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
+
+        try {
+            
+            cliente = new Cliente();
+            persona = new Persona();
+            persona.setNumeroDocumento(numeroDocumentoTxt.getText());
+            cliente.setPersona(persona);
+            if (!validaciones.validarCampoVacio(numeroDocumentoTxt) &&
+                facadeCliente.consultarCliente(cliente) != null ) {
+                flagModal = true;
+                validaciones.mapearCliente(facadeCliente.consultarCliente(cliente), nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, jRadioButtonFemenino,
+                jRadioButtonMasculino, fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
+                registrarBtn.setEnabled(false);
+                modificarBtn.setEnabled(true);
+                
+            }else{
+                if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
+                    registrarBtn.setEnabled(true);
+                    modificarBtn.setEnabled(false);
+                    
+                }
+
+            }
+
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_consultarBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -750,9 +855,9 @@ public class ClienteGUI extends javax.swing.JDialog {
     private javax.swing.JTextField barrioTxt;
     private javax.swing.ButtonGroup buttonGroupGenero;
     private javax.swing.JTextField celularTxt;
+    private javax.swing.JButton consultarBtn;
     private javax.swing.JTextField direccionTxt;
     private com.toedter.calendar.JDateChooser fechaNacimientoDate;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -780,8 +885,10 @@ public class ClienteGUI extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButtonMasculino;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel mensajeLbl;
+    private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField nombresTxt;
     private javax.swing.JTextField numeroDocumentoTxt;
+    private javax.swing.JButton registrarBtn;
     private javax.swing.JTextField telefonoTxt;
     private javax.swing.JComboBox<String> tieneMotocicletaCombo;
     private javax.swing.JComboBox<String> tipoDocumentoCombo;
@@ -795,8 +902,31 @@ public class ClienteGUI extends javax.swing.JDialog {
          }else{
              
          }
-     } 
+     }
+     
+     
 
 
+     public Cliente mapearCliente(){
+     
+         
+        persona.setNombres(nombresTxt.getText().trim());
+        persona.setApellidos(apellidosTxt.getText().trim());
+        persona.setTelefono(telefonoTxt.getText().trim());
+        persona.setCelular(celularTxt.getText().trim());
+        persona.setTipoDocumento(tipoDocumentoCombo.getSelectedItem().toString());
+        persona.setNumeroDocumento(numeroDocumentoTxt.getText().trim());
+        persona.setDireccion(direccionTxt.getText().trim());
+        cliente.setPersona(persona);
+        cliente.setSexo(validaciones.validarEleccionGenero(jRadioButtonFemenino,
+                                                            jRadioButtonMasculino));
+        cliente.setFechaNacimiento(fechaNacimientoDate.getDate());
+        cliente.setBarrio(barrioTxt.getText());
+        cliente.setTieneMotocicleta(validaciones.validarTieneMotocicleta(
+                tieneMotocicletaCombo.getSelectedItem().toString().trim()));
+        cliente.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
+        return cliente;
+         
+     }
 
 }
