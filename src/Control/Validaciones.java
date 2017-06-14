@@ -517,7 +517,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
 
                     
                     
-                    public void limpiarCamposEmpleado(JTextField nombres,JTextField apellidos,
+        public void limpiarCamposEmpleado(JTextField nombres,JTextField apellidos,
                   JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
                   JTextField telefono, JTextField celular,
                   ButtonGroup buttonGroupGenero,JDateChooser fechaIngreso,
@@ -540,7 +540,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                         
                     
                     
-                    }
+         }
                     
                     
                     
@@ -614,6 +614,30 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                         barrio.setText(cliente.getBarrio().trim());
         
         }
+        
+        
+        public void limpiarCamposCliente(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular,ButtonGroup buttonGroupGenero,
+                  JDateChooser fechaNacimiento, JComboBox tieneMotocicleta,
+                  JTextField barrio){
+                        
+                        nombres.setText("");
+                        apellidos.setText("");
+                        numeroDocumento.setText("");
+                        direccion.setText("");
+                        telefono.setText("");
+                        celular.setText("");
+                        barrio.setText("");
+                        tipoDocumento.setSelectedItem("-- Select --");
+                        buttonGroupGenero.clearSelection();
+                        fechaNacimiento.setDate(null);
+                        tieneMotocicleta.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+                        
+                        
+                    
+                    
+         }    
         
         
         

@@ -37,6 +37,10 @@ public class FacadeCliente {
     public String modificarCliente(Cliente cliente) throws SQLException, ParseException{
        ClienteDAO clienteoDAO = new ClienteDAO();
        personaDAO.modificarPersona(cliente.getPersona());
+       if (validarRegistroMotocilieta(cliente.getMotocicleta().getLinea())) {
+            cliente.getMotocicleta().setCodCliente(cliente.getCodCliente());
+            motocicletaDAO.registrarMotocicleta(cliente.getMotocicleta());
+        }
        return clienteoDAO.modificarCliente(cliente);
    } 
       
@@ -48,10 +52,11 @@ public class FacadeCliente {
     
     public boolean validarRegistroMotocilieta(String campo){
     
-        if (campo.equals("") || campo == null) {
-           return false;
+        if (campo != null ) {
+        if (!campo.trim().equals("") )    
+           return true;
         }
-        return true;
+        return false;
     
     }
     

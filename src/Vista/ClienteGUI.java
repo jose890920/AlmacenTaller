@@ -10,6 +10,7 @@ import Control.TipoDocumentoDAO;
 import Control.Validaciones;
 import Facade.FacadeCliente;
 import Modelo.Cliente;
+import Modelo.Motocicleta;
 import Modelo.Persona;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -97,6 +98,7 @@ public class ClienteGUI extends javax.swing.JDialog {
         registrarBtn = new javax.swing.JButton();
         modificarBtn = new javax.swing.JButton();
         consultarBtn = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
 
@@ -469,6 +471,16 @@ public class ClienteGUI extends javax.swing.JDialog {
         });
         jPanel3.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 145, 55));
 
+        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
+        jButton3.setText("Limpiar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 145, 55));
+
         jTabbedPane1.addTab("Datos Complementarios", jPanel3);
 
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 610, 330));
@@ -721,6 +733,7 @@ public class ClienteGUI extends javax.swing.JDialog {
         }else{
                 System.out.println("entre "+flagModal);
                 flagModal = false;
+                cliente.setMotocicleta(new Motocicleta());
             }
       
     }//GEN-LAST:event_tieneMotocicletaComboActionPerformed
@@ -785,7 +798,8 @@ public class ClienteGUI extends javax.swing.JDialog {
             if (!validaciones.validarCampoVacio(numeroDocumentoTxt) &&
                 facadeCliente.consultarCliente(cliente) != null ) {
                 flagModal = true;
-                validaciones.mapearCliente(facadeCliente.consultarCliente(cliente), nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                cliente = facadeCliente.consultarCliente(cliente);
+                validaciones.mapearCliente(cliente, nombresTxt, apellidosTxt, tipoDocumentoCombo,
                 numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, jRadioButtonFemenino,
                 jRadioButtonMasculino, fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
                 registrarBtn.setEnabled(false);
@@ -805,6 +819,14 @@ public class ClienteGUI extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_consultarBtnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        validaciones.limpiarCamposCliente(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+        numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, buttonGroupGenero,
+        fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
+        modificarBtn.setEnabled(false);
+        registrarBtn.setEnabled(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -858,6 +880,7 @@ public class ClienteGUI extends javax.swing.JDialog {
     private javax.swing.JButton consultarBtn;
     private javax.swing.JTextField direccionTxt;
     private com.toedter.calendar.JDateChooser fechaNacimientoDate;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
