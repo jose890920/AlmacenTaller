@@ -8,9 +8,17 @@ package Vista;
 import Control.ConstantesAlmacenyTaller;
 import Control.TipoMotocicletaDAO;
 import Control.Validaciones;
+import Facade.FacadeCliente;
+import Facade.FacadeMotociccleta;
 import Modelo.Cliente;
+import Modelo.Empleado;
 import Modelo.Motocicleta;
+import Modelo.Persona;
 import java.awt.Color;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -24,6 +32,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     Validaciones validaciones = new Validaciones();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
     TipoMotocicletaDAO tipoMotocicletaDAO = new TipoMotocicletaDAO();
+    Persona persona = new Persona();
+    FacadeCliente facadeCliente = new FacadeCliente();
+    FacadeMotociccleta facadeMotociccleta = new FacadeMotociccleta();
     /**
      * Creates new form MotocicletaGUI
      */
@@ -34,8 +45,8 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         cliente.setMotocicleta(moto);
         validaciones.adicionarItems(tipoMotocicletaCombo,
         tipoMotocicletaDAO.consultarTiposMotocicleta());
-        
-        this.setTitle("Informacion Motocicleta");
+        registrarBtn.setEnabled(false);
+        this.setTitle("Gestion Motocicleta");
         this.setLocationRelativeTo(null);
         paisTxt.setText(constantes.CONSTANTE_PAIS_POR_DEFECTO);
         paisTxt.setEnabled(false);
@@ -51,111 +62,74 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        placaTxt = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        paisTxt = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
-        jRadioButtonOtro = new javax.swing.JRadioButton();
-        modeloTxt = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jLabel26 = new javax.swing.JLabel();
-        marcaCombo = new javax.swing.JComboBox<>();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
-        cilindrajeTxt = new javax.swing.JTextField();
-        lineaTxt = new javax.swing.JTextField();
-        jLabel29 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jButtonGuardarMotocicleta = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
         tipoMotocicletaCombo = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        modeloTxt = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        paisTxt = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        placaTxt = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        cilindrajeTxt = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        lineaTxt = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
+        marcaCombo = new javax.swing.JComboBox<>();
+        registrarBtn = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jRadioButtonOtro = new javax.swing.JRadioButton();
+        numeroDocumentoTxt = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        nombresTxt = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        consultarBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        mensajeLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        placaTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        placaTxt.setMaximumSize(new java.awt.Dimension(6, 10));
-        placaTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                placaTxtFocusGained(evt);
+        jTabbedPane1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tipoMotocicletaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        tipoMotocicletaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
+        tipoMotocicletaCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tipoMotocicletaComboItemStateChanged(evt);
             }
+        });
+        tipoMotocicletaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                placaTxtFocusLost(evt);
+                tipoMotocicletaComboFocusLost(evt);
             }
         });
-        placaTxt.addActionListener(new java.awt.event.ActionListener() {
+        tipoMotocicletaCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                placaTxtActionPerformed(evt);
+                tipoMotocicletaComboActionPerformed(evt);
             }
         });
-        placaTxt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                placaTxtKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                placaTxtKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                placaTxtKeyTyped(evt);
-            }
-        });
-        getContentPane().add(placaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 180, -1));
+        jPanel1.add(tipoMotocicletaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 180, -1));
 
-        jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel21.setText("Placa");
-        getContentPane().add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel10.setText("Tipo de Motocicleta");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel22.setText("*");
-        getContentPane().add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, 10));
-
-        paisTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        paisTxt.setMaximumSize(new java.awt.Dimension(6, 10));
-        paisTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                paisTxtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                paisTxtFocusLost(evt);
-            }
-        });
-        paisTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                paisTxtActionPerformed(evt);
-            }
-        });
-        paisTxt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                paisTxtKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                paisTxtKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                paisTxtKeyTyped(evt);
-            }
-        });
-        getContentPane().add(paisTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, -1));
-
-        jLabel23.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel23.setText("Pais");
-        getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
-
-        jRadioButtonOtro.setText("Otro?");
-        jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonOtroActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jRadioButtonOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, -1, -1));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel16.setText("*");
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, 10));
 
         modeloTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         modeloTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -183,49 +157,99 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 modeloTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, -1));
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel24.setText("*");
-        getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, -1, 10));
+        jPanel1.add(modeloTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, -1));
 
         jLabel25.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel25.setText("Modelo");
-        getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 0, 0));
         jLabel26.setText("*");
-        getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, -1, 10));
+        jPanel1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, 10));
 
-        marcaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        marcaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "AUTECO", "KAWASAKI", "YAMAHA", "SUZUKI", "KTM", "AKT", "HONDA", "HERO", "OTRA" }));
-        marcaCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                marcaComboItemStateChanged(evt);
+        paisTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        paisTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        paisTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paisTxtFocusGained(evt);
             }
-        });
-        marcaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                marcaComboFocusLost(evt);
+                paisTxtFocusLost(evt);
             }
         });
-        marcaCombo.addActionListener(new java.awt.event.ActionListener() {
+        paisTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                marcaComboActionPerformed(evt);
+                paisTxtActionPerformed(evt);
             }
         });
-        getContentPane().add(marcaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 180, -1));
+        paisTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paisTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                paisTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                paisTxtKeyTyped(evt);
+            }
+        });
+        jPanel1.add(paisTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 180, -1));
 
-        jLabel27.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel27.setText("Marca");
-        getContentPane().add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
+        jLabel23.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel23.setText("Pais");
+        jPanel1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel28.setText("*");
-        getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 140, -1, 10));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel22.setText("*");
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, 10));
+
+        placaTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        placaTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        placaTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                placaTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                placaTxtFocusLost(evt);
+            }
+        });
+        placaTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placaTxtActionPerformed(evt);
+            }
+        });
+        placaTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                placaTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                placaTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                placaTxtKeyTyped(evt);
+            }
+        });
+        jPanel1.add(placaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 180, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel21.setText("Placa");
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel24.setText("*");
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, -1, 10));
+
+        jLabel29.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel29.setText("Cilindraje");
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel30.setText("*");
+        jPanel1.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, -1, 10));
 
         cilindrajeTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         cilindrajeTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -253,7 +277,16 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 cilindrajeTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(cilindrajeTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 180, -1));
+        jPanel1.add(cilindrajeTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 180, -1));
+
+        jLabel31.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel31.setText("Linea");
+        jPanel1.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel32.setText("*");
+        jPanel1.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 140, -1, 10));
 
         lineaTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         lineaTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -281,25 +314,45 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 lineaTxtKeyTyped(evt);
             }
         });
-        getContentPane().add(lineaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 180, -1));
+        jPanel1.add(lineaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 180, -1));
 
-        jLabel29.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel29.setText("Cilindraje");
-        getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+        jLabel27.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel27.setText("Marca");
+        jPanel1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, -1, -1));
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel30.setText("*");
-        getContentPane().add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, 10));
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel28.setText("*");
+        jPanel1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 200, -1, 10));
 
-        jLabel31.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel31.setText("Linea");
-        getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
+        marcaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        marcaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "AUTECO", "KAWASAKI", "YAMAHA", "SUZUKI", "KTM", "AKT", "HONDA", "HERO", "OTRA" }));
+        marcaCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                marcaComboItemStateChanged(evt);
+            }
+        });
+        marcaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                marcaComboFocusLost(evt);
+            }
+        });
+        marcaCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                marcaComboActionPerformed(evt);
+            }
+        });
+        jPanel1.add(marcaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 180, -1));
 
-        jLabel32.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel32.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel32.setText("*");
-        getContentPane().add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, 10));
+        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        registrarBtn.setText("Guardar");
+        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 145, 55));
 
         jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"))); // NOI18N
@@ -309,50 +362,103 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 145, 55));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 145, 55));
+
+        jRadioButtonOtro.setText("Otro?");
+        jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonOtroActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jRadioButtonOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, -1, -1));
+
+        numeroDocumentoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        numeroDocumentoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        numeroDocumentoTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                numeroDocumentoTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                numeroDocumentoTxtFocusLost(evt);
+            }
+        });
+        numeroDocumentoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numeroDocumentoTxtActionPerformed(evt);
+            }
+        });
+        numeroDocumentoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                numeroDocumentoTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                numeroDocumentoTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                numeroDocumentoTxtKeyTyped(evt);
+            }
+        });
+        jPanel1.add(numeroDocumentoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 180, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel9.setText("Documento Propietario");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        nombresTxt.setEditable(false);
+        nombresTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        nombresTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        nombresTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                nombresTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                nombresTxtFocusLost(evt);
+            }
+        });
+        nombresTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombresTxtActionPerformed(evt);
+            }
+        });
+        nombresTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nombresTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                nombresTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nombresTxtKeyTyped(evt);
+            }
+        });
+        jPanel1.add(nombresTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 180, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel6.setText("Nombres");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+
+        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        consultarBtn.setText("Consultar");
+        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 145, 55));
+
+        jTabbedPane1.addTab("Datos de la Motocicleta", jPanel1);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 350));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/motocicleta.png"))); // NOI18N
         jLabel1.setText("Motocicleta");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
 
-        jButtonGuardarMotocicleta.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButtonGuardarMotocicleta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
-        jButtonGuardarMotocicleta.setText("Guardar");
-        jButtonGuardarMotocicleta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarMotocicletaActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonGuardarMotocicleta, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 145, 55));
-
-        tipoMotocicletaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        tipoMotocicletaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
-        tipoMotocicletaCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                tipoMotocicletaComboItemStateChanged(evt);
-            }
-        });
-        tipoMotocicletaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tipoMotocicletaComboFocusLost(evt);
-            }
-        });
-        tipoMotocicletaCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tipoMotocicletaComboActionPerformed(evt);
-            }
-        });
-        getContentPane().add(tipoMotocicletaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel10.setText("Tipo de Motocicleta");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, -1, -1));
-
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel16.setText("*");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 10));
+        mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 370, 350, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -528,18 +634,42 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonGuardarMotocicletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarMotocicletaActionPerformed
+    private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
         
-        if (mapeoMotocicleta()) {
-            validarSonido(mapeoMotocicleta());
+        
+        try {
+            cliente = new Cliente();
+            persona.setNumeroDocumento(numeroDocumentoTxt.getText());
+            cliente.setPersona(persona);
+            moto.setPlaca(placaTxt.getText());
+            if (validaciones.validarCamposMotocicleta(placaTxt, cilindrajeTxt,
+                paisTxt, lineaTxt, modeloTxt, marcaCombo,
+                tipoMotocicletaCombo).equals("") &&
+                facadeCliente.consultarCliente(cliente) != null &&
+                facadeMotociccleta.consultarMotocicleta(moto) == null) {
+                cliente = facadeCliente.consultarCliente(cliente);
+                facadeMotociccleta.registrarMotocicleta(mapeoMotocicleta(cliente));
+                    
         }else{
-           
-            mapeoMotocicleta();
-            dispose();
-        }
+                if (!validaciones.validarCamposMotocicleta(placaTxt, cilindrajeTxt,
+                paisTxt, lineaTxt, modeloTxt, marcaCombo,
+                tipoMotocicletaCombo).equals("")) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
+                }else if(facadeCliente.consultarCliente(cliente) == null){
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO);
+                }else if(facadeMotociccleta.consultarMotocicleta(moto) != null){
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EXISTE_PLACA);
+                }
+                
+                    
+    }
+            validaciones.notificarMensajeconTimer(mensajeLbl);
 
-           
-    }//GEN-LAST:event_jButtonGuardarMotocicletaActionPerformed
+    }   catch (SQLException | ParseException ex) {
+            Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+          
+    }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void tipoMotocicletaComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboItemStateChanged
         validarSonido(validaciones.validaCombo(tipoMotocicletaCombo));
@@ -553,34 +683,99 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tipoMotocicletaComboActionPerformed
 
+    private void numeroDocumentoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtFocusGained
+        validaciones.validarEnfoque(numeroDocumentoTxt);
+    }//GEN-LAST:event_numeroDocumentoTxtFocusGained
+
+    private void numeroDocumentoTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtFocusLost
+        validarSonido(validaciones.validarCampoVacio(numeroDocumentoTxt));
+    }//GEN-LAST:event_numeroDocumentoTxtFocusLost
+
+    private void numeroDocumentoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numeroDocumentoTxtActionPerformed
+
+    private void numeroDocumentoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numeroDocumentoTxtKeyPressed
+
+    private void numeroDocumentoTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numeroDocumentoTxtKeyReleased
+
+    private void numeroDocumentoTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoTxtKeyTyped
+        validarSonido(validaciones.validarSoloNumeros(evt, numeroDocumentoTxt));
+        validaciones.validarCantidadCaracteresTexto(evt, numeroDocumentoTxt,
+            constantes.CONSTANTE_CARACTERES_POR_LINEA);
+    }//GEN-LAST:event_numeroDocumentoTxtKeyTyped
+
+    private void nombresTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nombresTxtFocusGained
+
+       
+    }//GEN-LAST:event_nombresTxtFocusGained
+
+    private void nombresTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nombresTxtFocusLost
+
+       
+    }//GEN-LAST:event_nombresTxtFocusLost
+
+    private void nombresTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombresTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombresTxtActionPerformed
+
+    private void nombresTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresTxtKeyPressed
+
+    }//GEN-LAST:event_nombresTxtKeyPressed
+
+    private void nombresTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresTxtKeyReleased
+
+    }//GEN-LAST:event_nombresTxtKeyReleased
+
+    private void nombresTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nombresTxtKeyTyped
+
+        validarSonido(validaciones.validarSoloLetras(evt, nombresTxt));
+        validaciones.minusculaToMayuscula(evt);
+        validaciones.validarCantidadCaracteresTexto(evt, nombresTxt,
+            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+    }//GEN-LAST:event_nombresTxtKeyTyped
+
+    private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
+
+        try {
+
+            cliente = new Cliente();
+            persona = new Persona();
+            persona.setNumeroDocumento(numeroDocumentoTxt.getText());
+            cliente.setPersona(persona);
+            if (!validaciones.validarCampoVacio(numeroDocumentoTxt) &&
+                facadeCliente.consultarCliente(cliente) != null ) {
+                
+                cliente = facadeCliente.consultarCliente(cliente);
+                nombresTxt.setText(cliente.getPersona().getNombres().trim()+
+                        " "+cliente.getPersona().getApellidos().trim());
+                System.out.println("nombres"+cliente.getPersona().getNombres().trim()+
+                        " "+cliente.getPersona().getApellidos().trim());
+                registrarBtn.setEnabled(true);
+
+            }else{
+                if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
+                    registrarBtn.setEnabled(false);
+                    //modificarBtn.setEnabled(false);
+
+                }
+
+            }
+
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_consultarBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MotocicletaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MotocicletaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MotocicletaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MotocicletaGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
+ 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDialog.setDefaultLookAndFeelDecorated(true); 
@@ -599,8 +794,8 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cilindrajeTxt;
+    private javax.swing.JButton consultarBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButtonGuardarMotocicleta;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -616,12 +811,20 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButtonOtro;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField lineaTxt;
     private javax.swing.JComboBox<String> marcaCombo;
+    private javax.swing.JLabel mensajeLbl;
     private javax.swing.JTextField modeloTxt;
+    private javax.swing.JTextField nombresTxt;
+    private javax.swing.JTextField numeroDocumentoTxt;
     private javax.swing.JTextField paisTxt;
     private javax.swing.JTextField placaTxt;
+    private javax.swing.JButton registrarBtn;
     private javax.swing.JComboBox<String> tipoMotocicletaCombo;
     // End of variables declaration//GEN-END:variables
 
@@ -634,7 +837,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
          }
      } 
      
-     public boolean mapeoMotocicleta(){
+     public Motocicleta mapeoMotocicleta(Cliente cliente){
          if ((!placaTxt.getText().equals("") && placaTxt.getText() !=null) &&
              (!paisTxt.getText().equals("") && paisTxt.getText() !=null) &&
              (!modeloTxt.getText().equals("") && modeloTxt.getText() !=null) &&
@@ -644,7 +847,8 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                tipoMotocicletaCombo.getSelectedItem() !=null) &&   
              (!marcaCombo.getSelectedItem().toString().equals("") && 
                marcaCombo.getSelectedItem() !=null)) {
-             
+                    
+                    moto.setCodCliente(cliente.getCodCliente());
                     moto.setPlaca(placaTxt.getText());
                     moto.setPaisMatricula(paisTxt.getText());
                     moto.setModelo(modeloTxt.getText());
@@ -652,10 +856,10 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                     moto.setLinea(lineaTxt.getText());
                     moto.setMarca(marcaCombo.getSelectedItem().toString());
                     moto.setTipoMotocicleta(tipoMotocicletaCombo.getSelectedItem().toString());
-                    return false;
+                    return moto;
              
          }
-         return true;
+         return new Motocicleta();
      
      }
 

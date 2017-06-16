@@ -359,7 +359,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
             nombre.setText("");
             descripcion.setText("");
             valor.setText("");
-            cantidad.setText("");tipo.setSelectedItem("-- Select --");
+            cantidad.setText("");tipo.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
             fabricante.setText("");
             fecha.setDate(null);
             
@@ -408,9 +408,9 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                   JTextField otraCiudad){
               if (nombres.getText().trim().equals("") || nombres.getText()== null ||
                   apellidos.getText().trim().equals("") || apellidos.getText() == null ||
-                  tipoDocumento.getSelectedItem().equals("-- Select --")||
-                  estadoCivil.getSelectedItem().equals("-- Select --")||
-                  ciudad.getSelectedItem().equals("-- Select --")||
+                  tipoDocumento.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)||
+                  estadoCivil.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)||
+                  ciudad.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)||
                   numeroDocumento.getText().trim().equals("") || numeroDocumento.getText().trim() == null ||
                   direccion.getText().trim().equals("") || direccion.getText().trim() == null ||
                       (!femenino.isSelected() && !masculino.isSelected())||
@@ -531,12 +531,12 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                         telefono.setText("");
                         celular.setText("");
                         otraCiudad.setText("");
-                        tipoDocumento.setSelectedItem("-- Select --");
+                        tipoDocumento.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
                         buttonGroupGenero.clearSelection();
                         fechaIngreso.setDate(null);
                         fechaNacimiento.setDate(null);
-                        estadoCivil.setSelectedItem("-- Select --");
-                        ciudad.setSelectedItem("-- Select --");
+                        estadoCivil.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+                        ciudad.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
                         
                     
                     
@@ -639,7 +639,34 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                     
          }    
         
-        
+        public String validarCamposMotocicleta(JTextField placa,JTextField cilindraje,
+                  JTextField pais,JTextField linea,JTextField modelo,JComboBox marca,
+                  JComboBox tipoMotocicleta){
+                        
+                        if (placa.getText().equals("") || placa.getText() == null  ||
+                            cilindraje.getText().equals("") || 
+                            cilindraje.getText() == null ||
+                            cilindraje.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                            cilindraje.getText().equals(CONSTANTE_CAMPO_NUMERICO) ||
+                            pais.getText().equals("") || 
+                            pais.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                            pais.getText().equals(CONSTANTE_CAMPO_ALFABETICO) ||
+                            pais.getText() == null ||
+                            linea.getText().equals("") ||
+                            linea.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                            linea.getText().equals(CONSTANTE_CAMPO_ALFABETICO) ||
+                            linea.getText() == null ||
+                            marca.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO) ||
+                            tipoMotocicleta.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)) {
+                            
+                            return CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO;
+                            
+                        }
+                    
+                    return "";
+                    
+                    
+        }
         
         
         

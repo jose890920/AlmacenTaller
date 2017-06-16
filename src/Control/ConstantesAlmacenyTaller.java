@@ -27,6 +27,11 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO = "Validar Campos Obligatorios";
     public final String CONSTANTE_SELECCION_SI_POR_DEFECTO = "S";
     public final String CONSTANTE_SELECCION_NO_POR_DEFECTO = "N";
+    public final String CONSTANTE_CAMPO_OBLIGATORIO = "Campo Obligatorio";
+    public final String CONSTANTE_CAMPO_NUMERICO = "Solo se permiten Numeros";
+    public final String CONSTANTE_CAMPO_ALFABETICO = "Solo se permiten Letras";
+    public final String CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO = "No Existe Registro";
+    public final String CONSTANTE_MENSAJE_EXISTE_PLACA = "Ya existe esta placa";
     
     
 }

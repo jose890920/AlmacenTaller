@@ -723,7 +723,7 @@ public class ClienteGUI extends javax.swing.JDialog {
 
     private void tieneMotocicletaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tieneMotocicletaComboActionPerformed
         if (!flagModal) {
-            MotocicletaGUI motocicletaGUI = new MotocicletaGUI(null, true, cliente);
+            ModalMotocicletaGUI motocicletaGUI = new ModalMotocicletaGUI(null, true, cliente);
             if (tieneMotocicletaCombo.getSelectedItem().equals("SI")) {
                 //tieneMotocicletaCombo.setEnabled(false);
 

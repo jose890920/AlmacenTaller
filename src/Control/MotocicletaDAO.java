@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class MotocicletaDAO {
+public class MotocicletaDAO extends ConstantesAlmacenyTaller{
     
          SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -51,7 +51,7 @@ public class MotocicletaDAO {
         sentencia.gestionarRegistro(query);
     }
     
-    public void modificarMotocicleta(Motocicleta motocicleta) throws ParseException{
+    public String modificarMotocicleta(Motocicleta motocicleta) throws ParseException{
         
         motocicleta.setCodCliente(2);
         motocicleta.setPlaca("KPL15B");
@@ -74,7 +74,7 @@ public class MotocicletaDAO {
             + " tipo_motocilceta='"+motocicleta.getTipoMotocicleta()+"'" 
             + " WHERE cod_motocicleta = "+motocicleta.getCodMotocicleta()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -101,17 +101,22 @@ public class MotocicletaDAO {
          return mapearMotocicletas(resultset);
     }
     
-        public Motocicleta consultarMotocicletaCodMotocicleta(Integer codMotocicleta){
+        public Motocicleta consultarMotocicletaCodMotocicleta(String placa) throws SQLException{
             
             query =  "SELECT cod_motocicleta, cod_cliente_m, placa,"
                     + " pais_matricula, modelo, marca,"
                     + " cilindraje, linea, tipo_motocilceta, estado " 
-                    +" FROM motocicleta, cliente WHERE cod_motocicleta = "+codMotocicleta+""
-                    + " AND estado = 'Activo' "
+                    +" FROM motocicleta, cliente WHERE placa = '"+placa+"'"
+                    + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
                     + " ORDER BY cod_motocicleta ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
+            if (!resultset.next()) {
+                return null;
+            }
+            
+            resultset = sentencia.gestionarConsulta(query);
             return  mapearMotocicleta(resultset);
     }
         
