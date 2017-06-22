@@ -46,7 +46,7 @@ public class PersonaDAO {
     return persona.getCodPersona();
     }
     
-    public void modificarPersona(Persona persona){
+    public String modificarPersona(Persona persona){
         /*
                 persona.setNombres("juangui");
         persona.setApellidos("cuadradosqui");
@@ -65,7 +65,7 @@ public class PersonaDAO {
             + " numero_documento = '"+persona.getNumeroDocumento()+"' " 
             + " WHERE numero_documento = '"+persona.getNumeroDocumento()+"'";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -90,7 +90,7 @@ public class PersonaDAO {
          return mapearPersonas(resultset);
     }
     
-        public Persona consultarPersonaNumeroDocumento(String numeroDocumento){
+        public Persona consultarPersonaNumeroDocumento(String numeroDocumento) throws SQLException{
             query = "SELECT cod_persona, nombres, apellidos, direccion, telefono,"
             + " celular, correo, tipo_documento, numero_documento " +
               " FROM persona WHERE numero_documento = '"+numeroDocumento+"'"
@@ -98,6 +98,10 @@ public class PersonaDAO {
             
             resultset = sentencia.gestionarConsulta(query);
             
+            if (!resultset.next()) {
+                return null;
+            }
+            resultset = sentencia.gestionarConsulta(query);
             return  mapearPersona(resultset);
     }
         

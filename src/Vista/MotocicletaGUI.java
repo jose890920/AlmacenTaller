@@ -17,6 +17,8 @@ import Modelo.Persona;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -34,7 +36,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     TipoMotocicletaDAO tipoMotocicletaDAO = new TipoMotocicletaDAO();
     Persona persona = new Persona();
     FacadeCliente facadeCliente = new FacadeCliente();
-    FacadeMotociccleta facadeMotociccleta = new FacadeMotociccleta();
+    FacadeMotociccleta facadeMotocicleta = new FacadeMotociccleta();
+    int posicionMotocicleta = 0;
+    List<Motocicleta> listaMotocicleta = new ArrayList<Motocicleta>();
     /**
      * Creates new form MotocicletaGUI
      */
@@ -50,6 +54,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         paisTxt.setText(constantes.CONSTANTE_PAIS_POR_DEFECTO);
         paisTxt.setEnabled(false);
+        modificarBtn.setEnabled(false);
+        anteriorBtn.setVisible(false);
+        siguienteBtn.setVisible(false);
     }
 
 
@@ -86,13 +93,15 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         jLabel28 = new javax.swing.JLabel();
         marcaCombo = new javax.swing.JComboBox<>();
         registrarBtn = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jRadioButtonOtro = new javax.swing.JRadioButton();
         numeroDocumentoTxt = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         nombresTxt = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         consultarBtn = new javax.swing.JButton();
+        siguienteBtn = new javax.swing.JButton();
+        modificarBtn = new javax.swing.JButton();
+        anteriorBtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
 
@@ -346,23 +355,13 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
         registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
-        registrarBtn.setText("Guardar");
+        registrarBtn.setToolTipText("GUARDAR");
         registrarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 registrarBtnActionPerformed(evt);
             }
         });
         jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 145, 55));
-
-        jButton1.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"))); // NOI18N
-        jButton1.setText("Volver");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 145, 55));
 
         jRadioButtonOtro.setText("Otro?");
         jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
@@ -439,13 +438,41 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
         consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        consultarBtn.setText("Consultar");
+        consultarBtn.setToolTipText("CONSULTAR");
         consultarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 145, 55));
+        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 145, 55));
+
+        siguienteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente.png"))); // NOI18N
+        siguienteBtn.setToolTipText("SIGUIENTE");
+        siguienteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                siguienteBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(siguienteBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, -1, -1));
+
+        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        modificarBtn.setToolTipText("MODIFICAR");
+        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 145, 55));
+
+        anteriorBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anterior.png"))); // NOI18N
+        anteriorBtn.setToolTipText("ANTERIOR");
+        anteriorBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anteriorBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(anteriorBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
 
         jTabbedPane1.addTab("Datos de la Motocicleta", jPanel1);
 
@@ -630,10 +657,6 @@ public class MotocicletaGUI extends javax.swing.JDialog {
             constantes.CONSTANTE_TEXTO_POR_DEFECTO);
     }//GEN-LAST:event_lineaTxtKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
         
         
@@ -646,9 +669,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 paisTxt, lineaTxt, modeloTxt, marcaCombo,
                 tipoMotocicletaCombo).equals("") &&
                 facadeCliente.consultarCliente(cliente) != null &&
-                facadeMotociccleta.consultarMotocicleta(moto) == null) {
+                facadeMotocicleta.consultarMotocicleta(moto) == null) {
                 cliente = facadeCliente.consultarCliente(cliente);
-                facadeMotociccleta.registrarMotocicleta(mapeoMotocicleta(cliente));
+                facadeMotocicleta.registrarMotocicleta(mapeoMotocicleta(cliente));
                     
         }else{
                 if (!validaciones.validarCamposMotocicleta(placaTxt, cilindrajeTxt,
@@ -657,7 +680,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
                 }else if(facadeCliente.consultarCliente(cliente) == null){
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO);
-                }else if(facadeMotociccleta.consultarMotocicleta(moto) != null){
+                }else if(facadeMotocicleta.consultarMotocicleta(moto) != null){
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EXISTE_PLACA);
                 }
                 
@@ -755,7 +778,27 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                         " "+cliente.getPersona().getApellidos().trim());
                 System.out.println("nombres"+cliente.getPersona().getNombres().trim()+
                         " "+cliente.getPersona().getApellidos().trim());
-                registrarBtn.setEnabled(true);
+                
+                    listaMotocicleta = facadeMotocicleta.consultarMotocicletasPorCliente(
+                    numeroDocumentoTxt.getText());
+                if(listaMotocicleta != null){
+                    posicionMotocicleta = 0;
+                    validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+                    moto.setCodMotocicleta(listaMotocicleta.get(posicionMotocicleta).getCodMotocicleta());
+                    registrarBtn.setEnabled(false);
+                    modificarBtn.setEnabled(true);
+                    if(listaMotocicleta.size() > 1){
+                        anteriorBtn.setVisible(true);
+                        siguienteBtn.setVisible(true);
+                    }else{
+                        anteriorBtn.setVisible(false);
+                        siguienteBtn.setVisible(false);                    
+                    }
+                }else{
+                    registrarBtn.setEnabled(true);
+                }
+                
 
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
@@ -770,6 +813,43 @@ public class MotocicletaGUI extends javax.swing.JDialog {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_consultarBtnActionPerformed
+
+    private void siguienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteBtnActionPerformed
+        if (!listaMotocicleta.isEmpty() && listaMotocicleta.size() > posicionMotocicleta+1) {
+
+            posicionMotocicleta++;
+            validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+        }
+    }//GEN-LAST:event_siguienteBtnActionPerformed
+
+    private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
+        try {
+
+            if (validaciones.validarCamposMotocicleta(placaTxt, cilindrajeTxt, paisTxt, lineaTxt,
+                modeloTxt, marcaCombo, tipoMotocicletaCombo).equals("")){
+            mensajeLbl.setText(facadeMotocicleta.modificarMotocicleta(mapeoMotocicleta(cliente)));
+
+        }else{
+
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
+        }
+
+        validaciones.notificarMensajeconTimer(mensajeLbl);
+
+        } catch (SQLException | ParseException ex) {
+            Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_modificarBtnActionPerformed
+
+    private void anteriorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anteriorBtnActionPerformed
+        if (!listaMotocicleta.isEmpty() && posicionMotocicleta > 0) {
+
+            posicionMotocicleta--;
+            validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+        }
+    }//GEN-LAST:event_anteriorBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -793,9 +873,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton anteriorBtn;
     private javax.swing.JTextField cilindrajeTxt;
     private javax.swing.JButton consultarBtn;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;
@@ -820,11 +900,13 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> marcaCombo;
     private javax.swing.JLabel mensajeLbl;
     private javax.swing.JTextField modeloTxt;
+    private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField nombresTxt;
     private javax.swing.JTextField numeroDocumentoTxt;
     private javax.swing.JTextField paisTxt;
     private javax.swing.JTextField placaTxt;
     private javax.swing.JButton registrarBtn;
+    private javax.swing.JButton siguienteBtn;
     private javax.swing.JComboBox<String> tipoMotocicletaCombo;
     // End of variables declaration//GEN-END:variables
 

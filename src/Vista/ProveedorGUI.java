@@ -8,15 +8,15 @@ package Vista;
 import Control.ConstantesAlmacenyTaller;
 import Control.TipoDocumentoDAO;
 import Control.Validaciones;
-import Facade.FacadeEmpleado;
-import Modelo.Empleado;
+import Facade.FacadePersona;
+import Facade.FacadeProveedor;
 import Modelo.Persona;
+import Modelo.Proveedor;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
 import javax.swing.JDialog;
 import static javax.swing.JDialog.setDefaultLookAndFeelDecorated;
 import javax.swing.JFrame;
@@ -26,31 +26,30 @@ import org.jvnet.substance.SubstanceLookAndFeel;
  *
  * @author jose luis Rodriguez
  */
-public class EmpleadoGUI extends javax.swing.JDialog {
+public class ProveedorGUI extends javax.swing.JDialog {
     
     Validaciones validaciones = new Validaciones();
     TipoDocumentoDAO tipoDocumentoDAO = new TipoDocumentoDAO();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
-    FacadeEmpleado facadeEmpleado = new FacadeEmpleado();
-    Empleado empleado = new Empleado();
+    FacadeProveedor facadeProveedor = new FacadeProveedor();
+    FacadePersona facadePersona = new FacadePersona();
+    Proveedor proveedor = new Proveedor();
     Persona persona = new Persona();
     
     /**
      * Creates new form EmpleadoGUI
      */
-    public EmpleadoGUI(java.awt.Frame parent, boolean modal) {
+    public ProveedorGUI(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         validaciones.adicionarItems(tipoDocumentoCombo,
         tipoDocumentoDAO.consultarTiposDocumento());
         this.setTitle("Gestion Empleados");
-        this.setLocationRelativeTo(null);
-        cualLbl.setVisible(false);
-        ciudadEmpleadoTxt.setVisible(false);
-        buttonGroupGenero.add(jRadioButtonFemenino);
-        buttonGroupGenero.add(jRadioButtonMasculino);
-        registrarBtn.setEnabled(false);
+        this.setLocationRelativeTo(null);        
+        registrarBtn.setEnabled(true);
         modificarBtn.setEnabled(false);
+        paisTxt.setText(constantes.CONSTANTE_PAIS_POR_DEFECTO);
+        paisTxt.setEnabled(false);
     }
 
     /**
@@ -85,26 +84,25 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        fechaNacimientoDate = new com.toedter.calendar.JDateChooser();
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        estadoCivilCombo = new javax.swing.JComboBox<>();
-        fechaIngresoDate = new com.toedter.calendar.JDateChooser();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        ciudadCombo = new javax.swing.JComboBox<>();
-        cualLbl = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        ciudadEmpleadoTxt = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        jRadioButtonFemenino = new javax.swing.JRadioButton();
-        jRadioButtonMasculino = new javax.swing.JRadioButton();
         registrarBtn = new javax.swing.JButton();
         consultarBtn = new javax.swing.JButton();
         modificarBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        razonSocialTxt = new javax.swing.JTextField();
+        telefonoEmpresaTxt = new javax.swing.JTextField();
+        faxTxt = new javax.swing.JTextField();
+        correoComercialTxt = new javax.swing.JTextField();
+        paisTxt = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jRadioButtonOtro = new javax.swing.JRadioButton();
+        paginaWebTxt = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
 
@@ -164,7 +162,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         jLabel7.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel7.setText("Dirección");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 0, 0));
@@ -201,7 +199,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         jLabel8.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel8.setText("Celular");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, -1, -1));
 
         apellidosTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         apellidosTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -257,7 +255,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 direccionTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(direccionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 180, -1));
+        jPanel1.add(direccionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 180, -1));
 
         tipoDocumentoCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         tipoDocumentoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
@@ -276,7 +274,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 tipoDocumentoComboActionPerformed(evt);
             }
         });
-        jPanel1.add(tipoDocumentoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 180, -1));
+        jPanel1.add(tipoDocumentoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 180, -1));
 
         jLabel9.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel9.setText("Numero de Documento");
@@ -285,7 +283,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 0, 0));
         jLabel16.setText("*");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 50, -1, 10));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, 10));
 
         numeroDocumentoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         numeroDocumentoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -341,11 +339,11 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 celularTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(celularTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 180, -1));
+        jPanel1.add(celularTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 180, -1));
 
         jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel10.setText("Tipo de Documento");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel11.setText("Telefono");
@@ -354,126 +352,28 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 0, 0));
         jLabel17.setText("*");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, 10));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, 10));
 
-        jTabbedPane1.addTab("Información Personal", jPanel1);
+        jTabbedPane1.addTab("Información Representante Legal", jPanel1);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(fechaNacimientoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, 24));
 
         jLabel18.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel18.setText("Fecha de Ingreso");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
+        jLabel18.setText("Razon Social");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 0, 0));
         jLabel19.setText("*");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, 10));
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, 10));
 
         jLabel20.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel20.setText("Estado Civil");
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, -1, -1));
-
-        estadoCivilCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        estadoCivilCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "SOLTERO", "CASADO", "UNION LIBRE" }));
-        estadoCivilCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                estadoCivilComboItemStateChanged(evt);
-            }
-        });
-        estadoCivilCombo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                estadoCivilComboFocusLost(evt);
-            }
-        });
-        estadoCivilCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estadoCivilComboActionPerformed(evt);
-            }
-        });
-        jPanel2.add(estadoCivilCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 180, -1));
-        jPanel2.add(fechaIngresoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 180, 24));
-
-        jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel21.setText("Fecha de Nacimiento");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
-
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel22.setText("*");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, 10));
-
-        ciudadCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        ciudadCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "BOGOTA", "MEDELLIN", "CALI", "BARRANQUILLA", "CARTAGENA DE INDIAS", "SOLEDAD", "CUCUTA", "IBAGUE", "SOACHA", "BUCARAMANGA", "OTRA" }));
-        ciudadCombo.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                ciudadComboItemStateChanged(evt);
-            }
-        });
-        ciudadCombo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ciudadComboFocusLost(evt);
-            }
-        });
-        ciudadCombo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ciudadComboActionPerformed(evt);
-            }
-        });
-        jPanel2.add(ciudadCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 180, -1));
-
-        cualLbl.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        cualLbl.setText("Cual?");
-        jPanel2.add(cualLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, -1, -1));
-
-        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel24.setText("*");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, 10));
-
-        ciudadEmpleadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        ciudadEmpleadoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
-        ciudadEmpleadoTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                ciudadEmpleadoTxtFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                ciudadEmpleadoTxtFocusLost(evt);
-            }
-        });
-        ciudadEmpleadoTxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ciudadEmpleadoTxtActionPerformed(evt);
-            }
-        });
-        ciudadEmpleadoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                ciudadEmpleadoTxtKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                ciudadEmpleadoTxtKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                ciudadEmpleadoTxtKeyTyped(evt);
-            }
-        });
-        jPanel2.add(ciudadEmpleadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 180, -1));
-
-        jLabel25.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel25.setText("Genero");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+        jLabel20.setText("Correo Comercial");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel26.setText("Ciudad");
-        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
-
-        jRadioButtonFemenino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jRadioButtonFemenino.setText("Femenino");
-        jPanel2.add(jRadioButtonFemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
-
-        jRadioButtonMasculino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jRadioButtonMasculino.setText("Masculino");
-        jPanel2.add(jRadioButtonMasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
+        jLabel26.setText("Telefono Empresa");
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
@@ -483,7 +383,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 registrarBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 145, 55));
+        jPanel2.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 145, 55));
 
         consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
@@ -493,7 +393,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 consultarBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, 145, 55));
+        jPanel2.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 145, 55));
 
         modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
@@ -503,7 +403,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 modificarBtnActionPerformed(evt);
             }
         });
-        jPanel2.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 145, 55));
+        jPanel2.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 145, 55));
 
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
@@ -513,18 +413,211 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, 145, 55));
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 145, 55));
+
+        razonSocialTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        razonSocialTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        razonSocialTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                razonSocialTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                razonSocialTxtFocusLost(evt);
+            }
+        });
+        razonSocialTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                razonSocialTxtActionPerformed(evt);
+            }
+        });
+        razonSocialTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                razonSocialTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                razonSocialTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                razonSocialTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(razonSocialTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 180, -1));
+
+        telefonoEmpresaTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        telefonoEmpresaTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        telefonoEmpresaTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                telefonoEmpresaTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                telefonoEmpresaTxtFocusLost(evt);
+            }
+        });
+        telefonoEmpresaTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                telefonoEmpresaTxtActionPerformed(evt);
+            }
+        });
+        telefonoEmpresaTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                telefonoEmpresaTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                telefonoEmpresaTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                telefonoEmpresaTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(telefonoEmpresaTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 180, -1));
+
+        faxTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        faxTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        faxTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                faxTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                faxTxtFocusLost(evt);
+            }
+        });
+        faxTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                faxTxtActionPerformed(evt);
+            }
+        });
+        faxTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                faxTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                faxTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                faxTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(faxTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 180, -1));
+
+        correoComercialTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        correoComercialTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        correoComercialTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                correoComercialTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                correoComercialTxtFocusLost(evt);
+            }
+        });
+        correoComercialTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                correoComercialTxtActionPerformed(evt);
+            }
+        });
+        correoComercialTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                correoComercialTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                correoComercialTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                correoComercialTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(correoComercialTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 180, -1));
+
+        paisTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        paisTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        paisTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paisTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paisTxtFocusLost(evt);
+            }
+        });
+        paisTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paisTxtActionPerformed(evt);
+            }
+        });
+        paisTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paisTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                paisTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                paisTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(paisTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 180, -1));
+
+        jLabel23.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel23.setText("Pais");
+        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel22.setText("*");
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, -1, 10));
+
+        jRadioButtonOtro.setText("Otro?");
+        jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonOtroActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jRadioButtonOtro, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 60, -1, -1));
+
+        paginaWebTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        paginaWebTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        paginaWebTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                paginaWebTxtFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                paginaWebTxtFocusLost(evt);
+            }
+        });
+        paginaWebTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                paginaWebTxtActionPerformed(evt);
+            }
+        });
+        paginaWebTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                paginaWebTxtKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                paginaWebTxtKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                paginaWebTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(paginaWebTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, 180, -1));
+
+        jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel21.setText("Fax");
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel24.setText("Pagina Web");
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
 
         jTabbedPane1.addTab("Información Laboral", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 600, 350));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 680, 350));
 
         jLabel12.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empleados.png"))); // NOI18N
-        jLabel12.setText("Empleados");
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Proveedores.png"))); // NOI18N
+        jLabel12.setText("Proveedores");
         jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 270, 80));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 350, 310, 80));
 
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -714,92 +807,33 @@ public class EmpleadoGUI extends javax.swing.JDialog {
             constantes.CONSTANTE_VALOR_POR_DEFECTO);
     }//GEN-LAST:event_celularTxtKeyTyped
 
-    private void estadoCivilComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_estadoCivilComboItemStateChanged
-        validarSonido(validaciones.validaCombo(estadoCivilCombo));
-    }//GEN-LAST:event_estadoCivilComboItemStateChanged
-
-    private void estadoCivilComboFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_estadoCivilComboFocusLost
-        validarSonido(validaciones.validaCombo(estadoCivilCombo));
-    }//GEN-LAST:event_estadoCivilComboFocusLost
-
-    private void estadoCivilComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estadoCivilComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estadoCivilComboActionPerformed
-
-    private void ciudadComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ciudadComboItemStateChanged
-        validarSonido(validaciones.validaCombo(ciudadCombo));
-        validaciones.ocultarCampo(ciudadEmpleadoTxt, ciudadCombo, cualLbl);
-    }//GEN-LAST:event_ciudadComboItemStateChanged
-
-    private void ciudadComboFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ciudadComboFocusLost
-        validarSonido(validaciones.validaCombo(ciudadCombo));
-    }//GEN-LAST:event_ciudadComboFocusLost
-
-    private void ciudadComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ciudadComboActionPerformed
-
-    private void ciudadEmpleadoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtFocusGained
-
-        validaciones.validarEnfoque(ciudadEmpleadoTxt);
-    }//GEN-LAST:event_ciudadEmpleadoTxtFocusGained
-
-    private void ciudadEmpleadoTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtFocusLost
-
-        validarSonido(validaciones.validarCampoVacio(ciudadEmpleadoTxt));
-    }//GEN-LAST:event_ciudadEmpleadoTxtFocusLost
-
-    private void ciudadEmpleadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ciudadEmpleadoTxtActionPerformed
-
-    private void ciudadEmpleadoTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtKeyPressed
-
-    }//GEN-LAST:event_ciudadEmpleadoTxtKeyPressed
-
-    private void ciudadEmpleadoTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtKeyReleased
-
-    }//GEN-LAST:event_ciudadEmpleadoTxtKeyReleased
-
-    private void ciudadEmpleadoTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ciudadEmpleadoTxtKeyTyped
-
-        validarSonido(validaciones.validarSoloLetras(evt, ciudadEmpleadoTxt));
-        validaciones.minusculaToMayuscula(evt);
-        validaciones.validarCantidadCaracteresTexto(evt, ciudadEmpleadoTxt,
-            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
-    }//GEN-LAST:event_ciudadEmpleadoTxtKeyTyped
-
     private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
 
         try {
-            empleado = new Empleado();
+            proveedor = new Proveedor();
             persona = new Persona();
             persona.setNumeroDocumento(numeroDocumentoTxt.getText());
-            empleado.setPersona(persona);
+            proveedor.setPersona(persona);
             
-            if (validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
-                    numeroDocumentoTxt, direccionTxt, jRadioButtonFemenino, jRadioButtonMasculino,
-                    fechaIngresoDate, fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                    ciudadEmpleadoTxt).equals("") && facadeEmpleado.consultarEmpleado(empleado) == null) {
+        if (validaciones.validarCamposProveedor(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                numeroDocumentoTxt, direccionTxt, razonSocialTxt, paisTxt).equals("") && 
+                facadePersona.consultarPersona(persona) == null) {
 
-                    facadeEmpleado.registrarEmpleado(mapearEmpleado());
+                    facadeProveedor.registrarProveedor(mapearProveedor());
                     
-        }else{mensajeLbl.setText(validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt,
-                                 tipoDocumentoCombo,numeroDocumentoTxt, direccionTxt,
-                                 jRadioButtonFemenino, jRadioButtonMasculino,fechaIngresoDate,
-                                 fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                                 ciudadEmpleadoTxt));
+        }else{
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
                     
     }
             validaciones.notificarMensajeconTimer(mensajeLbl);
 
     }   catch (SQLException | ParseException ex) {
-            Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProveedorGUI.class.getName()).log(Level.SEVERE, null, ex);
         } 
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
-         
+         /*
         try {
            
             empleado = new Empleado();
@@ -824,13 +858,14 @@ public class EmpleadoGUI extends javax.swing.JDialog {
             }
 
         } catch (SQLException | ParseException ex) {
-            Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProveedorGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+       */
         
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
+      /*
         try {
             
                         if (validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
@@ -852,10 +887,11 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
     }//GEN-LAST:event_modificarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       /*
         validaciones.limpiarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
                                            numeroDocumentoTxt, direccionTxt, telefonoTxt,
                                            celularTxt, buttonGroupGenero, fechaIngresoDate,
@@ -863,7 +899,190 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                                            ciudadEmpleadoTxt);
         modificarBtn.setEnabled(false);
         registrarBtn.setEnabled(true);
+        */
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void razonSocialTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_razonSocialTxtFocusGained
+
+        validaciones.validarEnfoque(razonSocialTxt);
+    }//GEN-LAST:event_razonSocialTxtFocusGained
+
+    private void razonSocialTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_razonSocialTxtFocusLost
+
+        validarSonido(validaciones.validarCampoVacio(razonSocialTxt));
+    }//GEN-LAST:event_razonSocialTxtFocusLost
+
+    private void razonSocialTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_razonSocialTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_razonSocialTxtActionPerformed
+
+    private void razonSocialTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_razonSocialTxtKeyPressed
+
+    }//GEN-LAST:event_razonSocialTxtKeyPressed
+
+    private void razonSocialTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_razonSocialTxtKeyReleased
+
+    }//GEN-LAST:event_razonSocialTxtKeyReleased
+
+    private void razonSocialTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_razonSocialTxtKeyTyped
+
+        validarSonido(validaciones.validarSoloLetras(evt, razonSocialTxt));
+        validaciones.minusculaToMayuscula(evt);
+        validaciones.validarCantidadCaracteresTexto(evt, razonSocialTxt,
+            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+    }//GEN-LAST:event_razonSocialTxtKeyTyped
+
+    private void telefonoEmpresaTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtFocusGained
+        validaciones.validarEnfoque(telefonoEmpresaTxt);
+    }//GEN-LAST:event_telefonoEmpresaTxtFocusGained
+
+    private void telefonoEmpresaTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtFocusLost
+        validarSonido(validaciones.validarCampoVacio(telefonoEmpresaTxt));
+    }//GEN-LAST:event_telefonoEmpresaTxtFocusLost
+
+    private void telefonoEmpresaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_telefonoEmpresaTxtActionPerformed
+
+    private void telefonoEmpresaTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_telefonoEmpresaTxtKeyPressed
+
+    private void telefonoEmpresaTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_telefonoEmpresaTxtKeyReleased
+
+    private void telefonoEmpresaTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_telefonoEmpresaTxtKeyTyped
+        validarSonido(validaciones.validarSoloNumeros(evt, telefonoEmpresaTxt));
+        validaciones.validarCantidadCaracteresTexto(evt, telefonoEmpresaTxt,
+            constantes.CONSTANTE_NUMEROS_TELEFONICOS);
+    }//GEN-LAST:event_telefonoEmpresaTxtKeyTyped
+
+    private void faxTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_faxTxtFocusGained
+        validaciones.validarEnfoque(faxTxt);
+    }//GEN-LAST:event_faxTxtFocusGained
+
+    private void faxTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_faxTxtFocusLost
+        validarSonido(validaciones.validarCampoVacio(faxTxt));
+    }//GEN-LAST:event_faxTxtFocusLost
+
+    private void faxTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faxTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faxTxtActionPerformed
+
+    private void faxTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_faxTxtKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faxTxtKeyPressed
+
+    private void faxTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_faxTxtKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_faxTxtKeyReleased
+
+    private void faxTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_faxTxtKeyTyped
+        validarSonido(validaciones.validarSoloNumeros(evt, faxTxt));
+        validaciones.validarCantidadCaracteresTexto(evt, faxTxt,
+            constantes.CONSTANTE_NUMEROS_TELEFONICOS);
+    }//GEN-LAST:event_faxTxtKeyTyped
+
+    private void correoComercialTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoComercialTxtFocusGained
+
+        validaciones.validarEnfoque(correoComercialTxt);
+    }//GEN-LAST:event_correoComercialTxtFocusGained
+
+    private void correoComercialTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoComercialTxtFocusLost
+
+        validarSonido(validaciones.validarCampoVacio(correoComercialTxt));
+    }//GEN-LAST:event_correoComercialTxtFocusLost
+
+    private void correoComercialTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoComercialTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_correoComercialTxtActionPerformed
+
+    private void correoComercialTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correoComercialTxtKeyPressed
+
+    }//GEN-LAST:event_correoComercialTxtKeyPressed
+
+    private void correoComercialTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correoComercialTxtKeyReleased
+
+    }//GEN-LAST:event_correoComercialTxtKeyReleased
+
+    private void correoComercialTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_correoComercialTxtKeyTyped
+
+        validaciones.minusculaToMayuscula(evt);
+        validaciones.validarCantidadCaracteresTexto(evt, correoComercialTxt,
+            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+    }//GEN-LAST:event_correoComercialTxtKeyTyped
+
+    private void paisTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paisTxtFocusGained
+
+        validaciones.validarEnfoque(paisTxt);
+    }//GEN-LAST:event_paisTxtFocusGained
+
+    private void paisTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paisTxtFocusLost
+
+        validarSonido(validaciones.validarCampoVacio(paisTxt));
+    }//GEN-LAST:event_paisTxtFocusLost
+
+    private void paisTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paisTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paisTxtActionPerformed
+
+    private void paisTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paisTxtKeyPressed
+
+    }//GEN-LAST:event_paisTxtKeyPressed
+
+    private void paisTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paisTxtKeyReleased
+
+    }//GEN-LAST:event_paisTxtKeyReleased
+
+    private void paisTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paisTxtKeyTyped
+
+        validarSonido(validaciones.validarSoloLetras(evt, paisTxt));
+        validaciones.minusculaToMayuscula(evt);
+        validaciones.validarCantidadCaracteresTexto(evt, paisTxt,
+            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+    }//GEN-LAST:event_paisTxtKeyTyped
+
+    private void jRadioButtonOtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonOtroActionPerformed
+        if (jRadioButtonOtro.isSelected()) {
+            paisTxt.setEnabled(true);
+            paisTxt.setText("");
+            paisTxt.setBackground(Color.white);
+        }else{
+            paisTxt.setEnabled(false);
+            paisTxt.setText(validaciones.CONSTANTE_PAIS_POR_DEFECTO);
+        }
+
+    }//GEN-LAST:event_jRadioButtonOtroActionPerformed
+
+    private void paginaWebTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paginaWebTxtFocusGained
+
+        validaciones.validarEnfoque(paginaWebTxt);
+    }//GEN-LAST:event_paginaWebTxtFocusGained
+
+    private void paginaWebTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paginaWebTxtFocusLost
+
+        validarSonido(validaciones.validarCampoVacio(paginaWebTxt));
+    }//GEN-LAST:event_paginaWebTxtFocusLost
+
+    private void paginaWebTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paginaWebTxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_paginaWebTxtActionPerformed
+
+    private void paginaWebTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paginaWebTxtKeyPressed
+
+    }//GEN-LAST:event_paginaWebTxtKeyPressed
+
+    private void paginaWebTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paginaWebTxtKeyReleased
+
+    }//GEN-LAST:event_paginaWebTxtKeyReleased
+
+    private void paginaWebTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_paginaWebTxtKeyTyped
+
+        validaciones.minusculaToMayuscula(evt);
+        validaciones.validarCantidadCaracteresTexto(evt, paginaWebTxt,
+            constantes.CONSTANTE_TEXTO_POR_DEFECTO);
+    }//GEN-LAST:event_paginaWebTxtKeyTyped
 
     /**
      * @param args the command line arguments
@@ -882,14 +1101,15 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EmpleadoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EmpleadoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EmpleadoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EmpleadoGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ProveedorGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -897,7 +1117,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
             public void run() {
                 JDialog.setDefaultLookAndFeelDecorated(true); 
                 SubstanceLookAndFeel.setSkin("org.jvnet.substance.skin.BusinessBlackSteelSkin");
-                EmpleadoGUI dialog = new EmpleadoGUI(new javax.swing.JFrame(), true);
+                ProveedorGUI dialog = new ProveedorGUI(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -924,14 +1144,10 @@ public class EmpleadoGUI extends javax.swing.JDialog {
     private javax.swing.JTextField apellidosTxt;
     private javax.swing.ButtonGroup buttonGroupGenero;
     private javax.swing.JTextField celularTxt;
-    private javax.swing.JComboBox<String> ciudadCombo;
-    private javax.swing.JTextField ciudadEmpleadoTxt;
     private javax.swing.JButton consultarBtn;
-    private javax.swing.JLabel cualLbl;
+    private javax.swing.JTextField correoComercialTxt;
     private javax.swing.JTextField direccionTxt;
-    private javax.swing.JComboBox<String> estadoCivilCombo;
-    private com.toedter.calendar.JDateChooser fechaIngresoDate;
-    private com.toedter.calendar.JDateChooser fechaNacimientoDate;
+    private javax.swing.JTextField faxTxt;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -946,8 +1162,8 @@ public class EmpleadoGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -956,19 +1172,22 @@ public class EmpleadoGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButtonFemenino;
-    private javax.swing.JRadioButton jRadioButtonMasculino;
+    private javax.swing.JRadioButton jRadioButtonOtro;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel mensajeLbl;
     private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField nombresTxt;
     private javax.swing.JTextField numeroDocumentoTxt;
+    private javax.swing.JTextField paginaWebTxt;
+    private javax.swing.JTextField paisTxt;
+    private javax.swing.JTextField razonSocialTxt;
     private javax.swing.JButton registrarBtn;
+    private javax.swing.JTextField telefonoEmpresaTxt;
     private javax.swing.JTextField telefonoTxt;
     private javax.swing.JComboBox<String> tipoDocumentoCombo;
     // End of variables declaration//GEN-END:variables
 
-    private Empleado mapearEmpleado() {
+    private Proveedor mapearProveedor() {
         
         persona.setNombres(nombresTxt.getText().trim());
         persona.setApellidos(apellidosTxt.getText().trim());
@@ -977,16 +1196,18 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         persona.setTipoDocumento(tipoDocumentoCombo.getSelectedItem().toString());
         persona.setNumeroDocumento(numeroDocumentoTxt.getText().trim());
         persona.setDireccion(direccionTxt.getText().trim());
-        empleado.setPersona(persona);
-        empleado.setSexo(validaciones.validarEleccionGenero(jRadioButtonFemenino,
-                                                            jRadioButtonMasculino));
-        empleado.setFechaIngreso(fechaIngresoDate.getDate());
-        empleado.setFechaNacimiento(fechaNacimientoDate.getDate());
-        empleado.setCiudad(validaciones.obtenerCiudadEmpleado(ciudadEmpleadoTxt, ciudadCombo));
-        empleado.setEstadoCivil(estadoCivilCombo.getSelectedItem().toString());
-        empleado.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
+        proveedor.setPersona(persona);
+        proveedor.setEmailComercial(correoComercialTxt.getText());
+        proveedor.setFax(faxTxt.getText());
+        proveedor.setPaginaWeb(paginaWebTxt.getText());
+        proveedor.setPais(paisTxt.getText());
+        proveedor.setRazonSocial(razonSocialTxt.getText());
+        proveedor.setTelefonoEmpresa(telefonoEmpresaTxt.getText());
+        proveedor.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
         
-        return empleado;
+
+        
+        return proveedor;
         
         
     }

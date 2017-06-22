@@ -8,6 +8,7 @@ package Control;
 
 import Modelo.Cliente;
 import Modelo.Empleado;
+import Modelo.Motocicleta;
 import Modelo.Persona;
 import Modelo.Producto;
 import com.toedter.calendar.JDateChooser;
@@ -401,7 +402,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
           }
           
           
-                    public String validarCamposEmpleado(JTextField nombres,JTextField apellidos,
+        public String validarCamposEmpleado(JTextField nombres,JTextField apellidos,
                   JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
                   JRadioButton femenino,JRadioButton masculino,JDateChooser fechaIngreso,
                   JDateChooser fechaNacimiento, JComboBox estadoCivil, JComboBox ciudad,
@@ -668,6 +669,55 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                     
         }
         
+        
+        
+         public void mapearMotocicleta(Motocicleta motocicleta, JTextField placa, JTextField pais,
+                                             JTextField modelo, JTextField cilindraje, JTextField linea,
+                                             JComboBox tipoMotocicleta, JComboBox marca){
+         if (true) {
+                    
+                    pais.setText(motocicleta.getPaisMatricula().trim());
+                    placa.setText(motocicleta.getPlaca().trim());
+                    modelo.setText(motocicleta.getModelo().trim());
+                    cilindraje.setText(motocicleta.getCilindraje().trim());
+                    linea.setText(motocicleta.getLinea().trim());
+                    tipoMotocicleta.setSelectedItem(motocicleta.getTipoMotocicleta().trim());
+                    marca.setSelectedItem(motocicleta.getMarca().trim());
+
+             
+         }
+         
+     
+        }
+         
+         
+         
+        public String validarCamposProveedor(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField razonSocial, JTextField pais){
+              if (nombres.getText().trim().equals("") || nombres.getText()== null ||
+                  nombres.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                  nombres.getText().trim().equals(CONSTANTE_CAMPO_ALFABETICO) ||                      
+                  apellidos.getText().trim().equals("") || apellidos.getText() == null ||
+                  apellidos.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                  apellidos.getText().trim().equals(CONSTANTE_CAMPO_ALFABETICO) ||                       
+                  tipoDocumento.getSelectedItem().equals(CONSTANTE_COMBO_POR_DEFECTO)||                  
+                  numeroDocumento.getText().trim().equals("") || numeroDocumento.getText().trim() == null ||
+                  direccion.getText().trim().equals("") || direccion.getText().trim() == null ||
+                  direccion.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                  razonSocial.getText().trim().equals("") || razonSocial.getText().trim() == null ||
+                  razonSocial.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) 
+                     
+                  ) {
+
+                  
+                    return "Valide los Campos Obligatorios";   
+              }
+
+                       
+                    return "";   
+
+        }
         
         
      }

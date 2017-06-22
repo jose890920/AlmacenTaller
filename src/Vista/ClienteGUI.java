@@ -825,7 +825,8 @@ public class ClienteGUI extends javax.swing.JDialog {
         numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, buttonGroupGenero,
         fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
         modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(false);
+        registrarBtn.setEnabled(true);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

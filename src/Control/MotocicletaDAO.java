@@ -52,7 +52,7 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
     }
     
     public String modificarMotocicleta(Motocicleta motocicleta) throws ParseException{
-        
+        /*
         motocicleta.setCodCliente(2);
         motocicleta.setPlaca("KPL15B");
         motocicleta.setPaisMatricula("ColombiA");
@@ -62,7 +62,7 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
         motocicleta.setLinea("VivaR");
         motocicleta.setTipoMotocicleta("Semiautomatica");
         motocicleta.setCodMotocicleta(1);
-    
+    */
     query =    "UPDATE motocicleta " 
             + " SET  cod_cliente_m = "+motocicleta.getCodCliente()+","
             + " placa='"+motocicleta.getPlaca()+"',"
@@ -72,7 +72,9 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
             + " cilindraje = '"+motocicleta.getCilindraje()+"',"
             + " linea = '"+motocicleta.getLinea()+"',"
             + " tipo_motocilceta='"+motocicleta.getTipoMotocicleta()+"'" 
-            + " WHERE cod_motocicleta = "+motocicleta.getCodMotocicleta()+"";
+            + " FROM cliente where cod_cliente = cod_cliente_m AND "
+            + " cliente.estado ='"+CONSTANTE_ESTADO_POR_DEFECTO+"' AND"
+            + " cod_motocicleta = "+motocicleta.getCodMotocicleta();
     
     return sentencia.gestionarRegistro(query);
     
@@ -85,15 +87,18 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
             sentencia.gestionarRegistro(query);
     }
     
-    public List <Motocicleta> consultarMotocicleta()throws SQLException{
+    public List <Motocicleta> consultarMotocicleta(String numeroDocumento)throws SQLException{
         
         
         
             query =  "SELECT cod_motocicleta, cod_cliente_m, placa,"
                     + " pais_matricula, modelo, marca,"
-                    + " cilindraje, linea, tipo_motocilceta " 
-                    +" FROM motocicleta "
-                    +" ORDER BY cod_motocicleta ASC";
+                    + " cilindraje, linea, tipo_motocilceta, estado " 
+                    +" FROM motocicleta, cliente,persona WHERE numero_documento = '"+numeroDocumento+"'"
+                    + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
+                    + " AND cod_cliente_m = cod_cliente "
+                     + " AND cod_persona_c = cod_persona "
+                    + " ORDER BY cod_motocicleta ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
@@ -123,12 +128,12 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
         public List <Motocicleta> mapearMotocicletas(ResultSet resultset){
             
                 List <Motocicleta> listadoMotocicletas = new ArrayList<>();
-                Motocicleta motocicleta = new Motocicleta();
+                
                 
             try {
                 
               while(resultset.next()){
-                
+                Motocicleta motocicleta = new Motocicleta();
                 motocicleta.setCodMotocicleta(resultset.getInt("cod_motocicleta"));
                 motocicleta.setCodCliente(resultset.getInt("cod_cliente_m"));
                 motocicleta.setPlaca(resultset.getString("placa"));
@@ -147,7 +152,12 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
             }
             } catch (Exception e) {
             }
-      
+            if (listadoMotocicletas.isEmpty()) {
+                return null;
+            }
+            for (int i = 0; i < listadoMotocicletas.size(); i++) {
+                System.out.println("linea en moto "+listadoMotocicletas.get(i).getLinea());
+            }
         return listadoMotocicletas;
         
         }

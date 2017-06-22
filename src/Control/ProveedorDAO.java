@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class ProveedorDAO {
+public class ProveedorDAO extends ConstantesAlmacenyTaller{
     
         
      SentenciaSQL sentencia = new SentenciaSQL();
@@ -23,7 +23,7 @@ public class ProveedorDAO {
      
     public void registrarProveedor(Proveedor proveedor)throws SQLException, ParseException{
 
-     
+     /*
         proveedor.setCodPersona(2);
         proveedor.setRazonSocial("guayas colombia");
         proveedor.setTelefonoEmpresa("3554545");
@@ -32,7 +32,7 @@ public class ProveedorDAO {
         proveedor.setPais("Colombia");
         proveedor.setPaginaWeb("www.gcolombia.com");
         proveedor.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_proveedor) conteo from proveedor";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -52,7 +52,7 @@ public class ProveedorDAO {
         sentencia.gestionarRegistro(query);
     }
     
-    public void modificarProveedor(Proveedor proveedor) throws ParseException{
+    public String modificarProveedor(Proveedor proveedor) throws ParseException{
         
         proveedor.setCodPersona(1);
         proveedor.setRazonSocial("frenos colombia");
@@ -75,7 +75,7 @@ public class ProveedorDAO {
             + " estado='"+proveedor.getEstado()+"'"
             + " WHERE cod_proveedor = "+proveedor.getCodProveedor()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -101,16 +101,21 @@ public class ProveedorDAO {
          return mapearProveedores(resultset);
     }
     
-        public Proveedor consultarProveedorCodProveedor(Integer codProveedor){
+        public Proveedor consultarProveedorCodProveedor(String numeroDocumento) throws SQLException{
             
             query = "SELECT cod_proveedor, cod_persona_p, razon_social,"
-                    + " telefono_empresa, fax, correo_comercial,"
-                    + " pais, pagina_web, estado, nombres " 
+                    + " telefono_empresa, fax, correo_comercial, celular"
+                    + " pais, pagina_web, estado, numero_documento,"
+                    + " tipo_documento, nombres, apellidos, direccion, telefono " 
                     + "	FROM proveedor, persona WHERE cod_persona_p = cod_persona"
-                    + " AND estado = 'Activo' "
-                    + " AND cod_proveedor = "+codProveedor+" ORDER BY cod_proveedor ASC";            
+                    + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
+                    + " AND numero_documento = '"+numeroDocumento+"' ORDER BY cod_proveedor ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
+            if (!resultset.next()) {
+                return null;
+            }
+            resultset = sentencia.gestionarConsulta(query);
             return  mapearProveedor(resultset);
     }
         
