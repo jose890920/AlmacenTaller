@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class UsuarioDAO {
+public class UsuarioDAO extends ConstantesAlmacenyTaller{
     
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -22,13 +22,13 @@ public class UsuarioDAO {
      
     public void registrarUsuario(Usuario usuario)throws SQLException, ParseException{
 
-     
+     /*
         usuario.setCodEmpleado(2);
         usuario.setNombreUsuario("admin1");
         usuario.setContrasenia("12345");
         usuario.setTipoUsuario("root");
         usuario.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_usuario) conteo from usuario";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -45,24 +45,25 @@ public class UsuarioDAO {
          sentencia.gestionarRegistro(query);
     }
     
-    public void modificarUsuario(Usuario usuario) throws ParseException{
-        
+    public String modificarUsuario(Usuario usuario) throws ParseException{
+       /* 
         usuario.setCodEmpleado(2);
         usuario.setNombreUsuario("admin2");
         usuario.setContrasenia("1255");
         usuario.setTipoUsuario("root");
         usuario.setEstado("inactivo");
         usuario.setCodUsuario(1);
-    
-    query =    "UPDATE usuario " 
-            + " SET  cod_empleado_u="+usuario.getCodEmpleado()+","
+    */
+    query =    "UPDATE usuario SET" 
             + " nombre_usuario='"+usuario.getNombreUsuario()+"',"
             + " contrasenia='"+usuario.getContrasenia()+"',"
             + " tipo_usuario='"+usuario.getTipoUsuario()+"',"
             + " estado='"+usuario.getEstado()+"'"
-            + " WHERE cod_usuario = "+usuario.getCodUsuario()+"";
+            + " FROM persona,empleado WHERE cod_empleado_u = cod_empleado"
+            + " AND cod_persona_e = cod_persona "
+            + " AND numero_documento = '"+usuario.getEmpleado().getPersona().getNumeroDocumento()+"'";
     
-    sentencia.gestionarRegistro(query);
+   return sentencia.gestionarRegistro(query);
     
     }
     
@@ -87,13 +88,19 @@ public class UsuarioDAO {
          return mapearUsuarios(resultset);
     }
     
-        public Usuario consultarUsuarioCodUsuario(Integer codUsuario){
+        public Usuario consultarUsuarioCodUsuario(String numeroDocumento) throws SQLException{
             
             query =  "SELECT cod_usuario, cod_empleado_u, nombre_usuario,"
                     + " contrasenia, tipo_usuario, usuario.estado, estado_civil " 
-                    +"	FROM usuario, empleado  WHERE cod_empleado_u = cod_empleado"
-                    + " AND usuario.estado = 'Activo' "
-                    + " AND cod_usuario = "+codUsuario+" ORDER BY cod_usuario ASC";            
+                    +"	FROM usuario, empleado, persona  WHERE cod_empleado_u = cod_empleado "
+                    + " AND usuario.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
+                    + " AND cod_persona_e = cod_persona "
+                    + " AND numero_documento = '"+numeroDocumento+"'";            
+            resultset = sentencia.gestionarConsulta(query);
+            
+            if (!resultset.next()) {
+                return null;
+            }
             resultset = sentencia.gestionarConsulta(query);
             
             return  mapearUsuario(resultset);
@@ -169,6 +176,23 @@ public class UsuarioDAO {
           //u.eliminarUsuario(1);
           
 
+    }
+    
+    public Usuario consultarUsuarioNombreUsuario(String nombreUsuario) throws SQLException{
+            
+            query =  "SELECT cod_usuario, cod_empleado_u, nombre_usuario,"
+                    + " contrasenia, tipo_usuario, usuario.estado, estado_civil " 
+                    +"	FROM usuario, empleado  WHERE cod_empleado_u = cod_empleado "
+                    + " AND usuario.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
+                    + " AND nombre_usuario = '"+nombreUsuario+"'";            
+            resultset = sentencia.gestionarConsulta(query);
+            
+            if (!resultset.next()) {
+                return null;
+            }
+            resultset = sentencia.gestionarConsulta(query);
+            
+            return  mapearUsuario(resultset);
     }
 
     

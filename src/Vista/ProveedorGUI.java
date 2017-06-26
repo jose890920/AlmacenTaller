@@ -46,7 +46,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
         tipoDocumentoDAO.consultarTiposDocumento());
         this.setTitle("Gestion Empleados");
         this.setLocationRelativeTo(null);        
-        registrarBtn.setEnabled(true);
+        registrarBtn.setEnabled(false);
         modificarBtn.setEnabled(false);
         paisTxt.setText(constantes.CONSTANTE_PAIS_POR_DEFECTO);
         paisTxt.setEnabled(false);
@@ -88,10 +88,6 @@ public class ProveedorGUI extends javax.swing.JDialog {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
-        registrarBtn = new javax.swing.JButton();
-        consultarBtn = new javax.swing.JButton();
-        modificarBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         razonSocialTxt = new javax.swing.JTextField();
         telefonoEmpresaTxt = new javax.swing.JTextField();
         faxTxt = new javax.swing.JTextField();
@@ -103,8 +99,13 @@ public class ProveedorGUI extends javax.swing.JDialog {
         paginaWebTxt = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
+        registrarBtn = new javax.swing.JButton();
+        modificarBtn = new javax.swing.JButton();
+        consultarBtn = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,7 +163,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
 
         jLabel7.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel7.setText("Dirección");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, -1, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 0, 0));
@@ -199,7 +200,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
 
         jLabel8.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel8.setText("Celular");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 110, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 110, -1, -1));
 
         apellidosTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         apellidosTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -255,7 +256,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
                 direccionTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(direccionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 190, 180, -1));
+        jPanel1.add(direccionTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 180, -1));
 
         tipoDocumentoCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         tipoDocumentoCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
@@ -274,7 +275,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
                 tipoDocumentoComboActionPerformed(evt);
             }
         });
-        jPanel1.add(tipoDocumentoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 180, -1));
+        jPanel1.add(tipoDocumentoCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 180, -1));
 
         jLabel9.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel9.setText("Numero de Documento");
@@ -339,11 +340,11 @@ public class ProveedorGUI extends javax.swing.JDialog {
                 celularTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(celularTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 180, -1));
+        jPanel1.add(celularTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, 180, -1));
 
         jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel10.setText("Tipo de Documento");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 50, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel11.setText("Telefono");
@@ -352,7 +353,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 0, 0));
         jLabel17.setText("*");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 170, -1, 10));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 170, -1, 10));
 
         jTabbedPane1.addTab("Información Representante Legal", jPanel1);
 
@@ -365,7 +366,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 0, 0));
         jLabel19.setText("*");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, 10));
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, 10));
 
         jLabel20.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel20.setText("Correo Comercial");
@@ -374,46 +375,6 @@ public class ProveedorGUI extends javax.swing.JDialog {
         jLabel26.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel26.setText("Telefono Empresa");
         jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
-
-        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
-        registrarBtn.setText("Registrar");
-        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, 145, 55));
-
-        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        consultarBtn.setText("Consultar");
-        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 180, 145, 55));
-
-        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
-        modificarBtn.setText("Modificar");
-        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 120, 145, 55));
-
-        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
-        jButton3.setText("Limpiar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 240, 145, 55));
 
         razonSocialTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         razonSocialTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -608,9 +569,14 @@ public class ProveedorGUI extends javax.swing.JDialog {
         jLabel24.setText("Pagina Web");
         jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
 
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel25.setText("*");
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 40, -1, 10));
+
         jTabbedPane1.addTab("Información Laboral", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 680, 350));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 0, 490, 350));
 
         jLabel12.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -622,6 +588,46 @@ public class ProveedorGUI extends javax.swing.JDialog {
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 350, 30));
+
+        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        registrarBtn.setToolTipText("REGISTRAR");
+        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 145, 55));
+
+        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        modificarBtn.setToolTipText("MODIFICAR");
+        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 145, 55));
+
+        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        consultarBtn.setToolTipText("CONSULTAR");
+        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 145, 55));
+
+        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
+        jButton3.setToolTipText("LIMPIAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, 145, 55));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -817,7 +823,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
             
         if (validaciones.validarCamposProveedor(nombresTxt, apellidosTxt, tipoDocumentoCombo,
                 numeroDocumentoTxt, direccionTxt, razonSocialTxt, paisTxt).equals("") && 
-                facadePersona.consultarPersona(persona) == null) {
+                facadeProveedor.consultarProveedor(proveedor) == null) {
 
                     facadeProveedor.registrarProveedor(mapearProveedor());
                     
@@ -833,20 +839,20 @@ public class ProveedorGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
-         /*
+        
         try {
            
-            empleado = new Empleado();
+            proveedor = new Proveedor();
             persona = new Persona();
             persona.setNumeroDocumento(numeroDocumentoTxt.getText());
-            empleado.setPersona(persona);
+            proveedor.setPersona(persona);
             if (!validaciones.validarCampoVacio(numeroDocumentoTxt) &&
-                facadeEmpleado.consultarEmpleado(empleado) != null ) {
-
-                validaciones.mapearEmpleado(facadeEmpleado.consultarEmpleado(empleado), nombresTxt, apellidosTxt,
-                                            tipoDocumentoCombo, numeroDocumentoTxt, direccionTxt, telefonoTxt,
-                                            celularTxt, jRadioButtonFemenino, jRadioButtonMasculino, fechaIngresoDate,
-                                            fechaNacimientoDate, estadoCivilCombo, ciudadCombo, ciudadEmpleadoTxt);
+                facadeProveedor.consultarProveedor(proveedor) != null ) {
+                proveedor = facadeProveedor.consultarProveedor(proveedor);
+                validaciones.mapearProveedor(proveedor, nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                                             numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt,
+                                             razonSocialTxt, paisTxt, telefonoEmpresaTxt, paginaWebTxt, faxTxt,
+                                             correoComercialTxt, jRadioButtonOtro);
                 registrarBtn.setEnabled(false);
                 modificarBtn.setEnabled(true);
             }else{
@@ -860,26 +866,23 @@ public class ProveedorGUI extends javax.swing.JDialog {
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(ProveedorGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-       */
+       
         
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
-      /*
+     
         try {
             
-                        if (validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
-                    numeroDocumentoTxt, direccionTxt, jRadioButtonFemenino, jRadioButtonMasculino,
-                    fechaIngresoDate, fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                    ciudadEmpleadoTxt).equals("")){
-                        mensajeLbl.setText(facadeEmpleado.modificarEmpleado(mapearEmpleado()));
+                        if (validaciones.validarCamposProveedor(nombresTxt, apellidosTxt,
+                            tipoDocumentoCombo, numeroDocumentoTxt, direccionTxt, razonSocialTxt,
+                            paisTxt).equals("")){
+                        mensajeLbl.setText(facadeProveedor.modificarProveedor(mapearProveedor()));
                         
                         }else{
                         
-                        mensajeLbl.setText(validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
-                    numeroDocumentoTxt, direccionTxt, jRadioButtonFemenino, jRadioButtonMasculino,
-                    fechaIngresoDate, fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                    ciudadEmpleadoTxt));
+                        mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
+                        
                         }
             
             
@@ -887,19 +890,19 @@ public class ProveedorGUI extends javax.swing.JDialog {
 
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_modificarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       /*
-        validaciones.limpiarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
-                                           numeroDocumentoTxt, direccionTxt, telefonoTxt,
-                                           celularTxt, buttonGroupGenero, fechaIngresoDate,
-                                           fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                                           ciudadEmpleadoTxt);
+       
+        validaciones.limpiarCamposProveedor(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                                            numeroDocumentoTxt, direccionTxt, telefonoTxt,
+                                            celularTxt, razonSocialTxt, paisTxt,
+                                            telefonoEmpresaTxt, paginaWebTxt, faxTxt,
+                                            correoComercialTxt, jRadioButtonOtro);
         modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(true);
-        */
+        registrarBtn.setEnabled(false);
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void razonSocialTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_razonSocialTxtFocusGained
@@ -963,7 +966,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_faxTxtFocusGained
 
     private void faxTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_faxTxtFocusLost
-        validarSonido(validaciones.validarCampoVacio(faxTxt));
+     
     }//GEN-LAST:event_faxTxtFocusLost
 
     private void faxTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_faxTxtActionPerformed
@@ -990,8 +993,14 @@ public class ProveedorGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_correoComercialTxtFocusGained
 
     private void correoComercialTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_correoComercialTxtFocusLost
-
-        validarSonido(validaciones.validarCampoVacio(correoComercialTxt));
+        if (!correoComercialTxt.getText().trim().equals("") && correoComercialTxt.getText() != null) {
+             if (!validaciones.validarEmail(correoComercialTxt.getText())) {
+                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_EMAIL);
+                     validaciones.notificarMensajeconTimer(mensajeLbl);
+                     mensajeLbl.setForeground(Color.red);
+                     validarSonido(true);
+                     }   
+        }
     }//GEN-LAST:event_correoComercialTxtFocusLost
 
     private void correoComercialTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoComercialTxtActionPerformed
@@ -1062,7 +1071,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
 
     private void paginaWebTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_paginaWebTxtFocusLost
 
-        validarSonido(validaciones.validarCampoVacio(paginaWebTxt));
+      
     }//GEN-LAST:event_paginaWebTxtFocusLost
 
     private void paginaWebTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paginaWebTxtActionPerformed
@@ -1164,6 +1173,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

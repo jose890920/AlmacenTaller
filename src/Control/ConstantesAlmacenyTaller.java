@@ -32,6 +32,15 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_CAMPO_ALFABETICO = "Solo se permiten Letras";
     public final String CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO = "No Existe Registro";
     public final String CONSTANTE_MENSAJE_EXISTE_PLACA = "Ya existe esta placa";
+    public final String CONSTANTE_PATRON_EMAIL ="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                                               + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    public final String CONSTANTE_MENSAJE_VALIDACION_EMAIL = "No es un Email";
+    public final String CONSTANTE_PATRON_PLACA ="^[_A-Za-z]{3}[0-9]{2}[_A-Za-z]{1}";
+    public final String CONSTANTE_PATRON_PLACA_SIN_DIGITO_FINAL ="^[_A-Za-z]{3}[0-9]{2}";
+    public final String CONSTANTE_MENSAJE_VALIDACION_PLACA = "Placa Incorrecta";
+    public final String CONSTANTE_MENSAJE_EXISTE_USUARIO = "Ya existe este Usuario";
+    public final String CONSTANTE_CAMPO_CONTRASENIA = "Campo contraseña Requerido";
+    public final String CONSTANTE_MENSAJE_CONTRASENIAS_DIFERENTES = "Contraseñas Distintas";
     
     
 }

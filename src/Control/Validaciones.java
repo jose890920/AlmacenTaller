@@ -11,6 +11,8 @@ import Modelo.Empleado;
 import Modelo.Motocicleta;
 import Modelo.Persona;
 import Modelo.Producto;
+import Modelo.Proveedor;
+import Modelo.Usuario;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -24,10 +26,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -460,7 +465,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                     return "El Empleado Debe Ser Mayor de Edad";
                     }
                     
-                    public void mapearEmpleado(Empleado empleado, JTextField nombres,JTextField apellidos,
+        public void mapearEmpleado(Empleado empleado, JTextField nombres,JTextField apellidos,
                   JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
                   JTextField telefono, JTextField celular,
                   JRadioButton femenino,JRadioButton masculino,JDateChooser fechaIngreso,
@@ -492,7 +497,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                         fechaIngreso.setDate(empleado.getFechaIngreso());
                         fechaNacimiento.setDate(empleado.getFechaNacimiento());
                         estadoCivil.setSelectedItem(empleado.getEstadoCivil().trim());
-                    }
+        }
                     
                     public boolean validarCiudad(JComboBox ciudad, JTextField otraCiudad,String valor){
                         
@@ -673,10 +678,14 @@ public class Validaciones extends ConstantesAlmacenyTaller{
         
          public void mapearMotocicleta(Motocicleta motocicleta, JTextField placa, JTextField pais,
                                              JTextField modelo, JTextField cilindraje, JTextField linea,
-                                             JComboBox tipoMotocicleta, JComboBox marca){
+                                             JComboBox tipoMotocicleta, JComboBox marca, JRadioButton otro){
          if (true) {
                     
                     pais.setText(motocicleta.getPaisMatricula().trim());
+                    if (!motocicleta.getPaisMatricula().equals(CONSTANTE_PAIS_POR_DEFECTO)) {
+                         pais.setEnabled(true);
+                         otro.setSelected(true);
+                    }
                     placa.setText(motocicleta.getPlaca().trim());
                     modelo.setText(motocicleta.getModelo().trim());
                     cilindraje.setText(motocicleta.getCilindraje().trim());
@@ -720,6 +729,194 @@ public class Validaciones extends ConstantesAlmacenyTaller{
         }
         
         
-     }
+        public void limpiarCamposProveedor(JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular, JTextField razonSocial,JTextField pais,
+                  JTextField telefonoEmpresa, JTextField paginaWeb, JTextField fax,
+                  JTextField correoComercial,JRadioButton otro){
+        
+                nombres.setText("");
+                nombres.setBackground(Color.white);
+                apellidos.setText("");
+                apellidos.setBackground(Color.white);
+                tipoDocumento.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+                tipoDocumento.setBackground(Color.white);
+                numeroDocumento.setBackground(Color.white);
+                numeroDocumento.setText("");
+                direccion.setBackground(Color.white);
+                direccion.setText("");
+                telefono.setBackground(Color.white);
+                telefono.setText("");
+                celular.setBackground(Color.white);
+                celular.setText("");
+                razonSocial.setBackground(Color.white);
+                razonSocial.setText("");
+                pais.setBackground(Color.white);
+                pais.setText(CONSTANTE_PAIS_POR_DEFECTO);
+                telefonoEmpresa.setBackground(Color.white);
+                telefonoEmpresa.setText("");
+                paginaWeb.setBackground(Color.white);
+                paginaWeb.setText("");
+                fax.setBackground(Color.white);
+                fax.setText("");
+                correoComercial.setBackground(Color.white);
+                correoComercial.setText("");
+                otro.setSelected(false);
+                pais.setEnabled(false);
+        
+        }
+        
+        
+    public  boolean validarEmail(String email) {
+ 
+        //Compila la expresion regular
+        Pattern pattern = Pattern.compile(CONSTANTE_PATRON_EMAIL);
+ 
+        // Compara el string con el patron
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+ 
+    }
+    
+        public  boolean validarPlaca(String placa) {
+ 
+        //Compila la expresion regular.
+        Pattern pattern = Pattern.compile(CONSTANTE_PATRON_PLACA);
+         Pattern pattern2 = Pattern.compile(CONSTANTE_PATRON_PLACA_SIN_DIGITO_FINAL);
+ 
+        // Compara el string con el patron.
+        Matcher matcher = pattern.matcher(placa);
+        Matcher matcher2 = pattern2.matcher(placa);
+            if (matcher.matches()) {
+                return matcher.matches();
+            }
+            if (matcher2.matches()) {
+                return matcher2.matches();
+            }            
+            return false;
+ 
+    }
+ 
+        
+        
+         public void mapearProveedor(Proveedor proveedor, JTextField nombres,JTextField apellidos,
+                  JComboBox tipoDocumento,JTextField numeroDocumento,JTextField direccion,
+                  JTextField telefono, JTextField celular, JTextField razonSocial,JTextField pais,
+                  JTextField telefonoEmpresa, JTextField paginaWeb, JTextField fax,
+                  JTextField correoComercial,JRadioButton otro){
+                    
+                       
+                        
+                        nombres.setText(proveedor.getPersona().getNombres().trim());
+                        apellidos.setText(proveedor.getPersona().getApellidos().trim());
+                        if (!proveedor.getPais().trim().equals(CONSTANTE_PAIS_POR_DEFECTO)) {
+                            otro.setSelected(true);
+                            pais.setEnabled(true);
+                        }else{
+                            otro.setSelected(false);
+                            pais.setEnabled(false);
+                        }
+                        pais.setText(proveedor.getPais().trim());
+                        tipoDocumento.setSelectedItem(proveedor.getPersona().getTipoDocumento().trim());
+                        numeroDocumento.setText(proveedor.getPersona().getNumeroDocumento().trim());
+                        direccion.setText(proveedor.getPersona().getDireccion().trim());
+                        telefono.setText(proveedor.getPersona().getTelefono().trim());
+                        celular.setText(proveedor.getPersona().getCelular().trim());
+                        razonSocial.setText(proveedor.getRazonSocial().trim());
+                        razonSocial.setBackground(Color.white);
+                        telefonoEmpresa.setText(proveedor.getTelefonoEmpresa().trim());
+                        paginaWeb.setText(proveedor.getPaginaWeb().trim());
+                        fax.setText(proveedor.getFax().trim());
+                        correoComercial.setText(proveedor.getEmailComercial().trim());
+                        
+        }
+         
+         
+        public void limpiarCamposMotocicleta(JTextField placa, JTextField pais,
+                                             JTextField modelo, JTextField cilindraje,
+                                             JTextField linea,JComboBox tipoMotocicleta,
+                                             JComboBox marca, JRadioButton otro,
+                                             JTextField numeroDocumento, JTextField nombres,
+                                             JButton anterior, JButton siguiente){
+            
+            placa.setText("");
+            pais.setText(CONSTANTE_PAIS_POR_DEFECTO);
+            pais.setBackground(Color.white);
+            pais.setEnabled(false);
+            otro.setSelected(false);
+            modelo.setText("");
+            cilindraje.setText("");
+            linea.setText("");
+            tipoMotocicleta.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+            marca.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+            numeroDocumento.setText("");
+            nombres.setText("");
+            anterior.setVisible(false);
+            siguiente.setVisible(false);
+            
+            
+            
+        
+        
+        }
+        
+        public String validarCamposUsuario(JTextField numeroDocumentoTxt, JTextField nombresTxt,
+                JTextField nombreUsuarioTxt, JTextField contraseniaTxt, JComboBox tipoUsuarioCombo){
+                
+            if (numeroDocumentoTxt.getText() == null ||
+                numeroDocumentoTxt.getText().trim().equals("") ||
+                numeroDocumentoTxt.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                numeroDocumentoTxt.getText().equals(CONSTANTE_CAMPO_NUMERICO) ||
+                nombresTxt.getText() == null ||
+                nombresTxt.getText().trim().equals("") ||
+                nombresTxt.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                nombresTxt.getText().equals(CONSTANTE_CAMPO_ALFABETICO) ||
+                nombreUsuarioTxt.getText() == null ||
+                nombreUsuarioTxt.getText().trim().equals("") ||
+                nombreUsuarioTxt.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+                tipoUsuarioCombo.getSelectedItem().toString().trim().equals(CONSTANTE_COMBO_POR_DEFECTO)) {
+                
+            
+                return CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO;
+            
+            }
+        
+         return "";
+        }
+        
+        
+        public boolean validarEspacioVacio(KeyEvent ke, JTextField text) { 
+             char c=ke.getKeyChar(); 
+             boolean flag = false;
+         
+          if(Character.isSpace(c)) { 
+
+              ke.consume(); 
+              
+              flag = true;
+          }
+             return flag;
+        }
+        
+        public boolean compararContrasenias(JPasswordField contrasenia1, JPasswordField contrasenia2){
+        
+            if (contrasenia1.getText().trim().toUpperCase().equals(contrasenia2.getText().trim().toUpperCase())) {
+                return true;
+            }
+        return false;
+        }
+        
+        public void mapearUsuario(Usuario usuario,  JTextField nombreUsuarioTxt,
+                                  JPasswordField contraseniaTxt, JComboBox tipoUsuarioCombo){
+        
+            nombreUsuarioTxt.setText(usuario.getNombreUsuario().trim());
+            contraseniaTxt.setText(usuario.getContrasenia().trim());
+            tipoUsuarioCombo.setSelectedItem(usuario.getTipoUsuario().trim());
+            
+        }
+}
+        
+        
+     
 
     

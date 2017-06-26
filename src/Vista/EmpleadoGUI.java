@@ -6,20 +6,23 @@
 package Vista;
 
 import Control.ConstantesAlmacenyTaller;
+
 import Control.TipoDocumentoDAO;
 import Control.Validaciones;
 import Facade.FacadeEmpleado;
+import Facade.FacadePersona;
 import Modelo.Empleado;
 import Modelo.Persona;
 import java.awt.Color;
+
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ButtonGroup;
+
 import javax.swing.JDialog;
-import static javax.swing.JDialog.setDefaultLookAndFeelDecorated;
-import javax.swing.JFrame;
+
+
 import org.jvnet.substance.SubstanceLookAndFeel;
 
 /**
@@ -101,12 +104,13 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jLabel26 = new javax.swing.JLabel();
         jRadioButtonFemenino = new javax.swing.JRadioButton();
         jRadioButtonMasculino = new javax.swing.JRadioButton();
-        registrarBtn = new javax.swing.JButton();
-        consultarBtn = new javax.swing.JButton();
-        modificarBtn = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        registrarBtn = new javax.swing.JButton();
+        modificarBtn = new javax.swing.JButton();
+        consultarBtn = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -359,7 +363,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jTabbedPane1.addTab("Información Personal", jPanel1);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(fechaNacimientoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 180, 24));
+        jPanel2.add(fechaNacimientoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 190, 180, 24));
 
         jLabel18.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel18.setText("Fecha de Ingreso");
@@ -372,7 +376,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         jLabel20.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel20.setText("Estado Civil");
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 110, -1, -1));
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, -1, -1));
 
         estadoCivilCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         estadoCivilCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "SOLTERO", "CASADO", "UNION LIBRE" }));
@@ -391,17 +395,17 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 estadoCivilComboActionPerformed(evt);
             }
         });
-        jPanel2.add(estadoCivilCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, 180, -1));
+        jPanel2.add(estadoCivilCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 130, 180, -1));
         jPanel2.add(fechaIngresoDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 180, 24));
 
         jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel21.setText("Fecha de Nacimiento");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, -1, -1));
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 170, -1, -1));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 0, 0));
         jLabel22.setText("*");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, -1, 10));
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, 10));
 
         ciudadCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         ciudadCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "BOGOTA", "MEDELLIN", "CALI", "BARRANQUILLA", "CARTAGENA DE INDIAS", "SOLEDAD", "CUCUTA", "IBAGUE", "SOACHA", "BUCARAMANGA", "OTRA" }));
@@ -461,7 +465,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         jLabel25.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel25.setText("Genero");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
 
         jLabel26.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel26.setText("Ciudad");
@@ -469,51 +473,11 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         jRadioButtonFemenino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jRadioButtonFemenino.setText("Femenino");
-        jPanel2.add(jRadioButtonFemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, -1, -1));
+        jPanel2.add(jRadioButtonFemenino, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 50, -1, -1));
 
         jRadioButtonMasculino.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jRadioButtonMasculino.setText("Masculino");
-        jPanel2.add(jRadioButtonMasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, -1, -1));
-
-        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
-        registrarBtn.setText("Registrar");
-        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 60, 145, 55));
-
-        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
-        consultarBtn.setText("Consultar");
-        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                consultarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, 145, 55));
-
-        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
-        modificarBtn.setText("Modificar");
-        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificarBtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, 145, 55));
-
-        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
-        jButton3.setText("Limpiar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 240, 145, 55));
+        jPanel2.add(jRadioButtonMasculino, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
 
         jTabbedPane1.addTab("Información Laboral", jPanel2);
 
@@ -524,11 +488,55 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/empleados.png"))); // NOI18N
         jLabel12.setText("Empleados");
         jLabel12.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 270, 80));
+        getContentPane().add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 350, 270, 80));
 
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 350, 30));
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 350, 30));
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
+        registrarBtn.setToolTipText("REGISTRAR");
+        registrarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 145, 55));
+
+        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
+        modificarBtn.setToolTipText("MODIFICAR");
+        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 145, 55));
+
+        consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
+        consultarBtn.setToolTipText("CONSULTAR");
+        consultarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarBtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 145, 55));
+
+        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
+        jButton3.setToolTipText("LIMPIAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 145, 55));
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 60, 160, 290));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -773,6 +781,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
         try {
             empleado = new Empleado();
+            FacadePersona facadePersona = new FacadePersona();
             persona = new Persona();
             persona.setNumeroDocumento(numeroDocumentoTxt.getText());
             empleado.setPersona(persona);
@@ -784,13 +793,9 @@ public class EmpleadoGUI extends javax.swing.JDialog {
 
                     facadeEmpleado.registrarEmpleado(mapearEmpleado());
                     
-        }else{mensajeLbl.setText(validaciones.validarCamposEmpleado(nombresTxt, apellidosTxt,
-                                 tipoDocumentoCombo,numeroDocumentoTxt, direccionTxt,
-                                 jRadioButtonFemenino, jRadioButtonMasculino,fechaIngresoDate,
-                                 fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
-                                 ciudadEmpleadoTxt));
-                    
-    }
+        }else{mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
+              mensajeLbl.setForeground(Color.red);
+        }
             validaciones.notificarMensajeconTimer(mensajeLbl);
 
     }   catch (SQLException | ParseException ex) {
@@ -956,6 +961,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JRadioButton jRadioButtonFemenino;
     private javax.swing.JRadioButton jRadioButtonMasculino;
     private javax.swing.JTabbedPane jTabbedPane1;

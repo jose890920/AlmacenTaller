@@ -102,6 +102,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         siguienteBtn = new javax.swing.JButton();
         modificarBtn = new javax.swing.JButton();
         anteriorBtn = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
 
@@ -361,7 +362,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 registrarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 145, 55));
+        jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 145, 55));
 
         jRadioButtonOtro.setText("Otro?");
         jRadioButtonOtro.addActionListener(new java.awt.event.ActionListener() {
@@ -444,7 +445,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 consultarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 145, 55));
+        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 145, 55));
 
         siguienteBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/siguiente.png"))); // NOI18N
         siguienteBtn.setToolTipText("SIGUIENTE");
@@ -463,7 +464,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 modificarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 145, 55));
+        jPanel1.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 145, 55));
 
         anteriorBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/anterior.png"))); // NOI18N
         anteriorBtn.setToolTipText("ANTERIOR");
@@ -474,9 +475,19 @@ public class MotocicletaGUI extends javax.swing.JDialog {
         });
         jPanel1.add(anteriorBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 260, -1, -1));
 
+        jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
+        jButton3.setToolTipText("LIMPIAR");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 250, 145, 55));
+
         jTabbedPane1.addTab("Datos de la Motocicleta", jPanel1);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 350));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 350));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/motocicleta.png"))); // NOI18N
@@ -498,6 +509,14 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private void placaTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaTxtFocusLost
 
         validarSonido(validaciones.validarCampoVacio(placaTxt));
+        if (!validaciones.validarPlaca(placaTxt.getText())) {
+            validarSonido(true);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_PLACA);
+            mensajeLbl.setForeground(Color.red);
+            validaciones.notificarMensajeconTimer(mensajeLbl);
+        }
+  
+        
     }//GEN-LAST:event_placaTxtFocusLost
 
     private void placaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placaTxtActionPerformed
@@ -784,7 +803,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 if(listaMotocicleta != null){
                     posicionMotocicleta = 0;
                     validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
-                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo, jRadioButtonOtro);
                     moto.setCodMotocicleta(listaMotocicleta.get(posicionMotocicleta).getCodMotocicleta());
                     registrarBtn.setEnabled(false);
                     modificarBtn.setEnabled(true);
@@ -819,7 +838,13 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
             posicionMotocicleta++;
             validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
-                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo, jRadioButtonOtro);
+            if (!paisTxt.getText().equals(constantes.CONSTANTE_PAIS_POR_DEFECTO)) {
+                jRadioButtonOtro.setSelected(true);
+            }else{
+                jRadioButtonOtro.setSelected(false);
+                paisTxt.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_siguienteBtnActionPerformed
 
@@ -847,9 +872,26 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
             posicionMotocicleta--;
             validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
-                    lineaTxt, tipoMotocicletaCombo, marcaCombo);
+                    lineaTxt, tipoMotocicletaCombo, marcaCombo, jRadioButtonOtro);
+            if (!paisTxt.getText().equals(constantes.CONSTANTE_PAIS_POR_DEFECTO)) {
+                jRadioButtonOtro.setSelected(true);
+            }else{
+                jRadioButtonOtro.setSelected(false);
+                paisTxt.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_anteriorBtnActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        validaciones.limpiarCamposMotocicleta(placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
+                                              lineaTxt, tipoMotocicletaCombo, marcaCombo,
+                                              jRadioButtonOtro, numeroDocumentoTxt, nombresTxt,
+                                              anteriorBtn, siguienteBtn);
+        modificarBtn.setEnabled(false);
+        registrarBtn.setEnabled(false);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -876,6 +918,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private javax.swing.JButton anteriorBtn;
     private javax.swing.JTextField cilindrajeTxt;
     private javax.swing.JButton consultarBtn;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel16;

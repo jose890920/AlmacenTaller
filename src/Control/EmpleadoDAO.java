@@ -111,7 +111,7 @@ public class EmpleadoDAO extends ConstantesAlmacenyTaller{
             if (!resultset.next()) {
                 return null;
             }
-            
+            resultset = sentencia.gestionarConsulta(query);
             return  mapearEmpleado(resultset);
     }
         

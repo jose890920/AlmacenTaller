@@ -1,6 +1,7 @@
 
 package Control;
 
+import Modelo.Persona;
 import Modelo.Proveedor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,7 +54,7 @@ public class ProveedorDAO extends ConstantesAlmacenyTaller{
     }
     
     public String modificarProveedor(Proveedor proveedor) throws ParseException{
-        
+        /*
         proveedor.setCodPersona(1);
         proveedor.setRazonSocial("frenos colombia");
         proveedor.setTelefonoEmpresa("5554545");
@@ -63,17 +64,17 @@ public class ProveedorDAO extends ConstantesAlmacenyTaller{
         proveedor.setPaginaWeb("www.fcolombia.com");
         proveedor.setEstado("inactivo");
         proveedor.setCodProveedor(1);
-    
-    query =    "UPDATE proveedor " 
-            + " SET  cod_persona_p="+proveedor.getCodPersona()+","
+    */
+   
+        query =    "UPDATE proveedor SET" 
             + " razon_social='"+proveedor.getRazonSocial()+"',"
             + " telefono_empresa='"+proveedor.getTelefonoEmpresa()+"',"
             + " fax='"+proveedor.getFax()+"',"
             + " correo_comercial='"+proveedor.getEmailComercial()+"',"
             + " pais='"+proveedor.getPais()+"'," 
-            + " pagina_web='"+proveedor.getPaginaWeb()+"',"
-            + " estado='"+proveedor.getEstado()+"'"
-            + " WHERE cod_proveedor = "+proveedor.getCodProveedor()+"";
+            + " pagina_web='"+proveedor.getPaginaWeb()+"' "
+            + " from persona  WHERE cod_persona_p = cod_persona AND"
+            + " numero_documento = '"+proveedor.getPersona().getNumeroDocumento()+"'";
     
     return sentencia.gestionarRegistro(query);
     
@@ -104,9 +105,9 @@ public class ProveedorDAO extends ConstantesAlmacenyTaller{
         public Proveedor consultarProveedorCodProveedor(String numeroDocumento) throws SQLException{
             
             query = "SELECT cod_proveedor, cod_persona_p, razon_social,"
-                    + " telefono_empresa, fax, correo_comercial, celular"
+                    + " telefono_empresa, fax, correo_comercial, celular,"
                     + " pais, pagina_web, estado, numero_documento,"
-                    + " tipo_documento, nombres, apellidos, direccion, telefono " 
+                    + " tipo_documento, nombres, apellidos, direccion, telefono, celular " 
                     + "	FROM proveedor, persona WHERE cod_persona_p = cod_persona"
                     + " AND estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' "
                     + " AND numero_documento = '"+numeroDocumento+"' ORDER BY cod_proveedor ASC";            
@@ -156,6 +157,7 @@ public class ProveedorDAO extends ConstantesAlmacenyTaller{
                 public Proveedor mapearProveedor(ResultSet resultset){
                 
                 Proveedor proveedor = new Proveedor();
+                Persona persona = new Persona();
             try {
                     
               if(resultset.next()){
@@ -169,11 +171,18 @@ public class ProveedorDAO extends ConstantesAlmacenyTaller{
                 proveedor.setPais(resultset.getString("pais"));
                 proveedor.setPaginaWeb(resultset.getString("pagina_web"));
                 proveedor.setEstado(resultset.getString("estado"));
-
+                persona.setNombres(resultset.getString("nombres"));
+                persona.setApellidos(resultset.getString("apellidos"));
+                persona.setDireccion(resultset.getString("direccion"));
+                persona.setTelefono(resultset.getString("telefono"));
+                persona.setCelular(resultset.getString("celular"));
+                persona.setTipoDocumento(resultset.getString("tipo_documento"));
+                persona.setNumeroDocumento(resultset.getString("numero_documento"));
+                proveedor.setPersona(persona);
 
                 System.out.println(" proveedor "+proveedor.getRazonSocial());
                 System.out.println(" proveedor "+proveedor.getPais()); 
-                System.out.println(""+resultset.getString("nombres"));
+                System.out.println("pais--"+resultset.getString("pais"));
                 
             }
             } catch (Exception e) {
