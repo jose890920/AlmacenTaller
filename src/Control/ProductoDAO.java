@@ -70,18 +70,22 @@ public class ProductoDAO extends ConstantesAlmacenyTaller{
             sentencia.gestionarRegistro(query);
     }
     
-    public List <Producto> consultarProducto()throws SQLException{
+        public List <Producto> consultarProducto(String nombreProducto)throws SQLException{
         
         
         
             query = "SELECT cod_producto, nombre_producto, descripcion,"
                     + " tipo_producto, cantidad, fabricante, fecha_ingreso,"
                     + " valor, estado " 
-                    +" FROM producto WHERE estado = 'Activo'"
-                    + " ORDER BY cod_producto ASC";
+                    +" FROM producto WHERE estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"'"
+                    + " AND nombre_producto LIKE '%"+nombreProducto+"%' ORDER BY nombre_producto ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             
+            if (!resultset.next()) {
+                return null;
+            }
+            resultset = sentencia.gestionarConsulta(query);
           
          return mapearProductos(resultset);
     }
@@ -103,12 +107,12 @@ public class ProductoDAO extends ConstantesAlmacenyTaller{
         public List <Producto> mapearProductos(ResultSet resultset){
             
                 List <Producto> listadoProductos = new ArrayList<>();
-                Producto producto = new Producto();
+                
                 
             try {
                 
               while(resultset.next()){
-                
+                Producto producto = new Producto();
                 producto.setCodProducto(resultset.getInt("cod_producto"));
                 producto.setNombreProdcto(resultset.getString("nombre_producto"));
                 producto.setDescripcion(resultset.getString("descripcion"));

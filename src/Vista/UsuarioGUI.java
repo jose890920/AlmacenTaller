@@ -42,6 +42,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
     Usuario usuario;
     Empleado empleado;
     Persona persona = new Persona();
+    boolean flagModificarContrasenia;
 
   
     
@@ -192,7 +193,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 registrarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 145, 55));
+        jPanel1.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 145, 55));
 
         numeroDocumentoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         numeroDocumentoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -267,7 +268,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 consultarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 145, 55));
+        jPanel1.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 145, 60));
 
         modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
@@ -277,7 +278,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 modificarBtnActionPerformed(evt);
             }
         });
-        jPanel1.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 145, 55));
+        jPanel1.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 145, 55));
 
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
@@ -287,7 +288,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, 145, 55));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 220, 145, 55));
 
         contraseniaTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -335,7 +336,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios.png"))); // NOI18N
         jLabel1.setText("Usuario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, -1, 100));
 
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -510,6 +511,10 @@ public class UsuarioGUI extends javax.swing.JDialog {
                     usuario = facadeUsuario.consultarUsuario(usuario);
                     validaciones.mapearUsuario(usuario, nombreUsuarioTxt,
                                                contraseniaTxt, tipoUsuarioCombo);
+                    confirmaContraseniaTxt.setText(contraseniaTxt.getText());
+                    confirmaContraseniaTxt.setVisible(false);
+                    jLabeConfirmaContrasenia.setVisible(false);
+                    modificarBtn.setEnabled(true);
                 }
                 
                 
@@ -518,7 +523,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                     registrarBtn.setEnabled(false);
-                    //modificarBtn.setEnabled(false);
+                    modificarBtn.setEnabled(false);
 
                 }
 
@@ -530,15 +535,24 @@ public class UsuarioGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
-        /*
+        
         try {
 
-            if (validaciones.validarCamposMotocicleta(nombreUsuarioTxt, contraseniaTxt, paisTxt, lineaTxt,
-                modeloTxt, marcaCombo, tipoUsuarioCombo).equals("")){
-            mensajeLbl.setText(facadeMotocicleta.modificarMotocicleta(mapeoMotocicleta(cliente)));
+            if (validaciones.validarCamposUsuario(numeroDocumentoTxt, nombresTxt,
+                                                  nombreUsuarioTxt, contraseniaTxt,
+                                                  tipoUsuarioCombo).equals("")){
+                if (validaciones.compararContrasenias(contraseniaTxt, confirmaContraseniaTxt)) {
+                    usuario.setEmpleado(empleado);
+                    mensajeLbl.setForeground(Color.green);
+                    mensajeLbl.setText(facadeUsuario.modificarUsuario(mapeoUsuario(usuario)));
+                }else{
+                    mensajeLbl.setForeground(Color.red);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CONTRASENIAS_DIFERENTES);
+                }
+            
 
         }else{
-
+            mensajeLbl.setForeground(Color.red);
             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
         }
 
@@ -546,18 +560,16 @@ public class UsuarioGUI extends javax.swing.JDialog {
 
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_modificarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-/*
-        validaciones.limpiarCamposMotocicleta(nombreUsuarioTxt, paisTxt, modeloTxt, contraseniaTxt,
-                                              lineaTxt, tipoUsuarioCombo, marcaCombo,
-                                              jRadioButtonOtro, numeroDocumentoTxt, nombresTxt,
-                                              anteriorBtn, siguienteBtn);
+
+        validaciones.limpiarCamposUsuario(nombreUsuarioTxt, contraseniaTxt,
+                tipoUsuarioCombo, confirmaContraseniaTxt, nombresTxt, numeroDocumentoTxt);
         modificarBtn.setEnabled(false);
         registrarBtn.setEnabled(false);
-*/
+
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void contraseniaTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_contraseniaTxtFocusLost
@@ -572,6 +584,10 @@ public class UsuarioGUI extends javax.swing.JDialog {
         }else{
             confirmaContraseniaTxt.setVisible(true);
             jLabeConfirmaContrasenia.setVisible(true);
+        }
+        
+        if (flagModificarContrasenia) {
+            confirmaContraseniaTxt.setText("");
         }
 
     }//GEN-LAST:event_contraseniaTxtFocusLost
@@ -598,11 +614,13 @@ public class UsuarioGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_confirmaContraseniaTxtFocusLost
 
     private void contraseniaTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contraseniaTxtKeyTyped
-        validarSonido(validaciones.validarEspacioVacio(evt, contraseniaTxt)); 
+        validarSonido(validaciones.validarEspacioVacio(evt, contraseniaTxt));
+        flagModificarContrasenia = true;
     }//GEN-LAST:event_contraseniaTxtKeyTyped
 
     private void confirmaContraseniaTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_confirmaContraseniaTxtKeyTyped
      validarSonido(validaciones.validarEspacioVacio(evt, confirmaContraseniaTxt)); 
+     flagModificarContrasenia = false;
     }//GEN-LAST:event_confirmaContraseniaTxtKeyTyped
 
     /**
@@ -666,6 +684,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
          usuario = new Usuario();
          usuario.setCodEmpleado(empleado.getCodEmpleado());
          usuario.setContrasenia(contraseniaTxt.getText().trim().toUpperCase());
+         usuario.setEmpleado(empleado);
          usuario.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
          usuario.setNombreUsuario(nombreUsuarioTxt.getText().trim());
          usuario.setTipoUsuario(tipoUsuarioCombo.getSelectedItem().toString().trim());

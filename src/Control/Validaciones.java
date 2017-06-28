@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -37,6 +38,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -873,6 +875,8 @@ public class Validaciones extends ConstantesAlmacenyTaller{
                 nombresTxt.getText().equals(CONSTANTE_CAMPO_ALFABETICO) ||
                 nombreUsuarioTxt.getText() == null ||
                 nombreUsuarioTxt.getText().trim().equals("") ||
+                contraseniaTxt.getText() == null ||
+                contraseniaTxt.getText().trim().equals("") ||
                 nombreUsuarioTxt.getText().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
                 tipoUsuarioCombo.getSelectedItem().toString().trim().equals(CONSTANTE_COMBO_POR_DEFECTO)) {
                 
@@ -913,6 +917,41 @@ public class Validaciones extends ConstantesAlmacenyTaller{
             contraseniaTxt.setText(usuario.getContrasenia().trim());
             tipoUsuarioCombo.setSelectedItem(usuario.getTipoUsuario().trim());
             
+        }
+        
+        public void limpiarCamposUsuario(JTextField nombreUsuarioTxt,
+                                  JPasswordField contraseniaTxt, JComboBox tipoUsuarioCombo,
+                                  JPasswordField confirmarContrasenia, JTextField nombresTxt,
+                                  JTextField numeroDocumentoTxt){
+            
+            nombreUsuarioTxt.setBackground(Color.white);
+            contraseniaTxt.setBackground(Color.white);
+            tipoUsuarioCombo.setBackground(Color.white);
+            confirmarContrasenia.setBackground(Color.white);
+            nombresTxt.setBackground(Color.white);
+            numeroDocumentoTxt.setBackground(Color.white);
+            nombreUsuarioTxt.setText("");
+            contraseniaTxt.setText("");
+            confirmarContrasenia.setText("");
+            nombresTxt.setText("");
+            numeroDocumentoTxt.setText("");
+            tipoUsuarioCombo.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
+            
+        
+        
+        }
+
+        public DefaultTableModel asignarModeloTabla(DefaultTableModel modelo, List<Producto> listadoProductos){
+            modelo = new DefaultTableModel();
+            String columnasTablaProductos[] = {"NOMBRE","PRECIO"};
+            modelo.setColumnIdentifiers(columnasTablaProductos);
+            for (int i = 0; i < listadoProductos.size(); i++) {
+                Object[] producto = new Object[2];
+                producto[0] = listadoProductos.get(i).getNombreProdcto().trim();
+                producto[1] = listadoProductos.get(i).getValor();
+                modelo.addRow(producto);
+            }
+        return modelo;
         }
 }
         
