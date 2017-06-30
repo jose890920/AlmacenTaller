@@ -8,25 +8,27 @@ package Vista;
 import Control.ConstantesAlmacenyTaller;
 import Control.ProductoDAO;
 
-import Control.TipoUsuarioDAO;
+
 import Control.Validaciones;
 
 import Facade.FacadeEmpleado;
 
-import Facade.FacadeUsuario;
-import Modelo.Cliente;
+
 import Modelo.Empleado;
-import Modelo.Motocicleta;
+
 import Modelo.Persona;
+import Modelo.Producto;
 import Modelo.Usuario;
 import java.awt.Color;
 import java.sql.SQLException;
-import java.text.ParseException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
-import javax.swing.JPasswordField;
+
 import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
 
@@ -41,10 +43,16 @@ public class VenderGUI extends javax.swing.JDialog {
     FacadeEmpleado facadeEmpleado = new FacadeEmpleado();
     Empleado empleado;
     Persona persona = new Persona();
-    String columnasTablaProductos[] = {"NOMBRE","PRECIO"};
+    String columnasTablaProductos[] = {"NOMBRE","PRECIO","STOCK"};
+    String columnasTablaProductosSeleccionados[] = {"NOMBRE","CANTIDAD","VLR UNIT","VLR CONJUNTO","DESCUENTO"};
     DefaultTableModel modeloTablaProductos = new DefaultTableModel();
+    DefaultTableModel modeloTablaProductosSeleccionados = new DefaultTableModel();
     ProductoDAO productoDAO;
-    
+    List<Producto> listadoProducto = new ArrayList();
+    double cantidadProductoSeleccionado;
+    double valorProductoSeleccionado;
+    double acumulaTotales = 0;
+    double descuento = 0;
     
 
   
@@ -62,8 +70,10 @@ public class VenderGUI extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         modificarBtn.setEnabled(false);
         modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
+        modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
         productosConsultaTabla.setModel(modeloTablaProductos);
-        
+        productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
+
 
     }
 
@@ -97,8 +107,18 @@ public class VenderGUI extends javax.swing.JDialog {
         productosConsultaTabla = new javax.swing.JTable();
         nombreProductoTxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        productoSeleccionadoTxt = new javax.swing.JTextField();
+        cantidadProductoSeleccionadoTxt = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        productosSeleccionadosTabla = new javax.swing.JTable();
+        descuentoProductoSeleccionadoTxt = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        totalParcialLbl = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -267,6 +287,8 @@ public class VenderGUI extends javax.swing.JDialog {
             }
         });
         jPanel1.add(numeroDocumentoClienteTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 200, -1));
+
+        fechaVentaDate.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jPanel1.add(fechaVentaDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 200, 26));
 
         jTabbedPane1.addTab("Datos de la venta", jPanel1);
@@ -285,6 +307,8 @@ public class VenderGUI extends javax.swing.JDialog {
 
             }
         ));
+        productosConsultaTabla.setColumnSelectionAllowed(true);
+        productosConsultaTabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         productosConsultaTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         productosConsultaTabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -325,29 +349,100 @@ public class VenderGUI extends javax.swing.JDialog {
         jPanel2.add(nombreProductoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 180, -1));
 
         jLabel11.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel11.setText("Nombre producto");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jLabel11.setText("Cantidad");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, -1));
 
-        jTextField1.setText("jTextField1");
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 100, -1));
+        productoSeleccionadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        productoSeleccionadoTxt.setEnabled(false);
+        jPanel2.add(productoSeleccionadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 180, 26));
 
-        jTextField2.setText("jTextField2");
-        jPanel2.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 110, -1));
+        cantidadProductoSeleccionadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        cantidadProductoSeleccionadoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        cantidadProductoSeleccionadoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cantidadProductoSeleccionadoTxtActionPerformed(evt);
+            }
+        });
+        cantidadProductoSeleccionadoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantidadProductoSeleccionadoTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(cantidadProductoSeleccionadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 200, 110, 26));
+
+        jLabel12.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel12.setText("Nombre producto");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel13.setText("Producto Seleccionado");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel26.setText("*");
+        jPanel2.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 180, -1, 10));
+
+        productosSeleccionadosTabla.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        productosSeleccionadosTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(productosSeleccionadosTabla);
+
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 110));
+
+        descuentoProductoSeleccionadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        descuentoProductoSeleccionadoTxt.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        descuentoProductoSeleccionadoTxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                descuentoProductoSeleccionadoTxtActionPerformed(evt);
+            }
+        });
+        descuentoProductoSeleccionadoTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                descuentoProductoSeleccionadoTxtKeyTyped(evt);
+            }
+        });
+        jPanel2.add(descuentoProductoSeleccionadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 200, 90, 26));
+
+        jLabel14.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel14.setText("Descuento");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 180, -1, -1));
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel27.setText("*");
+        jPanel2.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, 10));
+
+        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jLabel2.setText("%");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 10, 20));
+
+        totalParcialLbl.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        jPanel2.add(totalParcialLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 366, 140, 30));
 
         jTabbedPane1.addTab("Añadir Productos", jPanel2);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 360));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 430));
 
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 350, 30));
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 440, 410, 30));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Vender.png"))); // NOI18N
         jLabel1.setText("Vender");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 210, 100));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 410, 210, 100));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -656,8 +751,18 @@ public class VenderGUI extends javax.swing.JDialog {
         productoDAO = new ProductoDAO();
         
         try {
-            //validaciones.asignarModeloTabla(modeloTablaProductos, productoDAO.consultarProducto(nombreProductoTxt.getText()));
-            productosConsultaTabla.setModel(validaciones.asignarModeloTabla(modeloTablaProductos, productoDAO.consultarProducto(nombreProductoTxt.getText())));
+            listadoProducto = productoDAO.consultarProducto(nombreProductoTxt.getText());
+            if (listadoProducto != null) {
+                productosConsultaTabla.setModel(validaciones.asignarModeloTabla(modeloTablaProductos, listadoProducto));
+            }else{
+                mensajeLbl.setForeground(Color.red);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_NO_EXISTEN_PRODUCTOS);
+                validaciones.notificarMensajeconTimer(mensajeLbl);
+                DefaultTableModel auxModelo = new DefaultTableModel();
+                auxModelo.setColumnIdentifiers(columnasTablaProductos);
+                productosConsultaTabla.setModel(auxModelo);
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(VenderGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -680,12 +785,62 @@ public class VenderGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_nombreProductoTxtKeyTyped
 
     private void productosConsultaTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosConsultaTablaMouseClicked
-
-                jTextField1.setText(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 0).toString());
-                jTextField2.setText(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 1).toString());
-           
+        
+     productoSeleccionadoTxt.setText(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 0).toString());
+     cantidadProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 2).toString());
+     valorProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 1).toString());
+     cantidadProductoSeleccionadoTxt.setText("");
+     descuentoProductoSeleccionadoTxt.setText("");
   
     }//GEN-LAST:event_productosConsultaTablaMouseClicked
+
+    private void cantidadProductoSeleccionadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadProductoSeleccionadoTxtActionPerformed
+        
+        if (cantidadProductoSeleccionadoTxt.getText().trim().equals("") || Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) > cantidadProductoSeleccionado) {
+            
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE);
+            validaciones.notificarMensajeconTimer(mensajeLbl);
+        }else{
+            System.out.println("cantidad"+cantidadProductoSeleccionadoTxt.getText());
+            if (descuentoProductoSeleccionadoTxt.getText().trim().equals("") ) {
+                descuentoProductoSeleccionadoTxt.setText("0");
+            }
+
+
+            if (!validaciones.validarNombreProducto(productosSeleccionadosTabla, productoSeleccionadoTxt)) {
+                    mapeoProductoSeleccionado();
+                    acumulaTotales = 0;
+                    descuento = 0;
+                    for (int i = 0; i < productosSeleccionadosTabla.getRowCount() ; i++) {
+                    descuento = descuento + validaciones.calcularDescuento(Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 4).toString()), Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 2).toString()) * Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 1).toString()));
+                    acumulaTotales = acumulaTotales + Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 2).toString()) * Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 1).toString());
+                    
+                }
+                totalParcialLbl.setText(validaciones.calcularValorTotal(19, acumulaTotales, descuento)+"");
+
+                }else{
+                    mensajeLbl.setForeground(Color.red);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PRODUCTO_SELECCIONADO);
+                    validaciones.notificarMensajeconTimer(mensajeLbl);
+                }
+            
+            
+        }
+    }//GEN-LAST:event_cantidadProductoSeleccionadoTxtActionPerformed
+
+    private void cantidadProductoSeleccionadoTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantidadProductoSeleccionadoTxtKeyTyped
+        validaciones.validarSoloNumerosConEnter(evt, cantidadProductoSeleccionadoTxt);
+    }//GEN-LAST:event_cantidadProductoSeleccionadoTxtKeyTyped
+
+    private void descuentoProductoSeleccionadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_descuentoProductoSeleccionadoTxtActionPerformed
+
+    }//GEN-LAST:event_descuentoProductoSeleccionadoTxtActionPerformed
+
+    private void descuentoProductoSeleccionadoTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descuentoProductoSeleccionadoTxtKeyTyped
+        validaciones.validarSoloNumerosConEnter(evt, descuentoProductoSeleccionadoTxt);
+        validaciones.validarCantidadCaracteresTexto(evt, descuentoProductoSeleccionadoTxt, 2);
+    }//GEN-LAST:event_descuentoProductoSeleccionadoTxtKeyTyped
 
     /**
      * @param args the command line arguments
@@ -709,26 +864,33 @@ public class VenderGUI extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField cantidadProductoSeleccionadoTxt;
     private javax.swing.JButton consultarBtn;
+    private javax.swing.JTextField descuentoProductoSeleccionadoTxt;
     private com.toedter.calendar.JDateChooser fechaVentaDate;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel mensajeLbl;
     private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField nombreProductoTxt;
@@ -736,8 +898,11 @@ public class VenderGUI extends javax.swing.JDialog {
     private javax.swing.JTextField nombresEmpleadoTxt;
     private javax.swing.JTextField numeroDocumentoClienteTxt;
     private javax.swing.JTextField numeroDocumentoEmpleadoTxt;
+    private javax.swing.JTextField productoSeleccionadoTxt;
     private javax.swing.JTable productosConsultaTabla;
+    private javax.swing.JTable productosSeleccionadosTabla;
     private javax.swing.JButton registrarBtn;
+    private javax.swing.JLabel totalParcialLbl;
     // End of variables declaration//GEN-END:variables
 
      public void validarSonido(boolean flag){
@@ -760,6 +925,20 @@ public class VenderGUI extends javax.swing.JDialog {
          
         return usuario;
 
+     }
+     
+     
+     public void mapeoProductoSeleccionado(){
+     
+                Object[] productoAgregar = new Object[5];
+                productoAgregar[0] = productoSeleccionadoTxt.getText().trim();
+                productoAgregar[1] = cantidadProductoSeleccionadoTxt.getText();
+                productoAgregar[2] = valorProductoSeleccionado;
+                productoAgregar[3] = valorProductoSeleccionado * Double.parseDouble(cantidadProductoSeleccionadoTxt.getText());
+                productoAgregar[4] = descuentoProductoSeleccionadoTxt.getText().trim();
+                modeloTablaProductosSeleccionados.addRow(productoAgregar);
+                productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
+     
      }
 
 }

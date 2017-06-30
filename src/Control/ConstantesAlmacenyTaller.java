@@ -41,6 +41,8 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_MENSAJE_EXISTE_USUARIO = "Ya existe este Usuario";
     public final String CONSTANTE_CAMPO_CONTRASENIA = "Campo contraseña Requerido";
     public final String CONSTANTE_MENSAJE_CONTRASENIAS_DIFERENTES = "Contraseñas Distintas";
-    
+    public final String CONSTANTE_MENSAJE_VALIDACION_NO_EXISTEN_PRODUCTOS = "No se Encontraron Productos";
+    public final String CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE = "No hay Suficientes Productos";
+    public final String CONSTANTE_MENSAJE_PRODUCTO_SELECCIONADO = "Este Producto se Encuentra Seleccionado";
     
 }

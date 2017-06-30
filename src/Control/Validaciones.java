@@ -35,6 +35,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.Timer;
@@ -943,19 +944,63 @@ public class Validaciones extends ConstantesAlmacenyTaller{
 
         public DefaultTableModel asignarModeloTabla(DefaultTableModel modelo, List<Producto> listadoProductos){
             modelo = new DefaultTableModel();
-            String columnasTablaProductos[] = {"NOMBRE","PRECIO"};
+            String columnasTablaProductos[] = {"NOMBRE","PRECIO","STOCK"};
             modelo.setColumnIdentifiers(columnasTablaProductos);
             for (int i = 0; i < listadoProductos.size(); i++) {
-                Object[] producto = new Object[2];
+                Object[] producto = new Object[3];
                 producto[0] = listadoProductos.get(i).getNombreProdcto().trim();
                 producto[1] = listadoProductos.get(i).getValor();
+                producto[2] = listadoProductos.get(i).getCantidad();
+                
                 modelo.addRow(producto);
             }
         return modelo;
         }
-}
         
+        public boolean validarSoloNumerosConEnter(KeyEvent ke, JTextField text) { 
+             char c=ke.getKeyChar(); 
+             boolean flag = false;
+         
+          if((Character.isLetter(c) && !Character.isSpace(c)) || !Character.isDigit(c)) { 
+              
+              
+              ke.consume(); 
+              
+              flag = true;
+          }else{
+              
+              if(text.getText().trim().equals("Solo se permiten Numero") ||
+                      text.getText().trim().equals("Solo se permiten Numeros")){
+                  text.setText("");
+                  text.setBackground(Color.white);
+              }
+         
+          String cadena = (""+c).toUpperCase();
+              c = cadena.charAt(0);
+              ke.setKeyChar(c);
+          }
+         return flag;
+    } 
         
-     
-
     
+     public boolean validarNombreProducto(JTable tabla, JTextField nombre){
+       
+          for (int i = 0; i < tabla.getRowCount(); i++) {
+                if (tabla.getValueAt(i, 0).toString().equals(nombre.getText().trim())) {
+                    return true;
+
+                }
+            
+  
+         }
+          return false;
+
+
+     }
+        
+        
+        
+}
+   
+        
+ 
