@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  *
  * @author jose luis Rodriguez
  */
-public class VentaDAO {
+public class VentaDAO extends ConstantesAlmacenyTaller{
 
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -20,15 +21,15 @@ public class VentaDAO {
      String queryCodigo ="";
      ResultSet resultset;
      
-    public void registrarVenta(Venta venta)throws SQLException, ParseException{
+    public int registrarVenta(Venta venta)throws SQLException, ParseException{
 
-     
+     /*
         venta.setCodEmpleado(2);
         venta.setCodCliente(2);
         venta.setValorTotal(50_000);
         venta.setFechaVenta(validaciones.transformarFechatoDate("05-05-2017"));
         venta.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_venta) conteo from venta";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -43,26 +44,24 @@ public class VentaDAO {
                 + " "+venta.getValorTotal()+", '"+venta.getEstado()+"')";
         
          sentencia.gestionarRegistro(query);
+         return venta.getCodVenta();
     }
     
-    public void modificarVenta(Venta venta) throws ParseException{
-        
+    public String modificarVenta(Venta venta) throws ParseException{
+        /*
         venta.setCodEmpleado(2);
         venta.setCodCliente(2);
         venta.setValorTotal(55_000);
         venta.setFechaVenta(validaciones.transformarFechatoDate("01-05-2017"));
         venta.setEstado("inactivo");
         venta.setCodVenta(1);
-    
+    */
     query =    "UPDATE venta " 
-            + " SET  cod_cliente_v="+venta.getCodCliente()+","
-            + " cod_empleado_v='"+venta.getCodEmpleado()+"',"
-            + " fecha_venta='"+venta.getFechaVenta()+"',"
-            + " valor_venta="+venta.getValorTotal()+"," 
-            + " estado='"+venta.getEstado()+"'"
+            + " SET"
+            + " valor_venta="+venta.getValorTotal()+" " 
             + " WHERE cod_venta = "+venta.getCodVenta()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -87,14 +86,15 @@ public class VentaDAO {
          return mapearVentas(resultset);
     }
     
-        public Venta consultarVentaCodVenta(Integer codVenta){
+        public List<Venta> consultarVentaCodVenta(String numeroDocumento){
             
             query = "SELECT cod_venta, cod_cliente_v, cod_empleado_v,"
                     + " fecha_venta, valor_venta, venta.estado, barrio " 
-                    +" FROM venta,cliente, empleado WHERE "
-                    + " venta.estado = 'Activo' AND "
-                    + " cod_venta = "+codVenta+""
+                    +" FROM venta,cliente, empleado, persona WHERE "
+                    + " venta.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' AND "
+                    + " numero_documento = '"+numeroDocumento+"'"
                     + " AND cod_cliente_v = cod_cliente AND"
+                    + " cod_persona_c = cod_persona AND"
                     + " cod_empleado_v= cod_empleado ORDER BY cod_venta ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
@@ -131,12 +131,13 @@ public class VentaDAO {
         
         }
     
-                public Venta mapearVenta(ResultSet resultset){
+                public List<Venta> mapearVenta(ResultSet resultset){
                 
-                Venta venta = new Venta();
+                List <Venta> listadoVentas = new ArrayList<>();
             try {
                     
-              if(resultset.next()){
+              while(resultset.next()){
+                  Venta venta = new Venta();
                 venta.setCodVenta(resultset.getInt("cod_venta"));
                 venta.setCodCliente(resultset.getInt("cod_cliente_v"));
                 venta.setCodEmpleado(resultset.getInt("cod_empleado_v"));
@@ -148,12 +149,12 @@ public class VentaDAO {
                 System.out.println(" venta "+venta.getFechaVenta());
                 System.out.println(" venta "+venta.getValorTotal()); 
                 System.out.println(""+resultset.getString("barrio"));
-                
+                listadoVentas.add(venta);
             }
             } catch (Exception e) {
             }
       
-        return venta;
+        return listadoVentas ;
         }
     
     

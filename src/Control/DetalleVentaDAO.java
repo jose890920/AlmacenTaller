@@ -27,7 +27,7 @@ public class DetalleVentaDAO {
      
     public void registrarDetalleVenta(DetalleVenta detalleVenta)throws SQLException, ParseException{
 
-     
+     /*
         detalleVenta.setCodVenta(2);
         detalleVenta.setCodProducto(1);
         detalleVenta.setCantidadProducto(5);
@@ -37,7 +37,7 @@ public class DetalleVentaDAO {
                 detalleVenta.getCantidadProducto()));
         detalleVenta.setDescuento(
                 validaciones.calcularDescuento(10, detalleVenta.getValorConjunto()));
-        
+       */ 
         queryCodigo = "select MAX(cod_detalle_Venta) conteo from detalle_Venta";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);

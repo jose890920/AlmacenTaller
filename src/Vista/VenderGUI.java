@@ -10,17 +10,23 @@ import Control.ProductoDAO;
 
 
 import Control.Validaciones;
+import Facade.FacadeCliente;
 
 import Facade.FacadeEmpleado;
-
+import Facade.FacadeVenta;
+import Modelo.Cliente;
+import Control.DetalleVentaDAO;
+import Modelo.DetalleVenta;
 
 import Modelo.Empleado;
 
 import Modelo.Persona;
 import Modelo.Producto;
-import Modelo.Usuario;
+
+import Modelo.Venta;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
+import javax.swing.JTable;
 
 import javax.swing.table.DefaultTableModel;
 import org.jvnet.substance.SubstanceLookAndFeel;
@@ -43,8 +50,9 @@ public class VenderGUI extends javax.swing.JDialog {
     FacadeEmpleado facadeEmpleado = new FacadeEmpleado();
     Empleado empleado;
     Persona persona = new Persona();
-    String columnasTablaProductos[] = {"NOMBRE","PRECIO","STOCK"};
-    String columnasTablaProductosSeleccionados[] = {"NOMBRE","CANTIDAD","VLR UNIT","VLR CONJUNTO","DESCUENTO"};
+    Persona personaCliente = new Persona();
+    String columnasTablaProductos[] = {"ID","NOMBRE","PRECIO","STOCK"};
+    String columnasTablaProductosSeleccionados[] = {"ID","NOMBRE","CANTIDAD","VLR UNIT","VLR CONJUNTO","DESCUENTO"};
     DefaultTableModel modeloTablaProductos = new DefaultTableModel();
     DefaultTableModel modeloTablaProductosSeleccionados = new DefaultTableModel();
     ProductoDAO productoDAO;
@@ -53,7 +61,12 @@ public class VenderGUI extends javax.swing.JDialog {
     double valorProductoSeleccionado;
     double acumulaTotales = 0;
     double descuento = 0;
-    
+    int idProductoSeleccionado;
+    Cliente cliente = new Cliente();
+    FacadeCliente facadeCliente = new FacadeCliente();
+    Venta venta = new Venta();
+    FacadeVenta facadeVenta = new FacadeVenta();
+    DetalleVentaDAO detalleVentaDAO = new DetalleVentaDAO();
 
   
     
@@ -73,7 +86,7 @@ public class VenderGUI extends javax.swing.JDialog {
         modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
         productosConsultaTabla.setModel(modeloTablaProductos);
         productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
-
+        registrarBtn.setEnabled(false);
 
     }
 
@@ -119,6 +132,7 @@ public class VenderGUI extends javax.swing.JDialog {
         jLabel27 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         totalParcialLbl = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         mensajeLbl = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -307,7 +321,6 @@ public class VenderGUI extends javax.swing.JDialog {
 
             }
         ));
-        productosConsultaTabla.setColumnSelectionAllowed(true);
         productosConsultaTabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         productosConsultaTabla.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         productosConsultaTabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -429,6 +442,15 @@ public class VenderGUI extends javax.swing.JDialog {
         totalParcialLbl.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jPanel2.add(totalParcialLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 366, 140, 30));
 
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrarRegistro.png"))); // NOI18N
+        jButton1.setToolTipText("ELIMINAR REGISTRO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 280, -1, -1));
+
         jTabbedPane1.addTab("Añadir Productos", jPanel2);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 430));
@@ -525,38 +547,38 @@ public class VenderGUI extends javax.swing.JDialog {
 
     private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed
         
-        /*
+       
         try {
-            usuario = new Usuario();
+            persona = new Persona();
+            personaCliente = new Persona();
             empleado = new Empleado();
-            if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt)) {
-             persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText()); 
+            if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt) &&
+                !validaciones.validarCampoVacio(numeroDocumentoClienteTxt)) {
+             persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText());
+             personaCliente.setNumeroDocumento(numeroDocumentoClienteTxt.getText()); 
             }
             
             
             empleado.setPersona(persona);
-            usuario.setEmpleado(empleado);
-            if (validaciones.validarCamposUsuario(numeroDocumentoEmpleadoTxt, nombresEmpleadoTxt,
-                nombresClienteTxt, contraseniaTxt,tipoUsuarioCombo).equals("") &&
+            cliente.setPersona(personaCliente);
+            if (validaciones.validarCamposVenta(numeroDocumentoEmpleadoTxt, numeroDocumentoClienteTxt,
+                fechaVentaDate, productosSeleccionadosTabla).equals("") &&
                 facadeEmpleado.consultarEmpleado(empleado) != null &&
-                facadeUsuario.consultarUsuario(usuario) == null &&
-                facadeUsuario.consultarUsuarioNombreUsuario(nombresClienteTxt.getText().trim()) == null &&
-                validaciones.compararContrasenias(contraseniaTxt, confirmaContraseniaTxt)) {
+                facadeCliente.consultarCliente(cliente) != null) {
                 
-                usuario = facadeUsuario.consultarUsuario(usuario);
+                cliente = facadeCliente.consultarCliente(cliente);
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
-                facadeUsuario.registrarUsuario(mapeoUsuario(usuario));
+                int codigoVenta = facadeVenta.registrarVenta(mapeoVenta(venta));
+                registrarDetalleVenta(productosSeleccionadosTabla,codigoVenta);
                     
         }else{
-                if (!validaciones.validarCamposUsuario(numeroDocumentoEmpleadoTxt, nombresEmpleadoTxt,
-                    nombresClienteTxt, contraseniaTxt, tipoUsuarioCombo).equals("")) {
+                if (!validaciones.validarCamposVenta(numeroDocumentoEmpleadoTxt, numeroDocumentoClienteTxt,
+                    fechaVentaDate, productosSeleccionadosTabla).equals("")) {
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
                 }else if(facadeEmpleado.consultarEmpleado(empleado) == null){
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO);
-                }else if(facadeUsuario.consultarUsuarioNombreUsuario(nombresClienteTxt.getText().trim()) != null){
-                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EXISTE_USUARIO);
-                }else if(!validaciones.compararContrasenias(contraseniaTxt, confirmaContraseniaTxt)){
-                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CONTRASENIAS_DIFERENTES);
+                }else if(facadeCliente.consultarCliente(cliente) == null){
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_REGISTRO);
                 }
                 mensajeLbl.setForeground(Color.red);
                     
@@ -566,7 +588,7 @@ public class VenderGUI extends javax.swing.JDialog {
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         } 
-          */
+          
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void numeroDocumentoEmpleadoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoEmpleadoTxtFocusGained
@@ -626,30 +648,32 @@ public class VenderGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_nombresEmpleadoTxtKeyTyped
 
     private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
-        /*
+        
         try {
-            usuario = new Usuario();
-            empleado = new Empleado();
             persona = new Persona();
-            persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText());
-            empleado.setPersona(persona);
-            
+            personaCliente = new Persona();
+            empleado = new Empleado();
             if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt) &&
-                facadeEmpleado.consultarEmpleado(empleado) != null ) {
+                !validaciones.validarCampoVacio(numeroDocumentoClienteTxt)) {
+             persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText());
+             personaCliente.setNumeroDocumento(numeroDocumentoClienteTxt.getText()); 
+             cliente.setPersona(personaCliente);
+             empleado.setPersona(persona);
+            
+            
+            if (facadeEmpleado.consultarEmpleado(empleado) != null &&
+                facadeCliente.consultarCliente(cliente) != null) {
                 
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
-                usuario.setEmpleado(empleado);
+                
+                cliente = facadeCliente.consultarCliente(cliente);
                 nombresEmpleadoTxt.setText(empleado.getPersona().getNombres().trim()+
                         " "+empleado.getPersona().getApellidos().trim());
-                if (facadeUsuario.consultarUsuario(usuario) != null) {
-                    usuario = facadeUsuario.consultarUsuario(usuario);
-                    validaciones.mapearUsuario(usuario, nombresClienteTxt,
-                                               contraseniaTxt, tipoUsuarioCombo);
-                    confirmaContraseniaTxt.setText(contraseniaTxt.getText());
-                    confirmaContraseniaTxt.setVisible(false);
-                    jLabeConfirmaContrasenia.setVisible(false);
-                    modificarBtn.setEnabled(true);
-                }
+                nombresClienteTxt.setText(cliente.getPersona().getNombres().trim()+
+                        " "+cliente.getPersona().getApellidos().trim());
+         
+                    registrarBtn.setEnabled(true);
+                
                 
                 
 
@@ -662,10 +686,10 @@ public class VenderGUI extends javax.swing.JDialog {
                 }
 
             }
-
+            }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
@@ -761,6 +785,9 @@ public class VenderGUI extends javax.swing.JDialog {
                 DefaultTableModel auxModelo = new DefaultTableModel();
                 auxModelo.setColumnIdentifiers(columnasTablaProductos);
                 productosConsultaTabla.setModel(auxModelo);
+                productoSeleccionadoTxt.setText("");
+                descuentoProductoSeleccionadoTxt.setText("");
+                cantidadProductoSeleccionadoTxt.setText("");
             }
             
         } catch (SQLException ex) {
@@ -786,9 +813,10 @@ public class VenderGUI extends javax.swing.JDialog {
 
     private void productosConsultaTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productosConsultaTablaMouseClicked
         
-     productoSeleccionadoTxt.setText(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 0).toString());
-     cantidadProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 2).toString());
-     valorProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 1).toString());
+     productoSeleccionadoTxt.setText(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 1).toString());
+     cantidadProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 3).toString());
+     valorProductoSeleccionado =  Double.parseDouble(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 2).toString());
+     idProductoSeleccionado =  Integer.parseInt(productosConsultaTabla.getValueAt(productosConsultaTabla.getSelectedRow(), 0).toString());
      cantidadProductoSeleccionadoTxt.setText("");
      descuentoProductoSeleccionadoTxt.setText("");
   
@@ -810,15 +838,7 @@ public class VenderGUI extends javax.swing.JDialog {
 
             if (!validaciones.validarNombreProducto(productosSeleccionadosTabla, productoSeleccionadoTxt)) {
                     mapeoProductoSeleccionado();
-                    acumulaTotales = 0;
-                    descuento = 0;
-                    for (int i = 0; i < productosSeleccionadosTabla.getRowCount() ; i++) {
-                    descuento = descuento + validaciones.calcularDescuento(Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 4).toString()), Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 2).toString()) * Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 1).toString()));
-                    acumulaTotales = acumulaTotales + Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 2).toString()) * Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 1).toString());
-                    
-                }
-                totalParcialLbl.setText(validaciones.calcularValorTotal(19, acumulaTotales, descuento)+"");
-
+                    calcularValorParcial();
                 }else{
                     mensajeLbl.setForeground(Color.red);
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PRODUCTO_SELECCIONADO);
@@ -841,6 +861,13 @@ public class VenderGUI extends javax.swing.JDialog {
         validaciones.validarSoloNumerosConEnter(evt, descuentoProductoSeleccionadoTxt);
         validaciones.validarCantidadCaracteresTexto(evt, descuentoProductoSeleccionadoTxt, 2);
     }//GEN-LAST:event_descuentoProductoSeleccionadoTxtKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (productosSeleccionadosTabla.getSelectedRow() > -1) {
+            modeloTablaProductosSeleccionados.removeRow(productosSeleccionadosTabla.getSelectedRow());
+            calcularValorParcial();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -868,6 +895,7 @@ public class VenderGUI extends javax.swing.JDialog {
     private javax.swing.JButton consultarBtn;
     private javax.swing.JTextField descuentoProductoSeleccionadoTxt;
     private com.toedter.calendar.JDateChooser fechaVentaDate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -914,31 +942,71 @@ public class VenderGUI extends javax.swing.JDialog {
          }
      } 
      
-     public Usuario mapeoUsuario(Usuario usuario){
-         usuario = new Usuario();
-         usuario.setCodEmpleado(empleado.getCodEmpleado());
+     public Venta mapeoVenta(Venta venta){
+         venta = new Venta();
+         venta.setCliente(cliente);
+         venta.setEmpleado(empleado);
         
-         usuario.setEmpleado(empleado);
-         usuario.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
-         usuario.setNombreUsuario(nombresClienteTxt.getText().trim());
+         venta.setEmpleado(empleado);
+         venta.setEstado(constantes.CONSTANTE_ESTADO_POR_DEFECTO);
+         venta.setCodCliente(cliente.getCodCliente());
+         venta.setCodEmpleado(empleado.getCodEmpleado());
+         venta.setFechaVenta(fechaVentaDate.getDate());
+         venta.setValorTotal(0.0);
          
          
-        return usuario;
+        return venta;
 
      }
      
      
      public void mapeoProductoSeleccionado(){
      
-                Object[] productoAgregar = new Object[5];
-                productoAgregar[0] = productoSeleccionadoTxt.getText().trim();
-                productoAgregar[1] = cantidadProductoSeleccionadoTxt.getText();
-                productoAgregar[2] = valorProductoSeleccionado;
-                productoAgregar[3] = valorProductoSeleccionado * Double.parseDouble(cantidadProductoSeleccionadoTxt.getText());
-                productoAgregar[4] = descuentoProductoSeleccionadoTxt.getText().trim();
+                Object[] productoAgregar = new Object[6];
+                productoAgregar[0] = idProductoSeleccionado;
+                productoAgregar[1] = productoSeleccionadoTxt.getText().trim();
+                productoAgregar[2] = cantidadProductoSeleccionadoTxt.getText();
+                productoAgregar[3] = valorProductoSeleccionado;
+                productoAgregar[4] = valorProductoSeleccionado * Double.parseDouble(cantidadProductoSeleccionadoTxt.getText());
+                productoAgregar[5] = ((Double.parseDouble(descuentoProductoSeleccionadoTxt.getText().trim()))* Double.parseDouble(productoAgregar[4].toString())) / 100;
                 modeloTablaProductosSeleccionados.addRow(productoAgregar);
                 productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
      
      }
+     
+     public void registrarDetalleVenta(JTable productos, int codigoVenta) throws SQLException, ParseException{
+         
+         for (int i = 0; i < productos.getRowCount(); i++) {
+             DetalleVenta detalleVenta = new DetalleVenta();
+             detalleVenta.setCodVenta(codigoVenta);
+             detalleVenta.setCantidadProducto(Integer.parseInt(productos.getValueAt(i, 2).toString()));
+             detalleVenta.setCodProducto(Integer.parseInt(productos.getValueAt(i, 0).toString()));
+             detalleVenta.setDescuento(Double.parseDouble(productos.getValueAt(i, 5).toString()));
+             detalleVenta.setValorConjunto(Double.parseDouble(productos.getValueAt(i, 4).toString()));
+             detalleVenta.setValorUnitario(Double.parseDouble(productos.getValueAt(i, 3).toString()));
+             
+             detalleVentaDAO.registrarDetalleVenta(detalleVenta);
+         }
+         venta.setCodVenta(codigoVenta);
+         venta.setValorTotal(Double.parseDouble(totalParcialLbl.getText()));
+         facadeVenta.modificarVenta(venta);
+         
+         
+
+         
+         
+     
+     }
+
+    public void calcularValorParcial() {
+                      acumulaTotales = 0;
+                    descuento = 0;
+                    for (int i = 0; i < productosSeleccionadosTabla.getRowCount() ; i++) {
+                    descuento = descuento + Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 5).toString());
+                    acumulaTotales = acumulaTotales + Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 3).toString()) * Double.parseDouble(productosSeleccionadosTabla.getValueAt(i, 2).toString());
+                    
+                }
+                totalParcialLbl.setText(validaciones.calcularValorTotal(19, acumulaTotales, descuento)+"");
+    }
 
 }
