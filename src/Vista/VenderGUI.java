@@ -19,6 +19,7 @@ import Control.DetalleVentaDAO;
 import Modelo.DetalleVenta;
 
 import Modelo.Empleado;
+import Modelo.ParametrosFactura;
 
 import Modelo.Persona;
 import Modelo.Producto;
@@ -67,9 +68,10 @@ public class VenderGUI extends javax.swing.JDialog {
     Venta venta = new Venta();
     FacadeVenta facadeVenta = new FacadeVenta();
     DetalleVentaDAO detalleVentaDAO = new DetalleVentaDAO();
-
-  
+    int codigoVentaParametroFactura;
     
+
+      
     /**
      * Creates new form MotocicletaGUI
      */
@@ -570,7 +572,10 @@ public class VenderGUI extends javax.swing.JDialog {
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
                 int codigoVenta = facadeVenta.registrarVenta(mapeoVenta(venta));
                 registrarDetalleVenta(productosSeleccionadosTabla,codigoVenta);
-                    
+                ComprobanteGUI comprobanteGUI = new ComprobanteGUI(null, true, mapearParametrosFactura());
+                
+                comprobanteGUI.setVisible(true);
+             
         }else{
                 if (!validaciones.validarCamposVenta(numeroDocumentoEmpleadoTxt, numeroDocumentoClienteTxt,
                     fechaVentaDate, productosSeleccionadosTabla).equals("")) {
@@ -986,10 +991,15 @@ public class VenderGUI extends javax.swing.JDialog {
              detalleVenta.setValorUnitario(Double.parseDouble(productos.getValueAt(i, 3).toString()));
              
              detalleVentaDAO.registrarDetalleVenta(detalleVenta);
+             Producto producto = new Producto();
+             producto.setCodProducto(detalleVenta.getCodProducto());
+             String parametroModificacion =  "-"+productos.getValueAt(i, 2).toString();
+             productoDAO.actualizarStock(producto, parametroModificacion);
          }
          venta.setCodVenta(codigoVenta);
          venta.setValorTotal(Double.parseDouble(totalParcialLbl.getText()));
          facadeVenta.modificarVenta(venta);
+         codigoVentaParametroFactura = codigoVenta;
          
          
 
@@ -1007,6 +1017,18 @@ public class VenderGUI extends javax.swing.JDialog {
                     
                 }
                 totalParcialLbl.setText(validaciones.calcularValorTotal(19, acumulaTotales, descuento)+"");
+    }
+    
+    
+    public ParametrosFactura mapearParametrosFactura(){
+                ParametrosFactura parametrosFactura = new ParametrosFactura();
+                parametrosFactura.setNombreCliente(nombresClienteTxt.getText());
+                parametrosFactura.setNombreEmpleado(nombresEmpleadoTxt.getText());
+                parametrosFactura.setNumeroDocumentoCliente(numeroDocumentoClienteTxt.getText());
+                parametrosFactura.setNumeroDocumentoEmpleado(numeroDocumentoEmpleadoTxt.getText());
+                parametrosFactura.setProductosaVender(modeloTablaProductosSeleccionados);
+                parametrosFactura.setCodigoVenta(codigoVentaParametroFactura);
+    return parametrosFactura;
     }
 
 }

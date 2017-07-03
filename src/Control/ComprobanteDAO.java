@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class ComprobanteDAO {
+public class ComprobanteDAO extends ConstantesAlmacenyTaller{
     
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -22,7 +22,7 @@ public class ComprobanteDAO {
      
     public void registrarComprobante(Comprobante comprobante)throws SQLException, ParseException{
 
-     
+     /*
         comprobante.setCodCompra(2);
         comprobante.setCodVenta(null);
         comprobante.setValor(50_000);
@@ -32,7 +32,7 @@ public class ComprobanteDAO {
                 comprobante.getValor(),comprobante.getDescuento()));
         comprobante.setFechaComprobante(validaciones.transformarFechatoDate("05-05-2017"));
         comprobante.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_comprobante) conteo from comprobante";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -52,7 +52,7 @@ public class ComprobanteDAO {
          sentencia.gestionarRegistro(query);
     }
     
-    public void modificarComprobante(Comprobante comprobante) throws ParseException{
+    public String modificarComprobante(Comprobante comprobante) throws ParseException{
         
         comprobante.setCodCompra(null);
         comprobante.setCodVenta(2);
@@ -76,7 +76,7 @@ public class ComprobanteDAO {
             + " estado='"+comprobante.getEstado()+"'" 
             + " WHERE cod_comprobante = "+comprobante.getCodComprobante()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -103,16 +103,19 @@ public class ComprobanteDAO {
          return mapearComprobantes(resultset);
     }
     
-        public Comprobante consultarComprobanteCodComprobante(Integer codComprobante){
+        public List<Comprobante> consultarComprobanteCodComprobante(String numeroDocumento){
             
             query =   "SELECT distinct(cod_comprobante), cod_compra_c, cod_venta_c,"
                     + " valor, descuento, iva, comprobante.valor_total,"
                     + " fecha_comprobante, comprobante.estado " 
-                    + "	FROM comprobante,venta, compra WHERE "
-                    + " comprobante.estado = 'Activo' AND "
-                    + " cod_comprobante = "+codComprobante+""
+                    + "	FROM comprobante,venta, compra,cliente,persona WHERE "
+                    + " comprobante.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' AND "
+                    + " cod_comprobante = "+numeroDocumento+""
                     + " AND (cod_compra_c = cod_compra OR"
-                    + " cod_venta_c = cod_venta) ORDER BY cod_comprobante ASC";            
+                    + " cod_venta_c = cod_venta) "
+                    + " AND cod_cliente_v = cod_cliente AND "
+                    + " AND cod_persona_c = cod_persona "
+                    + " ORDER BY cod_comprobante ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
             return  mapearComprobante(resultset);
@@ -151,12 +154,13 @@ public class ComprobanteDAO {
         
         }
     
-                public Comprobante mapearComprobante(ResultSet resultset){
+                public List <Comprobante> mapearComprobante(ResultSet resultset){
                 
-                Comprobante comprobante = new Comprobante();
+                 List <Comprobante> listadoComprobantes = new ArrayList<>();
             try {
                     
-              if(resultset.next()){
+              while(resultset.next()){
+                Comprobante comprobante = new Comprobante();
                 comprobante.setCodComprobante(resultset.getInt("cod_comprobante"));
                 comprobante.setCodCompra(resultset.getInt("cod_compra_c"));
                 comprobante.setCodVenta(resultset.getInt("cod_venta_c"));
@@ -169,13 +173,13 @@ public class ComprobanteDAO {
 
                 System.out.println(" comprobante "+comprobante.getFechaComprobante());
                 System.out.println(" comprobante "+comprobante.getValorTotal());
-                
+                listadoComprobantes.add(comprobante);
                 
             }
             } catch (Exception e) {
             }
       
-        return comprobante;
+        return listadoComprobantes;
         }
     
     

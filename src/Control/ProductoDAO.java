@@ -161,6 +161,18 @@ public class ProductoDAO extends ConstantesAlmacenyTaller{
       
         return producto;
         }
+                
+                
+                    public String actualizarStock(Producto producto,String parametro) throws ParseException{
+
+    query =    "UPDATE producto " 
+            + " SET "
+            + " cantidad = cantidad"+parametro
+            + " WHERE cod_producto = "+producto.getCodProducto()+"";
+    
+   return sentencia.gestionarRegistro(query);
+    
+    }
     
     
     
