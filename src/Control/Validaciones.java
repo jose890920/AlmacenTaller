@@ -944,7 +944,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
 
         public DefaultTableModel asignarModeloTabla(DefaultTableModel modelo, List<Producto> listadoProductos){
             modelo = new DefaultTableModel();
-            String columnasTablaProductos[] = {"ID","NOMBRE","PRECIO","STOCK"};
+            String columnasTablaProductos[] = {"ID","NOMBRE","PRECIO ACTUAL","STOCK"};
             modelo.setColumnIdentifiers(columnasTablaProductos);
             for (int i = 0; i < listadoProductos.size(); i++) {
                 Object[] producto = new Object[4];
@@ -1002,6 +1002,30 @@ public class Validaciones extends ConstantesAlmacenyTaller{
         
     
      public String validarCamposVenta(JTextField numeroDocumentoEmpleadoTxt,
+                                      JTextField numeroDocumentoClienteTxt,
+                                      JDateChooser fechaVentaDate,
+                                      JTable productosSeleccionadosTabla){
+         if (numeroDocumentoClienteTxt.getText() == null ||
+             numeroDocumentoClienteTxt.getText().trim().equals("") ||
+             numeroDocumentoClienteTxt.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+             numeroDocumentoClienteTxt.getText().trim().equals(CONSTANTE_CAMPO_NUMERICO) ||
+             numeroDocumentoEmpleadoTxt.getText() == null ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals("") ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals(CONSTANTE_CAMPO_NUMERICO) ||
+             fechaVentaDate.getDate() == null ||
+             productosSeleccionadosTabla == null ||
+             productosSeleccionadosTabla.getRowCount() < 1) {
+             
+             return CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO;
+             
+         }
+         return "";
+     
+     }
+     
+     
+     public String validarCamposCompra(JTextField numeroDocumentoEmpleadoTxt,
                                       JTextField numeroDocumentoClienteTxt,
                                       JDateChooser fechaVentaDate,
                                       JTable productosSeleccionadosTabla){

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class CompraDAO {
+public class CompraDAO extends ConstantesAlmacenyTaller{
     
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -20,15 +20,15 @@ public class CompraDAO {
      String queryCodigo ="";
      ResultSet resultset;
      
-    public void registrarCompra(Compra compra)throws SQLException, ParseException{
+    public int registrarCompra(Compra compra)throws SQLException, ParseException{
 
-     
+     /*
         compra.setCodEmpleado(2);
         compra.setCodProveedor(2);
         compra.setValorTotal(50_000);
         compra.setFechaCompra(validaciones.transformarFechatoDate("05-05-2017"));
         compra.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_compra) conteo from compra";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -43,26 +43,24 @@ public class CompraDAO {
                 + " "+compra.getValorTotal()+", '"+compra.getEstado()+"')";
         
          sentencia.gestionarRegistro(query);
+         return compra.getCodCompra();
     }
     
-    public void modificarCompra(Compra compra) throws ParseException{
-        
+    public String modificarCompra(Compra compra) throws ParseException{
+        /*
         compra.setCodEmpleado(2);
         compra.setCodProveedor(2);
         compra.setValorTotal(55_000);
         compra.setFechaCompra(validaciones.transformarFechatoDate("01-05-2017"));
         compra.setEstado("inactivo");
         compra.setCodCompra(1);
-    
+    */
     query =    "UPDATE compra " 
-            + " SET  cod_proveedor_c="+compra.getCodProveedor()+","
-            + " cod_empleado_c='"+compra.getCodEmpleado()+"',"
-            + " fecha_compra='"+compra.getFechaCompra()+"',"
-            + " valor_total="+compra.getValorTotal()+"," 
-            + " estado='"+compra.getEstado()+"'"
+            + " SET "
+            + " valor_total="+compra.getValorTotal()+" " 
             + " WHERE cod_compra = "+compra.getCodCompra()+"";
     
-    sentencia.gestionarRegistro(query);
+    return sentencia.gestionarRegistro(query);
     
     }
     
@@ -87,14 +85,15 @@ public class CompraDAO {
          return mapearCompras(resultset);
     }
     
-        public Compra consultarCompraCodCompra(Integer codCompra){
+        public List<Compra> consultarCompraCodCompra(String numeroDocumento){
             
             query = "SELECT cod_compra, cod_proveedor_c, cod_empleado_c,"
                     + " fecha_compra, valor_total, compra.estado, razon_social " 
-                    +" FROM compra,proveedor, empleado WHERE "
-                    + " compra.estado = 'Activo' AND "
-                    + " cod_compra = "+codCompra+""
-                    + " AND cod_proveedor_c = cod_proveedor AND"
+                    +" FROM compra,proveedor, empleado, persona WHERE "
+                    + " compra.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' AND "
+                    + " numero_documento = '"+numeroDocumento+"'"
+                    + " AND cod_proveedor_c = cod_proveedor "
+                    + " AND cod_persona_p = cod_persona AND "
                     + " cod_empleado_c= cod_empleado ORDER BY cod_compra ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
@@ -131,12 +130,13 @@ public class CompraDAO {
         
         }
     
-                public Compra mapearCompra(ResultSet resultset){
+                public List <Compra> mapearCompra(ResultSet resultset){
                 
-                Compra compra = new Compra();
+                List <Compra> listadoCompras = new ArrayList<>();
             try {
                     
-              if(resultset.next()){
+              while(resultset.next()){
+                Compra compra = new Compra();
                 compra.setCodCompra(resultset.getInt("cod_compra"));
                 compra.setCodProveedor(resultset.getInt("cod_proveedor_c"));
                 compra.setCodEmpleado(resultset.getInt("cod_empleado_c"));
@@ -147,12 +147,12 @@ public class CompraDAO {
                 System.out.println(" compra "+compra.getFechaCompra());
                 System.out.println(" compra "+compra.getValorTotal());                
                 System.out.println(""+resultset.getString("razon_social"));
-                
+                listadoCompras.add(compra);
             }
             } catch (Exception e) {
             }
       
-        return compra;
+        return listadoCompras;
         }
     
     

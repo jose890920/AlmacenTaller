@@ -22,7 +22,7 @@ public class DetalleCompraDAO {
      
     public void registrarDetalleCompra(DetalleCompra detalleCompra)throws SQLException, ParseException{
 
-     
+     /*
         detalleCompra.setCodCompra(2);
         detalleCompra.setCodProducto(1);
         detalleCompra.setCantidadProducto(5);
@@ -32,7 +32,7 @@ public class DetalleCompraDAO {
                 detalleCompra.getCantidadProducto()));
         detalleCompra.setDescuento(
                 validaciones.calcularDescuento(10, detalleCompra.getValorConjunto()));
-        
+        */
         queryCodigo = "select MAX(cod_detalle_Compra) conteo from detalle_Compra";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
