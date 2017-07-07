@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author jose luis Rodriguez
  */
-public class AjusteDAO {
+public class AjusteDAO extends ConstantesAlmacenyTaller{
 
      SentenciaSQL sentencia = new SentenciaSQL();
      Validaciones validaciones = new Validaciones();
@@ -20,15 +20,15 @@ public class AjusteDAO {
      String queryCodigo ="";
      ResultSet resultset;
      
-    public void registrarAjuste(Ajuste ajuste)throws SQLException, ParseException{
+    public int registrarAjuste(Ajuste ajuste)throws SQLException, ParseException{
 
-     
+     /*
         ajuste.setCodEmpleado(2);
         ajuste.setValorTotal(55_550);
         ajuste.setTipoAjuste("Devolucion");
         ajuste.setFechaAjuste(validaciones.transformarFechatoDate("05/05/2017"));
         ajuste.setEstado("Activo");
-        
+       */ 
         queryCodigo = "select MAX(cod_ajuste) conteo from ajuste";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -44,26 +44,24 @@ public class AjusteDAO {
                 + " "+ajuste.getValorTotal()+", '"+ajuste.getEstado()+"')";
         
          sentencia.gestionarRegistro(query);
+         
+         return ajuste.getCodAjuste();
     }
     
-    public void modificarAjuste(Ajuste ajuste) throws ParseException{
-        
+    public String modificarAjuste(Ajuste ajuste) throws ParseException{
+        /*
         ajuste.setCodEmpleado(2);
         ajuste.setValorTotal(55_000);
         ajuste.setTipoAjuste("Devolucion");
         ajuste.setFechaAjuste(validaciones.transformarFechatoDate("01-05-2017"));
         ajuste.setEstado("inactivo");
         ajuste.setCodAjuste(1);
-    
-    query =    "UPDATE ajuste " 
-            + " SET  tipo_ajuste='"+ajuste.getTipoAjuste()+"',"
-            + " cod_empleado_a='"+ajuste.getCodEmpleado()+"',"
-            + " fecha_ajuste='"+ajuste.getFechaAjuste()+"',"
-            + " valor_total="+ajuste.getValorTotal()+"," 
-            + " estado='"+ajuste.getEstado()+"'"
+    */
+    query =    "UPDATE ajuste SET " 
+            + " valor_total = "+ajuste.getValorTotal()+" " 
             + " WHERE cod_ajuste = "+ajuste.getCodAjuste()+"";
     
-    sentencia.gestionarRegistro(query);
+   return sentencia.gestionarRegistro(query);
     
     }
     
@@ -88,13 +86,14 @@ public class AjusteDAO {
          return mapearAjustes(resultset);
     }
     
-        public Ajuste consultarAjusteCodAjuste(Integer codAjuste){
+        public List<Ajuste> consultarAjusteCodAjuste(String numeroDocumento){
             
             query = "SELECT cod_ajuste, tipo_ajuste, cod_empleado_a,"
                     + " fecha_ajuste, valor_total, ajuste.estado, ciudad " 
-                    +" FROM ajuste, empleado WHERE "
-                    + " ajuste.estado = 'Activo' AND "
-                    + " cod_ajuste = "+codAjuste+""
+                    +" FROM ajuste, empleado, persona WHERE "
+                    + " ajuste.estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' AND "
+                    + " numero_documento = '"+numeroDocumento+"' "
+                    + " AND cod_persona_a = cod_persona "
                     + " AND cod_empleado_a = cod_empleado ORDER BY cod_ajuste ASC";            
             resultset = sentencia.gestionarConsulta(query);
             
@@ -131,29 +130,31 @@ public class AjusteDAO {
         
         }
     
-                public Ajuste mapearAjuste(ResultSet resultset){
+                public List<Ajuste> mapearAjuste(ResultSet resultset){
                 
-                Ajuste ajuste = new Ajuste();
+                      List <Ajuste> listadoAjustes = new ArrayList<>();
+                
             try {
-                    
-              if(resultset.next()){
                   
-                ajuste.setCodAjuste(resultset.getInt("cod_ajuste"));
-                ajuste.setTipoAjuste(resultset.getString("tipo_ajuste"));
-                ajuste.setCodEmpleado(resultset.getInt("cod_empleado_a"));
-                ajuste.setFechaAjuste(resultset.getDate("fecha_ajuste"));
-                ajuste.setValorTotal(resultset.getInt("valor_total"));
-                ajuste.setEstado(resultset.getString("estado"));
+              while(resultset.next()){
+                    Ajuste ajuste = new Ajuste();
+                    ajuste.setCodAjuste(resultset.getInt("cod_ajuste"));
+                    ajuste.setTipoAjuste(resultset.getString("tipo_ajuste"));
+                    ajuste.setCodEmpleado(resultset.getInt("cod_empleado_a"));
+                    ajuste.setFechaAjuste(resultset.getDate("fecha_ajuste"));
+                    ajuste.setValorTotal(resultset.getInt("valor_total"));
+                    ajuste.setEstado(resultset.getString("estado"));
 
-                System.out.println(" ajuste "+ajuste.getFechaAjuste());
-                System.out.println(" ajuste "+ajuste.getValorTotal());                
-                System.out.println(""+resultset.getString("ciudad"));
+                    System.out.println(" ajuste "+ajuste.getFechaAjuste());
+                    System.out.println(" ajuste "+ajuste.getValorTotal());                
+                    System.out.println(""+resultset.getString("ciudad"));
+                    listadoAjustes.add(ajuste);
                 
             }
             } catch (Exception e) {
             }
       
-        return ajuste;
+        return listadoAjustes;
         }
     
     

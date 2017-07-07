@@ -1047,6 +1047,26 @@ public class Validaciones extends ConstantesAlmacenyTaller{
          return "";
      
      }
+     
+     
+          public String validarCamposAjuste(JTextField numeroDocumentoEmpleadoTxt,
+                                      JDateChooser fechaVentaDate,
+                                      JTable productosSeleccionadosTabla, JComboBox tipoAjuste){
+         if ( numeroDocumentoEmpleadoTxt.getText() == null ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals("") ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals(CONSTANTE_CAMPO_OBLIGATORIO) ||
+             numeroDocumentoEmpleadoTxt.getText().trim().equals(CONSTANTE_CAMPO_NUMERICO) ||
+             fechaVentaDate.getDate() == null ||
+             productosSeleccionadosTabla == null ||
+             tipoAjuste.getSelectedItem().toString().trim().equals(CONSTANTE_COMBO_POR_DEFECTO)||
+             productosSeleccionadosTabla.getRowCount() < 1) {
+             
+             return CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO;
+             
+         }
+         return "";
+     
+     }
         
 }
    
