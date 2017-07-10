@@ -44,5 +44,5 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_MENSAJE_VALIDACION_NO_EXISTEN_PRODUCTOS = "No se Encontraron Productos";
     public final String CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE = "No hay Suficientes Productos";
     public final String CONSTANTE_MENSAJE_PRODUCTO_SELECCIONADO = "Este Producto se Encuentra Seleccionado";
-    
+    public final String CONSTANTE_ESTADO_PAGO= "PAGADO";
 }

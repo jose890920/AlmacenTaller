@@ -86,7 +86,7 @@ public class AjusteGUI extends javax.swing.JDialog {
 
         
         registrarBtn.setEnabled(true);
-        this.setTitle("Gestion Compras");
+        this.setTitle("Gestion Ajuste");
         this.setLocationRelativeTo(null);
         
         modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
@@ -271,7 +271,7 @@ public class AjusteGUI extends javax.swing.JDialog {
         jLabel25.setText("*");
         jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, 10));
 
-        jTabbedPane1.addTab("Datos de la Compra", jPanel1);
+        jTabbedPane1.addTab("Datos del Ajuste", jPanel1);
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -436,8 +436,8 @@ public class AjusteGUI extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comprar.png"))); // NOI18N
-        jLabel1.setText("Comprar");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ajuste.png"))); // NOI18N
+        jLabel1.setText("Ajuste");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, 230, 100));
 

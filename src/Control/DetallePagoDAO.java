@@ -23,13 +23,13 @@ public class DetallePagoDAO {
      
     public void registrarDetallePago(DetallePago detallePago)throws SQLException, ParseException{
 
-     
+     /*
         detallePago.setCodPago(2);
         detallePago.setTipoServicio("Cambio de pastillas delanteras");
         detallePago.setValorServicio(15_000);
         detallePago.setDescuentoServicio(validaciones.calcularDescuento(10,
                                          detallePago.getValorServicio()));
-        
+        */
         queryCodigo = "select MAX(cod_detalle_Pago) conteo from detalle_Pago";
         
         ResultSet result = sentencia.gestionarConsulta(queryCodigo);
@@ -38,29 +38,32 @@ public class DetallePagoDAO {
         
         query = "INSERT INTO detalle_pago( " 
                 +" cod_detalle_pago, cod_pago_d, tipo_servicio,"
-                + " valor_servicio, descuento_servicio)" 
+                + " valor_servicio, descuento_servicio, descripcion)" 
                 +" VALUES ( "+detallePago.getCodDetallePago()+","
                 + " "+detallePago.getCodPago()+",'"+detallePago.getTipoServicio()+"',"
                 + " "+detallePago.getValorServicio()+","
-                + " "+detallePago.getDescuentoServicio()+" )";
+                + " "+detallePago.getDescuentoServicio()+","
+                + " '"+detallePago.getDescripcion()+"' "
+                + " )";
         
          sentencia.gestionarRegistro(query);
     }
     
     public void modificarDetallePago(DetallePago detallePago) throws ParseException{
-        
+       /* 
         detallePago.setCodPago(2);
         detallePago.setTipoServicio("Cambio de pastillas traseras");
         detallePago.setValorServicio(35_357);
         detallePago.setDescuentoServicio(validaciones.calcularDescuento(10,
                                          detallePago.getValorServicio()));
         detallePago.setCodDetallePago(1);
-    
+    */
     query =    "UPDATE detalle_Pago " 
             + " SET  cod_pago_d="+detallePago.getCodPago()+","
             + " tipo_servicio='"+detallePago.getTipoServicio()+"',"
             + " valor_servicio="+detallePago.getValorServicio()+","
-            + " descuento_servicio="+detallePago.getDescuentoServicio()+"" 
+            + " descuento_servicio="+detallePago.getDescuentoServicio()+","
+            + " descripcion = '"+detallePago.getDescripcion()+"' " 
             + " WHERE cod_detalle_Pago = "+detallePago.getCodDetallePago()+"";
     
     sentencia.gestionarRegistro(query);
@@ -79,7 +82,7 @@ public class DetallePagoDAO {
         
         
             query =  "SELECT cod_detalle_pago, cod_pago_d, tipo_servicio,"
-                    + " valor_servicio, descuento_servicio " 
+                    + " valor_servicio, descuento_servicio, descripcion " 
                     +" FROM detalle_pago ORDER BY cod_detalle_pago ASC";
             
             resultset = sentencia.gestionarConsulta(query);
@@ -91,7 +94,7 @@ public class DetallePagoDAO {
         public DetallePago consultarDetallePagoCodDetallePago(Integer codDetallePago){
             
             query =  "SELECT cod_detalle_pago, cod_pago_d, tipo_servicio,"
-                    + " valor_servicio, descuento_servicio, pago_empleado.estado estdp " 
+                    + " valor_servicio, descuento_servicio, pago_empleado.estado estdp, descripcion " 
                     +" FROM detalle_pago, pago_empleado WHERE cod_pago_d = cod_pago "
                     +" AND cod_detalle_pago = "+codDetallePago+" AND"
                     + " pago_empleado.estado = 'Activo' "

@@ -158,12 +158,12 @@ public class ComprarGUI extends javax.swing.JDialog {
 
         jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel10.setText("Documento Representante Legal");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 0, 0));
         jLabel16.setText("*");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, 10));
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, 10));
 
         nombresProveedorTxt.setEditable(false);
         nombresProveedorTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
@@ -192,20 +192,20 @@ public class ComprarGUI extends javax.swing.JDialog {
                 nombresProveedorTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(nombresProveedorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 200, -1));
+        jPanel1.add(nombresProveedorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, 200, -1));
 
         jLabel21.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel21.setText("Fecha de Compra");
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, -1, -1));
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 0, 0));
         jLabel24.setText("*");
-        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, 10));
+        jPanel1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, -1, 10));
 
         jLabel29.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel29.setText("Nombre Comercial");
-        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
+        jPanel1.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 140, -1, -1));
 
         numeroDocumentoEmpleadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         numeroDocumentoEmpleadoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -233,11 +233,11 @@ public class ComprarGUI extends javax.swing.JDialog {
                 numeroDocumentoEmpleadoTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(numeroDocumentoEmpleadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 200, -1));
+        jPanel1.add(numeroDocumentoEmpleadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 200, -1));
 
         jLabel9.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel9.setText("Documento Empleado");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
         nombresEmpleadoTxt.setEditable(false);
         nombresEmpleadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
@@ -266,16 +266,16 @@ public class ComprarGUI extends javax.swing.JDialog {
                 nombresEmpleadoTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(nombresEmpleadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 40, 200, -1));
+        jPanel1.add(nombresEmpleadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 100, 200, -1));
 
         jLabel6.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel6.setText("Nombres Empleado");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 80, -1, -1));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 0, 0));
         jLabel25.setText("*");
-        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, 10));
+        jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, 10));
 
         numeroDocumentoClienteTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         numeroDocumentoClienteTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -303,10 +303,10 @@ public class ComprarGUI extends javax.swing.JDialog {
                 numeroDocumentoClienteTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(numeroDocumentoClienteTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 200, -1));
+        jPanel1.add(numeroDocumentoClienteTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 200, -1));
 
         fechaCompraDate.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jPanel1.add(fechaCompraDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 200, 26));
+        jPanel1.add(fechaCompraDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 200, 26));
 
         jTabbedPane1.addTab("Datos de la Compra", jPanel1);
 

@@ -11,7 +11,15 @@ public class DetallePago {
     
     private double valorServicio, descuentoServicio;
     
-    private String tipoServicio;
+    private String tipoServicio,descripcion;
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     
     private PagoEmpleado pagoEmpleado;
 
