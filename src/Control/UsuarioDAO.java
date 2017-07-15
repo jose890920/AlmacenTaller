@@ -163,8 +163,8 @@ public class UsuarioDAO extends ConstantesAlmacenyTaller{
         return usuario;
         }
     
-    
-    
+                
+
     public static void main(String[] args) throws SQLException, ParseException {
         UsuarioDAO u = new UsuarioDAO();
         Usuario usuario = new Usuario();

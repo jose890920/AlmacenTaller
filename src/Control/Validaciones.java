@@ -1067,6 +1067,32 @@ public class Validaciones extends ConstantesAlmacenyTaller{
          return "";
      
      }
+          
+          
+     public boolean validarSoloNumerosyLetras(KeyEvent ke, JTextField text) { 
+             char c=ke.getKeyChar(); 
+             boolean flag = false;
+         
+          if(!(Character.isLetter(c) && !Character.isSpace(c)) || !Character.isDigit(c)) { 
+              
+              
+              ke.consume(); 
+              
+              flag = true;
+          }else{
+              
+              if(text.getText().trim().equals("Solo se permiten Numero") ||
+                      text.getText().trim().equals("Solo se permiten Numeros")){
+                  text.setText("");
+                  text.setBackground(Color.white);
+              }
+         
+          String cadena = (""+c).toUpperCase();
+              c = cadena.charAt(0);
+              ke.setKeyChar(c);
+          }
+         return flag;
+    } 
         
 }
    
