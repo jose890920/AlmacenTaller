@@ -83,7 +83,7 @@ public class VenderGUI extends javax.swing.JDialog {
         registrarBtn.setEnabled(true);
         this.setTitle("Gestion Ventas");
         this.setLocationRelativeTo(null);
-        modificarBtn.setEnabled(false);
+       
         modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
         modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
         productosConsultaTabla.setModel(modeloTablaProductos);
@@ -139,7 +139,6 @@ public class VenderGUI extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         registrarBtn = new javax.swing.JButton();
-        modificarBtn = new javax.swing.JButton();
         consultarBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -478,17 +477,7 @@ public class VenderGUI extends javax.swing.JDialog {
                 registrarBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 145, 55));
-
-        modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
-        modificarBtn.setToolTipText("MODIFICAR");
-        modificarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modificarBtnActionPerformed(evt);
-            }
-        });
-        jPanel3.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 145, 55));
+        jPanel3.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 145, 55));
 
         consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
@@ -686,7 +675,7 @@ public class VenderGUI extends javax.swing.JDialog {
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt)) {
                     registrarBtn.setEnabled(false);
-                    modificarBtn.setEnabled(false);
+                    
 
                 }
 
@@ -696,36 +685,6 @@ public class VenderGUI extends javax.swing.JDialog {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_consultarBtnActionPerformed
-
-    private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
-        /*
-        try {
-
-            if (validaciones.validarCamposUsuario(numeroDocumentoEmpleadoTxt, nombresEmpleadoTxt,
-                                                  nombresClienteTxt, contraseniaTxt,
-                                                  tipoUsuarioCombo).equals("")){
-                if (validaciones.compararContrasenias(contraseniaTxt, confirmaContraseniaTxt)) {
-                    usuario.setEmpleado(empleado);
-                    mensajeLbl.setForeground(Color.green);
-                    mensajeLbl.setText(facadeUsuario.modificarUsuario(mapeoUsuario(usuario)));
-                }else{
-                    mensajeLbl.setForeground(Color.red);
-                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CONTRASENIAS_DIFERENTES);
-                }
-            
-
-        }else{
-            mensajeLbl.setForeground(Color.red);
-            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
-        }
-
-        validaciones.notificarMensajeconTimer(mensajeLbl);
-
-        } catch (SQLException | ParseException ex) {
-            Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
-    }//GEN-LAST:event_modificarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
    /*
@@ -829,7 +788,9 @@ public class VenderGUI extends javax.swing.JDialog {
 
     private void cantidadProductoSeleccionadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadProductoSeleccionadoTxtActionPerformed
         
-        if (cantidadProductoSeleccionadoTxt.getText().trim().equals("") || Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) > cantidadProductoSeleccionado) {
+        if (cantidadProductoSeleccionadoTxt.getText().trim().equals("") || 
+            Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) > cantidadProductoSeleccionado ||
+            productoSeleccionadoTxt.getText().trim().equals("")) {
             
             mensajeLbl.setForeground(Color.red);
             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE);
@@ -925,7 +886,6 @@ public class VenderGUI extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel mensajeLbl;
-    private javax.swing.JButton modificarBtn;
     private javax.swing.JTextField nombreProductoTxt;
     private javax.swing.JTextField nombresClienteTxt;
     private javax.swing.JTextField nombresEmpleadoTxt;

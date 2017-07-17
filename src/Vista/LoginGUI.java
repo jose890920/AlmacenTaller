@@ -84,7 +84,7 @@ public class LoginGUI extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         mensajeLbl = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,22 +162,23 @@ public class LoginGUI extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 110, 60));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 110, 60));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/loginPrincipal.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 140, 130));
 
         mensajeLbl.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        jPanel1.add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 260, 30));
+        jPanel1.add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 260, 30));
 
-        jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        salir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/salirPrincipal.png"))); // NOI18N
+        salir.setToolTipText("SALIR");
+        salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                salirActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
+        jPanel1.add(salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 110, 60));
 
         jTabbedPane1.addTab("Login", jPanel1);
 
@@ -273,9 +274,9 @@ public class LoginGUI extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirActionPerformed
        System.exit(0);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_salirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,7 +302,6 @@ public class LoginGUI extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPasswordField contraseniaTxt;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -310,6 +310,7 @@ public class LoginGUI extends javax.swing.JDialog {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel mensajeLbl;
     private javax.swing.JTextField nombreUsuarioTxt;
+    private javax.swing.JButton salir;
     // End of variables declaration//GEN-END:variables
 
      public void validarSonido(boolean flag){

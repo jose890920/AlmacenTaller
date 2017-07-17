@@ -12,6 +12,7 @@ import Facade.FacadeProducto;
 import Modelo.Producto;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -41,6 +42,8 @@ public class ProductoGUI extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         this.setTitle("Gestion Productos");
         modificarBtn.setEnabled(false);
+        fechaIngresoDate.setEnabled(false);
+        fechaIngresoDate.setDate(new Date());
     }
 
     /**
@@ -231,6 +234,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         jLabel5.setText("Nombre de Producto");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
+        fechaIngresoDate.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         fechaIngresoDate.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 fechaIngresoDateKeyTyped(evt);
@@ -534,9 +538,15 @@ public class ProductoGUI extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         try {
+            if (!validaciones.validarCampoVacio(nombreProductoTxt)) {
+                producto = new Producto();
+                producto.setNombreProdcto(nombreProductoTxt.getText().trim());
+            
+            
             if (validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
                     fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
-                    tipoProductoCombo).equals("")) {
+                    tipoProductoCombo).equals("") && 
+                    facadeProducto.consultarProducto(producto) == null) {
                 facadeProducto.registrarProducto(mapearProducto());
             } else {
                 mensajeLbl.setText(validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
@@ -544,7 +554,7 @@ public class ProductoGUI extends javax.swing.JDialog {
                         tipoProductoCombo));
                 validaciones.notificarMensajeconTimer(mensajeLbl);
             }
-
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {

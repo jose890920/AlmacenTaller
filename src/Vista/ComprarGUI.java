@@ -803,8 +803,8 @@ public class ComprarGUI extends javax.swing.JDialog {
 
     private void cantidadProductoSeleccionadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadProductoSeleccionadoTxtActionPerformed
         
-        if (Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) < 1 ||
-            cantidadProductoSeleccionadoTxt.getText().trim().equals("") ||
+        if (cantidadProductoSeleccionadoTxt.getText().trim().equals("") ||
+            Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) < 1 ||
             valorProductoSeleccionadoTxt.getText().trim().equals("") ||
             Double.parseDouble(valorProductoSeleccionadoTxt.getText()) < 1) {
             
@@ -816,6 +816,8 @@ public class ComprarGUI extends javax.swing.JDialog {
             if (descuentoProductoSeleccionadoTxt.getText().trim().equals("") ) {
                 descuentoProductoSeleccionadoTxt.setText("0");
             }
+            
+
 
 
             if (!validaciones.validarNombreProducto(productosSeleccionadosTabla, productoSeleccionadoTxt)) {

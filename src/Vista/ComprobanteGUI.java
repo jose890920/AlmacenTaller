@@ -23,6 +23,8 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -549,8 +551,11 @@ public class ComprobanteGUI extends javax.swing.JDialog {
                 documento.add(new Paragraph("TOTAL DESCUENTOS:                    "+totalDescuentoLbl.getText()));
                 documento.add(new Paragraph("SUB TOTAL:                                     "+subtotalLbl.getText()));
                 documento.add(new Paragraph("IVA:                                                   "+ivaLbl.getText()));
-                documento.add(new Paragraph("VALOR TOTAL:                                "+valorTotalLbl.getText()));
+                documento.add(new Paragraph("VALOR TOTAL:                                "+valorTotalLbl.getText()));                
             documento.close();
+            File file = new File("D:\\Documentacio de proyecto\\Facturas\\factura"+idFacturaLbl.getText()+".pdf");
+            Desktop.getDesktop().open(file);
+            dispose();
 
         } catch (DocumentException | IOException e) {
         } catch (ParseException ex) {

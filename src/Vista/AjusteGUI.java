@@ -703,8 +703,8 @@ public class AjusteGUI extends javax.swing.JDialog {
 
     private void cantidadProductoSeleccionadoTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cantidadProductoSeleccionadoTxtActionPerformed
         
-        if (Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) < 1 ||
-            cantidadProductoSeleccionadoTxt.getText().trim().equals("") || validarCantidadProductos()) {
+        if (cantidadProductoSeleccionadoTxt.getText().trim().equals("") ||
+            Double.parseDouble(cantidadProductoSeleccionadoTxt.getText()) < 1 || validarCantidadProductos()) {
             
             mensajeLbl.setForeground(Color.red);
             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE);
