@@ -515,6 +515,11 @@ public class UsuarioGUI extends javax.swing.JDialog {
                     confirmaContraseniaTxt.setVisible(false);
                     jLabeConfirmaContrasenia.setVisible(false);
                     modificarBtn.setEnabled(true);
+                    registrarBtn.setEnabled(false);
+                }else{
+                
+                registrarBtn.setEnabled(true);
+                modificarBtn.setEnabled(false);
                 }
                 
                 

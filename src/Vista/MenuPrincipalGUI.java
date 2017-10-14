@@ -30,6 +30,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
             pagoBtn.setEnabled(false);
             usuariosBtn.setEnabled(false);
             ajustesEspecialesMenu.setEnabled(false);
+            catalogosBtn.setEnabled(false);
         }
         System.out.println("tipo "+tipoUsuario);
         
@@ -55,6 +56,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         ajusteBtn = new javax.swing.JButton();
         pagoBtn = new javax.swing.JButton();
         usuariosBtn = new javax.swing.JButton();
+        catalogosBtn = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -69,6 +71,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem11 = new javax.swing.JMenuItem();
 
@@ -167,6 +170,15 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
             }
         });
         jPanel1.add(usuariosBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, 140, 90));
+
+        catalogosBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/catalogos.png"))); // NOI18N
+        catalogosBtn.setToolTipText("CATALOGOS");
+        catalogosBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                catalogosBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(catalogosBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 140, 90));
 
         jMenu3.setText("Gestion Registro");
 
@@ -267,6 +279,15 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
             }
         });
         ajustesEspecialesMenu.add(jMenuItem10);
+
+        jMenuItem12.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem12.setText("Catalogos");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        ajustesEspecialesMenu.add(jMenuItem12);
 
         jMenuBar1.add(ajustesEspecialesMenu);
 
@@ -406,6 +427,16 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
       loginGUI.setVisible(true);
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void catalogosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catalogosBtnActionPerformed
+    CatalogosGUI catalogosGUI = new CatalogosGUI(this, true);
+      catalogosGUI.setVisible(true);     
+    }//GEN-LAST:event_catalogosBtnActionPerformed
+
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+      CatalogosGUI catalogosGUI = new CatalogosGUI(this, true);
+      catalogosGUI.setVisible(true);  
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -447,6 +478,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ajusteBtn;
     private javax.swing.JMenu ajustesEspecialesMenu;
+    private javax.swing.JButton catalogosBtn;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -461,6 +493,7 @@ public class MenuPrincipalGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
