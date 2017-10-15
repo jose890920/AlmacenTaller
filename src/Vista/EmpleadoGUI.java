@@ -792,15 +792,39 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                     ciudadEmpleadoTxt).equals("") && facadeEmpleado.consultarEmpleado(empleado) == null) {
 
                     facadeEmpleado.registrarEmpleado(mapearEmpleado());
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                
+                    registrarBtn.setEnabled(false);
+                    modificarBtn.setEnabled(false);
+                
+                    mensajeLbl.setForeground(Color.green);
                     
-        }else{mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
-              mensajeLbl.setForeground(Color.red);
+                    validaciones.limpiarCamposEmpleado(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                                           numeroDocumentoTxt, direccionTxt, telefonoTxt,
+                                           celularTxt, buttonGroupGenero, fechaIngresoDate,
+                                           fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
+                                           ciudadEmpleadoTxt);
+                    modificarBtn.setEnabled(false);
+                    registrarBtn.setEnabled(false);
+                    
+        }else{
+                 mensajeLbl.setForeground(Color.red);  
+                if(validaciones.compararFechas(fechaIngresoDate.getDate(), fechaNacimientoDate.getDate()).equals("")){
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
+                                 
+                }else{
+                    mensajeLbl.setText(constantes.CONSTANTE_EMPLEADO_MENOR);
+                                    
+                }
         }
-            validaciones.notificarMensajeconTimer(mensajeLbl);
+            
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
@@ -820,10 +844,19 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                                             fechaNacimientoDate, estadoCivilCombo, ciudadCombo, ciudadEmpleadoTxt);
                 registrarBtn.setEnabled(false);
                 modificarBtn.setEnabled(true);
+                mensajeLbl.setForeground(Color.green);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CLIENTE_ENCONTRADO);
+
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                 registrarBtn.setEnabled(true);
                 modificarBtn.setEnabled(false);
+                }
+                
+                if (facadeEmpleado.consultarEmpleado(empleado) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
+                    mensajeLbl.setForeground(Color.red);
+                    
                 }
                 
             }
@@ -831,6 +864,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+         validaciones.notificarMensajeconTimer(mensajeLbl);
        
         
     }//GEN-LAST:event_consultarBtnActionPerformed
@@ -867,7 +901,7 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                                            fechaNacimientoDate, estadoCivilCombo, ciudadCombo,
                                            ciudadEmpleadoTxt);
         modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(true);
+        registrarBtn.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

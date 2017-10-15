@@ -1093,6 +1093,17 @@ public class Validaciones extends ConstantesAlmacenyTaller{
           }
          return flag;
     } 
+     
+                        public String compararFechasMenor(Date fecha1, Date fecha2){
+
+                    double anios = ((fecha1.getTime()-fecha2.getTime())/(1000*60*60*24))/365;
+                        if (anios >= 15) {
+                            return "";
+                        }
+                    
+                    
+                    return "El Cliente Debe Ser Mayor 12 años";
+                    }
         
 }
    

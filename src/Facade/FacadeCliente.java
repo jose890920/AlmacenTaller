@@ -26,11 +26,15 @@ public class FacadeCliente {
     public void registrarCliente(Cliente cliente) throws SQLException, ParseException{
        ClienteDAO clienteoDAO = new ClienteDAO();
        cliente.setCodPersona(personaDAO.registrarPersona(cliente.getPersona()));
+       if(cliente.getMotocicleta() != null){
        cliente.getMotocicleta().setCodCliente(clienteoDAO.registrarCliente(cliente));
+    
         if (validarRegistroMotocilieta(cliente.getMotocicleta().getLinea())) {
             motocicletaDAO.registrarMotocicleta(cliente.getMotocicleta());
         }
-       
+       }else{
+        clienteoDAO.registrarCliente(cliente);
+       }
        
    } 
    

@@ -142,6 +142,8 @@ public class AjusteGUI extends javax.swing.JDialog {
         valorProductoSeleccionadoTxt = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         registrarBtn = new javax.swing.JButton();
@@ -350,8 +352,8 @@ public class AjusteGUI extends javax.swing.JDialog {
         jPanel2.add(cantidadProductoSeleccionadoTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 60, 26));
 
         jLabel12.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel12.setText("Nombre producto");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+        jLabel12.setText("Total Parcial");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
         jLabel13.setText("Producto Seleccionado");
@@ -430,6 +432,14 @@ public class AjusteGUI extends javax.swing.JDialog {
         jLabel28.setText("*");
         jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, -1, 10));
 
+        jLabel17.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel17.setText("Nombre producto");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel18.setText("Nombre producto");
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
+
         jTabbedPane1.addTab("Añadir Productos", jPanel2);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 430));
@@ -505,6 +515,10 @@ public class AjusteGUI extends javax.swing.JDialog {
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
                 int codigoAjuste = facadeAjuste.registrarAjuste(mapeoAjuste(ajuste));
                 registrarDetalleAjuste(productosSeleccionadosTabla,codigoAjuste);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                limpiarCampos();
+                
+                mensajeLbl.setForeground(Color.green);
                 //ComprobanteGUI comprobanteGUI = new ComprobanteGUI(null, true, mapearParametrosFactura());
                 
                 //comprobanteGUI.setVisible(true);
@@ -523,8 +537,10 @@ public class AjusteGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-          
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void numeroDocumentoEmpleadoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoEmpleadoTxtFocusGained
@@ -614,6 +630,9 @@ public class AjusteGUI extends javax.swing.JDialog {
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt)) {
                     registrarBtn.setEnabled(false);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
+                    mensajeLbl.setForeground(Color.red);
+                    validaciones.notificarMensajeconTimer(mensajeLbl);
                    
 
                 }
@@ -626,12 +645,8 @@ public class AjusteGUI extends javax.swing.JDialog {
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-   /*
-        validaciones.limpiarCamposUsuario(nombresClienteTxt, contraseniaTxt,
-                tipoUsuarioCombo, confirmaContraseniaTxt, nombresEmpleadoTxt, numeroDocumentoEmpleadoTxt);
-        modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(false);
-*/
+            limpiarCampos();
+            registrarBtn.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
@@ -805,6 +820,8 @@ public class AjusteGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
@@ -949,6 +966,25 @@ public class AjusteGUI extends javax.swing.JDialog {
             
         }
         return false;
+    }
+
+    private void limpiarCampos() {
+        numeroDocumentoEmpleadoTxt.setText("");
+        nombresEmpleadoTxt.setText("");
+        fechaAjusteDate.setDate(null);
+        tipoAjusteCombo.setSelectedItem("-- Select --");
+        nombreProductoTxt.setText("");
+        productoSeleccionadoTxt.setText("");
+        valorProductoSeleccionadoTxt.setText("");
+        descuentoProductoSeleccionadoTxt.setText("");
+        cantidadProductoSeleccionadoTxt.setText("");
+        modeloTablaProductos = new DefaultTableModel();
+        modeloTablaProductosSeleccionados = new DefaultTableModel();
+        modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
+        modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
+        productosConsultaTabla.setModel(modeloTablaProductos);
+        productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
+        totalParcialLbl.setText("");
     }
 
 }

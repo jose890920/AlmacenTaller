@@ -23,6 +23,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -260,6 +261,7 @@ public class ComprobanteGUI extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+         mensajeLbl.setForeground(Color.red);
         try {
 
                 facadeComprobante.registrarComprobante(mapearComprobante());
@@ -269,12 +271,15 @@ public class ComprobanteGUI extends javax.swing.JDialog {
     
         } catch (SQLException ex) {
             Logger.getLogger(ComprobanteGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         } catch (ParseException ex) {
             Logger.getLogger(ComprobanteGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         } catch (DocumentException ex) {
-            Logger.getLogger(ComprobanteGUI.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComprobanteGUI.class.getName()).log(Level.SEVERE, null, ex);      
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         }
-  
+        validaciones.notificarMensajeconTimer(mensajeLbl);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

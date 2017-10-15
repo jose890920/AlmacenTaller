@@ -44,5 +44,13 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_MENSAJE_VALIDACION_NO_EXISTEN_PRODUCTOS = "No se Encontraron Productos";
     public final String CONSTANTE_MENSAJE_CANTIDAD_DE_PRODUCTOS_NO_DISPONIBLE = "No hay Suficientes Productos";
     public final String CONSTANTE_MENSAJE_PRODUCTO_SELECCIONADO = "Este Producto se Encuentra Seleccionado";
-    public final String CONSTANTE_ESTADO_PAGO= "PAGADO";
+    public final String CONSTANTE_ESTADO_PAGO = "PAGADO";
+    public final String CONSTANTE_MENSAJE_REGISTRO_EXITOSO = "Registro exitoso";
+    public final String CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE = "Empleado no existe";
+    public final String CONSTANTE_MENSAJE_CLIENTE_ENCONTRADO = "Cliente encontrado";
+    public final String CONSTANTE_MENSAJE_NO_CLIENTE_ENCONTRADO = "Cliente no existe";    
+    public final String CONSTANTE_MENSAJE_ERROR_CONTROLADO = "Error controlado";        
+    public final String CONSTANTE_MENSAJE_NO_EXISTE_PROVEEDOR = "No existe proveedor";    
+    public final String CONSTANTE_CLIENTE_MENOR = "El Cliente Debe Ser Mayor de 15 años";  
+    public final String CONSTANTE_EMPLEADO_MENOR = "El Empleado Debe Ser Mayor de 18 años";  
 }

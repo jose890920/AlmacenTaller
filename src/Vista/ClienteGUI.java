@@ -12,8 +12,10 @@ import Facade.FacadeCliente;
 import Modelo.Cliente;
 import Modelo.Motocicleta;
 import Modelo.Persona;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JDialog;
@@ -95,12 +97,12 @@ public class ClienteGUI extends javax.swing.JDialog {
         tieneMotocicletaCombo = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        mensajeLbl = new javax.swing.JLabel();
         registrarBtn = new javax.swing.JButton();
         modificarBtn = new javax.swing.JButton();
         consultarBtn = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        mensajeLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -441,6 +443,21 @@ public class ClienteGUI extends javax.swing.JDialog {
         jLabel24.setText("*");
         jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 10));
 
+        jTabbedPane1.addTab("Datos Complementarios", jPanel3);
+
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 530, 330));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, -1));
+
+        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clientes.png"))); // NOI18N
+        jLabel1.setText("Clientes");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 336, 234, -1));
+
+        mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 490, 30));
+
         registrarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         registrarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/guardar.png"))); // NOI18N
         registrarBtn.setText("Registrar");
@@ -449,7 +466,7 @@ public class ClienteGUI extends javax.swing.JDialog {
                 registrarBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, 145, 55));
+        getContentPane().add(registrarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 60, 145, 55));
 
         modificarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         modificarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/editar.png"))); // NOI18N
@@ -459,7 +476,7 @@ public class ClienteGUI extends javax.swing.JDialog {
                 modificarBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, 145, 55));
+        getContentPane().add(modificarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 145, 55));
 
         consultarBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         consultarBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/buscar.png"))); // NOI18N
@@ -469,7 +486,7 @@ public class ClienteGUI extends javax.swing.JDialog {
                 consultarBtnActionPerformed(evt);
             }
         });
-        jPanel3.add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, 145, 55));
+        getContentPane().add(consultarBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 145, 55));
 
         jButton3.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/limpiar.png"))); // NOI18N
@@ -479,22 +496,7 @@ public class ClienteGUI extends javax.swing.JDialog {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 145, 55));
-
-        jTabbedPane1.addTab("Datos Complementarios", jPanel3);
-
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 0, 610, 330));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 606, -1));
-
-        jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/clientes.png"))); // NOI18N
-        jLabel1.setText("Clientes");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 336, 234, -1));
-
-        mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
-        mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 350, 30));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 240, 145, 55));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -749,8 +751,23 @@ public class ClienteGUI extends javax.swing.JDialog {
                 tieneMotocicletaCombo, barrioTxt, jRadioButtonFemenino,
                 jRadioButtonMasculino).equals("") &&
                 facadeCliente.consultarCliente(cliente) == null) {
+                
+                if (validaciones.compararFechasMenor(new Date(), fechaNacimientoDate.getDate()).equals("")) {
+                facadeCliente.registrarCliente(mapearCliente());
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                validaciones.limpiarCamposCliente(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, buttonGroupGenero,
+                fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
+                modificarBtn.setEnabled(false);
+                registrarBtn.setEnabled(false);
+                
+                mensajeLbl.setForeground(Color.green);
+                }else{
+                mensajeLbl.setText(constantes.CONSTANTE_CLIENTE_MENOR);
+                mensajeLbl.setForeground(Color.red);
+                }
+                
 
-            facadeCliente.registrarCliente(mapearCliente());
 
         }else{
                 mensajeLbl.setText(validaciones.validarCamposCliente(nombresTxt, apellidosTxt,
@@ -763,7 +780,10 @@ public class ClienteGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
         Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+        mensajeLbl.setForeground(Color.red);
+        mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
@@ -804,20 +824,28 @@ public class ClienteGUI extends javax.swing.JDialog {
                 jRadioButtonMasculino, fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
                 registrarBtn.setEnabled(false);
                 modificarBtn.setEnabled(true);
+                mensajeLbl.setForeground(Color.green);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CLIENTE_ENCONTRADO);
+                
                 
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                     registrarBtn.setEnabled(true);
                     modificarBtn.setEnabled(false);
+                    mensajeLbl.setForeground(Color.red);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_CLIENTE_ENCONTRADO);
+                    
                     
                 }
 
             }
-
+            
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         }
-
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -825,7 +853,7 @@ public class ClienteGUI extends javax.swing.JDialog {
         numeroDocumentoTxt, direccionTxt, telefonoTxt, celularTxt, buttonGroupGenero,
         fechaNacimientoDate, tieneMotocicletaCombo, barrioTxt);
         modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(true);
+        registrarBtn.setEnabled(false);
         
     }//GEN-LAST:event_jButton3ActionPerformed
 

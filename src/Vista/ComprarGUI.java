@@ -115,7 +115,7 @@ public class ComprarGUI extends javax.swing.JDialog {
         nombresEmpleadoTxt = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
-        numeroDocumentoClienteTxt = new javax.swing.JTextField();
+        numeroDocumentoProveedorTxt = new javax.swing.JTextField();
         fechaCompraDate = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -137,6 +137,7 @@ public class ComprarGUI extends javax.swing.JDialog {
         valorProductoSeleccionadoTxt = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         registrarBtn = new javax.swing.JButton();
@@ -277,33 +278,33 @@ public class ComprarGUI extends javax.swing.JDialog {
         jLabel25.setText("*");
         jPanel1.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, -1, 10));
 
-        numeroDocumentoClienteTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
-        numeroDocumentoClienteTxt.setMaximumSize(new java.awt.Dimension(6, 10));
-        numeroDocumentoClienteTxt.addFocusListener(new java.awt.event.FocusAdapter() {
+        numeroDocumentoProveedorTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        numeroDocumentoProveedorTxt.setMaximumSize(new java.awt.Dimension(6, 10));
+        numeroDocumentoProveedorTxt.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                numeroDocumentoClienteTxtFocusGained(evt);
+                numeroDocumentoProveedorTxtFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                numeroDocumentoClienteTxtFocusLost(evt);
+                numeroDocumentoProveedorTxtFocusLost(evt);
             }
         });
-        numeroDocumentoClienteTxt.addActionListener(new java.awt.event.ActionListener() {
+        numeroDocumentoProveedorTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numeroDocumentoClienteTxtActionPerformed(evt);
+                numeroDocumentoProveedorTxtActionPerformed(evt);
             }
         });
-        numeroDocumentoClienteTxt.addKeyListener(new java.awt.event.KeyAdapter() {
+        numeroDocumentoProveedorTxt.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                numeroDocumentoClienteTxtKeyPressed(evt);
+                numeroDocumentoProveedorTxtKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                numeroDocumentoClienteTxtKeyReleased(evt);
+                numeroDocumentoProveedorTxtKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                numeroDocumentoClienteTxtKeyTyped(evt);
+                numeroDocumentoProveedorTxtKeyTyped(evt);
             }
         });
-        jPanel1.add(numeroDocumentoClienteTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 200, -1));
+        jPanel1.add(numeroDocumentoProveedorTxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 200, -1));
 
         fechaCompraDate.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jPanel1.add(fechaCompraDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 200, 26));
@@ -467,6 +468,10 @@ public class ComprarGUI extends javax.swing.JDialog {
         jLabel28.setText("*");
         jPanel2.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 180, -1, 10));
 
+        jLabel17.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel17.setText("Total Parcial");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
+
         jTabbedPane1.addTab("Añadir Productos", jPanel2);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 430));
@@ -559,15 +564,15 @@ public class ComprarGUI extends javax.swing.JDialog {
             personaProveedor = new Persona();
             empleado = new Empleado();
             if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt) &&
-                !validaciones.validarCampoVacio(numeroDocumentoClienteTxt)) {
+                !validaciones.validarCampoVacio(numeroDocumentoProveedorTxt)) {
              persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText());
-             personaProveedor.setNumeroDocumento(numeroDocumentoClienteTxt.getText()); 
+             personaProveedor.setNumeroDocumento(numeroDocumentoProveedorTxt.getText()); 
             }
             
             
             empleado.setPersona(persona);
             proveedor.setPersona(personaProveedor);
-            if (validaciones.validarCamposCompra(numeroDocumentoEmpleadoTxt, numeroDocumentoClienteTxt,
+            if (validaciones.validarCamposCompra(numeroDocumentoEmpleadoTxt, numeroDocumentoProveedorTxt,
                 fechaCompraDate, productosSeleccionadosTabla).equals("") &&
                 facadeEmpleado.consultarEmpleado(empleado) != null &&
                 facadeProveedor.consultarProveedor(proveedor) != null) {
@@ -576,12 +581,18 @@ public class ComprarGUI extends javax.swing.JDialog {
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
                 int codigoCompra = facadeCompra.registrarCompra(mapeoCompra(compra));
                 registrarDetalleCompra(productosSeleccionadosTabla,codigoCompra);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                
+                registrarBtn.setEnabled(false);
+                
+                mensajeLbl.setForeground(Color.green);
+                limpiarCampos();
                 //ComprobanteGUI comprobanteGUI = new ComprobanteGUI(null, true, mapearParametrosFactura());
                 
                 //comprobanteGUI.setVisible(true);
              
         }else{
-                if (!validaciones.validarCamposCompra(numeroDocumentoEmpleadoTxt, numeroDocumentoClienteTxt,
+                if (!validaciones.validarCamposCompra(numeroDocumentoEmpleadoTxt, numeroDocumentoProveedorTxt,
                     fechaCompraDate, productosSeleccionadosTabla).equals("")) {
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
                 }else if(facadeEmpleado.consultarEmpleado(empleado) == null){
@@ -596,7 +607,10 @@ public class ComprarGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
           
     }//GEN-LAST:event_registrarBtnActionPerformed
 
@@ -663,9 +677,9 @@ public class ComprarGUI extends javax.swing.JDialog {
             personaProveedor = new Persona();
             empleado = new Empleado();
             if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt) &&
-                !validaciones.validarCampoVacio(numeroDocumentoClienteTxt)) {
+                !validaciones.validarCampoVacio(numeroDocumentoProveedorTxt)) {
              persona.setNumeroDocumento(numeroDocumentoEmpleadoTxt.getText());
-             personaProveedor.setNumeroDocumento(numeroDocumentoClienteTxt.getText()); 
+             personaProveedor.setNumeroDocumento(numeroDocumentoProveedorTxt.getText()); 
              proveedor.setPersona(personaProveedor);
              empleado.setPersona(persona);
             
@@ -692,52 +706,62 @@ public class ComprarGUI extends javax.swing.JDialog {
                    
 
                 }
+                
+                if (facadeEmpleado.consultarEmpleado(empleado) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
+                    mensajeLbl.setForeground(Color.red);
+                    
+                }
+                
+                if (facadeProveedor.consultarProveedor(proveedor) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_PROVEEDOR);
+                    mensajeLbl.setForeground(Color.red);
+                    
+                }
 
             }
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-   /*
-        validaciones.limpiarCamposUsuario(nombresClienteTxt, contraseniaTxt,
-                tipoUsuarioCombo, confirmaContraseniaTxt, nombresEmpleadoTxt, numeroDocumentoEmpleadoTxt);
-        modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(false);
-*/
+        limpiarCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel1FocusGained
 
-    private void numeroDocumentoClienteTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtFocusGained
-        validaciones.validarEnfoque(numeroDocumentoClienteTxt);
-    }//GEN-LAST:event_numeroDocumentoClienteTxtFocusGained
+    private void numeroDocumentoProveedorTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtFocusGained
+        validaciones.validarEnfoque(numeroDocumentoProveedorTxt);
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtFocusGained
 
-    private void numeroDocumentoClienteTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtFocusLost
-        validarSonido(validaciones.validarCampoVacio(numeroDocumentoClienteTxt));
-    }//GEN-LAST:event_numeroDocumentoClienteTxtFocusLost
+    private void numeroDocumentoProveedorTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtFocusLost
+        validarSonido(validaciones.validarCampoVacio(numeroDocumentoProveedorTxt));
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtFocusLost
 
-    private void numeroDocumentoClienteTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtActionPerformed
+    private void numeroDocumentoProveedorTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_numeroDocumentoClienteTxtActionPerformed
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtActionPerformed
 
-    private void numeroDocumentoClienteTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtKeyPressed
+    private void numeroDocumentoProveedorTxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_numeroDocumentoClienteTxtKeyPressed
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtKeyPressed
 
-    private void numeroDocumentoClienteTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtKeyReleased
+    private void numeroDocumentoProveedorTxtKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_numeroDocumentoClienteTxtKeyReleased
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtKeyReleased
 
-    private void numeroDocumentoClienteTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoClienteTxtKeyTyped
-        validarSonido(validaciones.validarSoloNumeros(evt, numeroDocumentoClienteTxt));
-        validaciones.validarCantidadCaracteresTexto(evt, numeroDocumentoClienteTxt,
+    private void numeroDocumentoProveedorTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_numeroDocumentoProveedorTxtKeyTyped
+        validarSonido(validaciones.validarSoloNumeros(evt, numeroDocumentoProveedorTxt));
+        validaciones.validarCantidadCaracteresTexto(evt, numeroDocumentoProveedorTxt,
             constantes.CONSTANTE_CARACTERES_POR_LINEA);
-    }//GEN-LAST:event_numeroDocumentoClienteTxtKeyTyped
+    }//GEN-LAST:event_numeroDocumentoProveedorTxtKeyTyped
 
     private void nombreProductoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_nombreProductoTxtFocusGained
 
@@ -893,6 +917,7 @@ public class ComprarGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel24;
@@ -912,8 +937,8 @@ public class ComprarGUI extends javax.swing.JDialog {
     private javax.swing.JTextField nombreProductoTxt;
     private javax.swing.JTextField nombresEmpleadoTxt;
     private javax.swing.JTextField nombresProveedorTxt;
-    private javax.swing.JTextField numeroDocumentoClienteTxt;
     private javax.swing.JTextField numeroDocumentoEmpleadoTxt;
+    private javax.swing.JTextField numeroDocumentoProveedorTxt;
     private javax.swing.JTextField productoSeleccionadoTxt;
     private javax.swing.JTable productosConsultaTabla;
     private javax.swing.JTable productosSeleccionadosTabla;
@@ -1008,11 +1033,32 @@ public class ComprarGUI extends javax.swing.JDialog {
                 ParametrosFactura parametrosFactura = new ParametrosFactura();
                 parametrosFactura.setNombreCliente(nombresProveedorTxt.getText());
                 parametrosFactura.setNombreEmpleado(nombresEmpleadoTxt.getText());
-                parametrosFactura.setNumeroDocumentoCliente(numeroDocumentoClienteTxt.getText());
+                parametrosFactura.setNumeroDocumentoCliente(numeroDocumentoProveedorTxt.getText());
                 parametrosFactura.setNumeroDocumentoEmpleado(numeroDocumentoEmpleadoTxt.getText());
                 parametrosFactura.setProductosaVender(modeloTablaProductosSeleccionados);
                 //parametrosFactura.setCodigoVenta(codigoVentaParametroFactura);
     return parametrosFactura;
     }
 
+    
+    private void limpiarCampos() {
+        numeroDocumentoEmpleadoTxt.setText("");
+        nombresEmpleadoTxt.setText("");
+        numeroDocumentoProveedorTxt.setText("");
+        nombresProveedorTxt.setText("");
+        fechaCompraDate.setDate(null);
+        nombreProductoTxt.setText("");
+        productoSeleccionadoTxt.setText("");
+        valorProductoSeleccionadoTxt.setText("");
+        descuentoProductoSeleccionadoTxt.setText("");
+        cantidadProductoSeleccionadoTxt.setText("");
+        modeloTablaProductos = new DefaultTableModel();
+        modeloTablaProductosSeleccionados = new DefaultTableModel();
+        modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
+        modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
+        productosConsultaTabla.setModel(modeloTablaProductos);
+        productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
+        totalParcialLbl.setText("");
+    }
+    
 }
