@@ -514,6 +514,11 @@ public class MotocicletaGUI extends javax.swing.JDialog {
             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_PLACA);
             mensajeLbl.setForeground(Color.red);
             validaciones.notificarMensajeconTimer(mensajeLbl);
+            modificarBtn.setEnabled(false);
+            registrarBtn.setEnabled(false);
+        }else{
+            modificarBtn.setEnabled(true);
+            registrarBtn.setEnabled(true);
         }
   
         
@@ -643,7 +648,7 @@ public class MotocicletaGUI extends javax.swing.JDialog {
     private void cilindrajeTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cilindrajeTxtKeyTyped
         validarSonido(validaciones.validarSoloNumeros(evt, cilindrajeTxt));
         validaciones.validarCantidadCaracteresTexto(evt, cilindrajeTxt,
-            constantes.CONSTANTE_CARACTERES_POR_LINEA);
+            constantes.CONSTANTE_VALOR_ANIO_POR_DEFECTO);
     }//GEN-LAST:event_cilindrajeTxtKeyTyped
 
     private void lineaTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lineaTxtFocusGained
@@ -691,8 +696,16 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 facadeMotocicleta.consultarMotocicleta(moto) == null) {
                 cliente = facadeCliente.consultarCliente(cliente);
                 facadeMotocicleta.registrarMotocicleta(mapeoMotocicleta(cliente));
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                validaciones.limpiarCamposMotocicleta(placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
+                                              lineaTxt, tipoMotocicletaCombo, marcaCombo,
+                                              jRadioButtonOtro, numeroDocumentoTxt, nombresTxt,
+                                              anteriorBtn, siguienteBtn);
+                modificarBtn.setEnabled(false);
+                registrarBtn.setEnabled(false);
                     
         }else{
+                mensajeLbl.setForeground(Color.red);
                 if (!validaciones.validarCamposMotocicleta(placaTxt, cilindrajeTxt,
                 paisTxt, lineaTxt, modeloTxt, marcaCombo,
                 tipoMotocicletaCombo).equals("")) {
@@ -709,8 +722,10 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-          
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        validaciones.notificarMensajeconTimer(mensajeLbl);          
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void tipoMotocicletaComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboItemStateChanged
@@ -800,12 +815,16 @@ public class MotocicletaGUI extends javax.swing.JDialog {
                 
                     listaMotocicleta = facadeMotocicleta.consultarMotocicletasPorCliente(
                     numeroDocumentoTxt.getText());
+                    
+                    registrarBtn.setEnabled(true);
+                    mensajeLbl.setForeground(Color.green);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CLIENTE_ENCONTRADO);
+
                 if(listaMotocicleta != null){
                     posicionMotocicleta = 0;
                     validaciones.mapearMotocicleta(listaMotocicleta.get(posicionMotocicleta), placaTxt, paisTxt, modeloTxt, cilindrajeTxt,
                     lineaTxt, tipoMotocicletaCombo, marcaCombo, jRadioButtonOtro);
                     moto.setCodMotocicleta(listaMotocicleta.get(posicionMotocicleta).getCodMotocicleta());
-                    registrarBtn.setEnabled(false);
                     modificarBtn.setEnabled(true);
                     if(listaMotocicleta.size() > 1){
                         anteriorBtn.setVisible(true);
@@ -822,6 +841,9 @@ public class MotocicletaGUI extends javax.swing.JDialog {
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                     registrarBtn.setEnabled(false);
+                    modificarBtn.setEnabled(false);
+                    mensajeLbl.setForeground(Color.red);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_CLIENTE_ENCONTRADO);
                     //modificarBtn.setEnabled(false);
 
                 }
@@ -830,7 +852,10 @@ public class MotocicletaGUI extends javax.swing.JDialog {
 
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void siguienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_siguienteBtnActionPerformed

@@ -400,6 +400,12 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 usuario = facadeUsuario.consultarUsuario(usuario);
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
                 facadeUsuario.registrarUsuario(mapeoUsuario(usuario));
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                registrarBtn.setEnabled(false);
+                modificarBtn.setEnabled(false);
+                mensajeLbl.setForeground(Color.green);
+                validaciones.limpiarCamposUsuario(nombreUsuarioTxt, contraseniaTxt,
+                tipoUsuarioCombo, confirmaContraseniaTxt, nombresTxt, numeroDocumentoTxt);
                     
         }else{
                 if (!validaciones.validarCamposUsuario(numeroDocumentoTxt, nombresTxt,
@@ -415,12 +421,15 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 mensajeLbl.setForeground(Color.red);
                     
     }
-            validaciones.notificarMensajeconTimer(mensajeLbl);
+            
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-          
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        
+          validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void tipoUsuarioComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoUsuarioComboItemStateChanged
@@ -507,6 +516,9 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 usuario.setEmpleado(empleado);
                 nombresTxt.setText(empleado.getPersona().getNombres().trim()+
                         " "+empleado.getPersona().getApellidos().trim());
+
+                mensajeLbl.setForeground(Color.green);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_ENCONTRADO);
                 if (facadeUsuario.consultarUsuario(usuario) != null) {
                     usuario = facadeUsuario.consultarUsuario(usuario);
                     validaciones.mapearUsuario(usuario, nombreUsuarioTxt,
@@ -529,6 +541,8 @@ public class UsuarioGUI extends javax.swing.JDialog {
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                     registrarBtn.setEnabled(false);
                     modificarBtn.setEnabled(false);
+                    mensajeLbl.setForeground(Color.red);
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
 
                 }
 
@@ -537,6 +551,7 @@ public class UsuarioGUI extends javax.swing.JDialog {
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed

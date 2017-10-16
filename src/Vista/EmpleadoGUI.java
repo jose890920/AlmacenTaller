@@ -845,7 +845,9 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 registrarBtn.setEnabled(false);
                 modificarBtn.setEnabled(true);
                 mensajeLbl.setForeground(Color.green);
-                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_CLIENTE_ENCONTRADO);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_ENCONTRADO);
+                fechaIngresoDate.setEnabled(false);
+                fechaNacimientoDate.setEnabled(false);
 
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
@@ -856,6 +858,8 @@ public class EmpleadoGUI extends javax.swing.JDialog {
                 if (facadeEmpleado.consultarEmpleado(empleado) == null ) {
                     mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
                     mensajeLbl.setForeground(Color.red);
+                    fechaIngresoDate.setEnabled(true);
+                    fechaNacimientoDate.setEnabled(true);
                     
                 }
                 

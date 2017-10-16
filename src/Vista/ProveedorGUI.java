@@ -826,6 +826,15 @@ public class ProveedorGUI extends javax.swing.JDialog {
                 facadeProveedor.consultarProveedor(proveedor) == null) {
 
                     facadeProveedor.registrarProveedor(mapearProveedor());
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                    registrarBtn.setEnabled(false);
+                    modificarBtn.setEnabled(false);
+                    mensajeLbl.setForeground(Color.green);
+                    validaciones.limpiarCamposProveedor(nombresTxt, apellidosTxt, tipoDocumentoCombo,
+                                            numeroDocumentoTxt, direccionTxt, telefonoTxt,
+                                            celularTxt, razonSocialTxt, paisTxt,
+                                            telefonoEmpresaTxt, paginaWebTxt, faxTxt,
+                                            correoComercialTxt, jRadioButtonOtro);
                     
         }else{
             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_POR_DEFECTO);
@@ -835,7 +844,11 @@ public class ProveedorGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(ProveedorGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        
+          validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void consultarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarBtnActionPerformed
@@ -855,10 +868,19 @@ public class ProveedorGUI extends javax.swing.JDialog {
                                              correoComercialTxt, jRadioButtonOtro);
                 registrarBtn.setEnabled(false);
                 modificarBtn.setEnabled(true);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EXISTE_PROVEEDOR);
+                mensajeLbl.setForeground(Color.green);
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoTxt)) {
                 registrarBtn.setEnabled(true);
                 modificarBtn.setEnabled(false);
+
+                }
+                
+                if (facadeProveedor.consultarProveedor(proveedor) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_EXISTE_PROVEEDOR);
+                    mensajeLbl.setForeground(Color.red);
+                    
                 }
                 
             }
@@ -867,7 +889,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
             Logger.getLogger(ProveedorGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
        
-        
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed

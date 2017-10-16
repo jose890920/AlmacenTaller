@@ -76,6 +76,7 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
         tipoMotocicletaCombo = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        mensajeLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -309,7 +310,7 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 145, 55));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 90, 145, 55));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/motocicleta.png"))); // NOI18N
@@ -324,7 +325,7 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
                 jButtonGuardarMotocicletaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonGuardarMotocicleta, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 145, 55));
+        getContentPane().add(jButtonGuardarMotocicleta, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 30, 145, 55));
 
         tipoMotocicletaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         tipoMotocicletaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --" }));
@@ -354,6 +355,10 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
         jLabel16.setText("*");
         getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 200, -1, 10));
 
+        mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
+        mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(mensajeLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 310, 350, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -365,6 +370,13 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
     private void placaTxtFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaTxtFocusLost
 
         validarSonido(validaciones.validarCampoVacio(placaTxt));
+        if (!validaciones.validarPlaca(placaTxt.getText())) {
+            validarSonido(true);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_VALIDACION_PLACA);
+            mensajeLbl.setForeground(Color.red);
+            validaciones.notificarMensajeconTimer(mensajeLbl);
+        }
+  
     }//GEN-LAST:event_placaTxtFocusLost
 
     private void placaTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placaTxtActionPerformed
@@ -491,7 +503,7 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
     private void cilindrajeTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cilindrajeTxtKeyTyped
         validarSonido(validaciones.validarSoloNumeros(evt, cilindrajeTxt));
         validaciones.validarCantidadCaracteresTexto(evt, cilindrajeTxt,
-            constantes.CONSTANTE_CARACTERES_POR_LINEA);
+            constantes.CONSTANTE_VALOR_ANIO_POR_DEFECTO);
     }//GEN-LAST:event_cilindrajeTxtKeyTyped
 
     private void lineaTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_lineaTxtFocusGained
@@ -532,13 +544,15 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
         
         if (mapeoMotocicleta()) {
             validarSonido(mapeoMotocicleta());
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(validaciones.CONSTANTE_CAMPO_OBLIGATORIO);
         }else{
            
             mapeoMotocicleta();
             dispose();
         }
 
-           
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_jButtonGuardarMotocicletaActionPerformed
 
     private void tipoMotocicletaComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tipoMotocicletaComboItemStateChanged
@@ -596,6 +610,7 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
     private javax.swing.JRadioButton jRadioButtonOtro;
     private javax.swing.JTextField lineaTxt;
     private javax.swing.JComboBox<String> marcaCombo;
+    private javax.swing.JLabel mensajeLbl;
     private javax.swing.JTextField modeloTxt;
     private javax.swing.JTextField paisTxt;
     private javax.swing.JTextField placaTxt;
@@ -617,10 +632,10 @@ public class ModalMotocicletaGUI extends javax.swing.JDialog {
              (!modeloTxt.getText().equals("") && modeloTxt.getText() !=null) &&
              (!cilindrajeTxt.getText().equals("") && cilindrajeTxt.getText() !=null)&&
              (!lineaTxt.getText().equals("") && lineaTxt.getText() !=null) &&
-             (!tipoMotocicletaCombo.getSelectedItem().toString().equals("") && 
-               tipoMotocicletaCombo.getSelectedItem() !=null) &&   
-             (!marcaCombo.getSelectedItem().toString().equals("") && 
-               marcaCombo.getSelectedItem() !=null)) {
+             (!tipoMotocicletaCombo.getSelectedItem().toString().equals(validaciones.CONSTANTE_COMBO_POR_DEFECTO) && 
+               tipoMotocicletaCombo.getSelectedItem() != null) &&   
+             (!marcaCombo.getSelectedItem().toString().equals(validaciones.CONSTANTE_COMBO_POR_DEFECTO) && 
+               marcaCombo.getSelectedItem() != null)) {
              
                     moto.setPlaca(placaTxt.getText());
                     moto.setPaisMatricula(paisTxt.getText());

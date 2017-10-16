@@ -562,7 +562,10 @@ public class VenderGUI extends javax.swing.JDialog {
                 int codigoVenta = facadeVenta.registrarVenta(mapeoVenta(venta));
                 registrarDetalleVenta(productosSeleccionadosTabla,codigoVenta);
                 ComprobanteGUI comprobanteGUI = new ComprobanteGUI(null, true, mapearParametrosFactura());
-                
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                registrarBtn.setEnabled(false);
+                mensajeLbl.setForeground(Color.green);
+                limpiarCampos();
                 comprobanteGUI.setVisible(true);
              
         }else{
@@ -581,8 +584,11 @@ public class VenderGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-          
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        
+          validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void numeroDocumentoEmpleadoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoEmpleadoTxtFocusGained
@@ -673,26 +679,36 @@ public class VenderGUI extends javax.swing.JDialog {
 
 
             }else{
+                mensajeLbl.setForeground(Color.red);
                 if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt)) {
                     registrarBtn.setEnabled(false);
                     
 
                 }
+                
+                if (facadeCliente.consultarCliente(cliente) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_NO_CLIENTE_ENCONTRADO);
+                    
+                    
+                }
+                
+                if (facadeEmpleado.consultarEmpleado(empleado) == null ) {
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
+                    
+                    
+                }
+                
 
             }
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+            validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-   /*
-        validaciones.limpiarCamposUsuario(nombresClienteTxt, contraseniaTxt,
-                tipoUsuarioCombo, confirmaContraseniaTxt, nombresEmpleadoTxt, numeroDocumentoEmpleadoTxt);
-        modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(false);
-*/
+        limpiarCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
@@ -989,6 +1005,25 @@ public class VenderGUI extends javax.swing.JDialog {
                 parametrosFactura.setProductosaVender(modeloTablaProductosSeleccionados);
                 parametrosFactura.setCodigoVenta(codigoVentaParametroFactura);
     return parametrosFactura;
+    }
+
+    private void limpiarCampos() {
+        numeroDocumentoClienteTxt.setText("");
+        numeroDocumentoEmpleadoTxt.setText("");
+        nombresClienteTxt.setText("");
+        nombresEmpleadoTxt.setText("");
+        fechaVentaDate.setDate(null);
+        nombreProductoTxt.setText("");
+        productoSeleccionadoTxt.setText("");
+        cantidadProductoSeleccionadoTxt.setText("");
+        descuentoProductoSeleccionadoTxt.setText("");
+        totalParcialLbl.setText("");
+        modeloTablaProductos = new DefaultTableModel();
+        modeloTablaProductosSeleccionados = new DefaultTableModel();
+        modeloTablaProductos.setColumnIdentifiers(columnasTablaProductos);
+        modeloTablaProductosSeleccionados.setColumnIdentifiers(columnasTablaProductosSeleccionados);
+        productosConsultaTabla.setModel(modeloTablaProductos);
+        productosSeleccionadosTabla.setModel(modeloTablaProductosSeleccionados);
     }
 
 }

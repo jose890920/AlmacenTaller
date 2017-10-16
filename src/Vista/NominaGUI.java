@@ -623,6 +623,9 @@ public class NominaGUI extends javax.swing.JDialog {
                 empleado = facadeEmpleado.consultarEmpleado(empleado);
                 int codigoPago = facadePagoEmpleado.registrarPagoEmpleado(mapeoPagoEmpleado(pagoEmpleado));
                 registrarDetallePago(serviciosSeleccionadosTabla,codigoPago);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                registrarBtn.setEnabled(false);
+                limpiarCampos();
                 //ComprobanteGUI comprobanteGUI = new ComprobanteGUI(null, true, mapearParametrosFactura());
                 
                 //comprobanteGUI.setVisible(true);
@@ -641,8 +644,11 @@ public class NominaGUI extends javax.swing.JDialog {
 
     }   catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-          
+            mensajeLbl.setForeground(Color.red);
+            mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_ERROR_CONTROLADO);
+        }
+        
+          validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_registrarBtnActionPerformed
 
     private void numeroDocumentoEmpleadoTxtFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_numeroDocumentoEmpleadoTxtFocusGained
@@ -723,7 +729,9 @@ public class NominaGUI extends javax.swing.JDialog {
                         " "+empleado.getPersona().getApellidos().trim());
                 
          
-                    registrarBtn.setEnabled(true);
+                registrarBtn.setEnabled(true);
+                mensajeLbl.setForeground(Color.green);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_ENCONTRADO);
                 
                 
                 
@@ -732,24 +740,23 @@ public class NominaGUI extends javax.swing.JDialog {
             }else{
                 if (!validaciones.validarCampoVacio(numeroDocumentoEmpleadoTxt)) {
                     registrarBtn.setEnabled(false);
-                   
+                    mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_EMPLEADO_NO_EXISTE);
+                    mensajeLbl.setForeground(Color.red);                   
 
                 }
+
+                
 
             }
             }
         } catch (SQLException | ParseException ex) {
             Logger.getLogger(EmpleadoGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-   /*
-        validaciones.limpiarCamposUsuario(nombresClienteTxt, contraseniaTxt,
-                tipoUsuarioCombo, confirmaContraseniaTxt, nombresEmpleadoTxt, numeroDocumentoEmpleadoTxt);
-        modificarBtn.setEnabled(false);
-        registrarBtn.setEnabled(false);
-*/
+        limpiarCampos();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jPanel1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPanel1FocusGained
@@ -919,9 +926,13 @@ public class NominaGUI extends javax.swing.JDialog {
      
         if (Double.parseDouble(totalPagoLbl.getText()) > 0) {
             pagoEmpleadoDAO.actualizarPago(numeroDocumentoEmpleadoPagoTxt.getText(),fechaInicioDate.getDate(),fechaFinDate.getDate());
+             mensajeLbl.setForeground(Color.green);
+             mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PAGO_EXITOSO);
+             limpiarCampos();
+            
         }else{
         mensajeLbl.setForeground(Color.red);
-        mensajeLbl.setText("Posee Pendientes con el almacen");
+        mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PAGO_NO_EXITOSO);
         }
         validaciones.notificarMensajeconTimer(mensajeLbl);
         
@@ -1004,7 +1015,6 @@ public class NominaGUI extends javax.swing.JDialog {
     private javax.swing.JLabel totalPagoLbl;
     private javax.swing.JLabel totalParcialLbl;
     private javax.swing.JTextField valorDescuentoEmpleadoTxt;
-    private javax.swing.JTextField valorProductoSeleccionadoTxt;
     private javax.swing.JTextField valorServicioSeleccionadoTxt;
     // End of variables declaration//GEN-END:variables
 
@@ -1133,6 +1143,32 @@ public class NominaGUI extends javax.swing.JDialog {
                     totalPagoLbl.setText(Double.parseDouble(subTotalPagoLbl.getText())-
                     (Double.parseDouble(descuentosNominaLbl.getText())+Double.parseDouble(descuentoTallerLbl.getText()))+"");
                     pagarNominaBtn.setVisible(true);
+    }
+
+    private void limpiarCampos() {
+        numeroDocumentoEmpleadoTxt.setText("");
+        nombresEmpleadoTxt.setText("");
+        fechaPagoDate.setDate(null);
+        valorDescuentoEmpleadoTxt.setText("");
+        tipoServicioCombo.setSelectedItem(constantes.CONSTANTE_COMBO_POR_DEFECTO);
+        descripcionServicioSeleccionadoTxt.setText("");
+        descuentoServicioSeleccionadoTxt.setText("");
+        valorServicioSeleccionadoTxt.setText("");
+        modeloTablaServiciosSeleccionados = new DefaultTableModel();
+        modeloTablaServiciosPagar = new DefaultTableModel();
+        modeloTablaServiciosSeleccionados.setColumnIdentifiers(columnasTablaServiciosSeleccionados);
+        modeloTablaServiciosPagar.setColumnIdentifiers(columnasTablaPagoServicios);
+        serviciosSeleccionadosTabla.setModel(modeloTablaServiciosSeleccionados);
+        serviciosPagarTabla.setModel(modeloTablaServiciosPagar);
+        numeroDocumentoEmpleadoPagoTxt.setText("");
+        nombreEmpleadoLbl.setText("");
+        fechaInicioDate.setDate(null);
+        fechaFinDate.setDate(null);
+        subTotalPagoLbl.setText("");
+        descuentosNominaLbl.setText("");
+        descuentoTallerLbl.setText("");
+        totalPagoLbl.setText("");
+        totalParcialLbl.setText("");
     }
 
 

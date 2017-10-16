@@ -370,7 +370,7 @@ public class Validaciones extends ConstantesAlmacenyTaller{
             valor.setText("");
             cantidad.setText("");tipo.setSelectedItem(CONSTANTE_COMBO_POR_DEFECTO);
             fabricante.setText("");
-            fecha.setDate(null);
+            fecha.setDate(new Date());
             
             
           

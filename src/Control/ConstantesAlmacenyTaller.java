@@ -53,4 +53,10 @@ public class ConstantesAlmacenyTaller {
     public final String CONSTANTE_MENSAJE_NO_EXISTE_PROVEEDOR = "No existe proveedor";    
     public final String CONSTANTE_CLIENTE_MENOR = "El Cliente Debe Ser Mayor de 15 años";  
     public final String CONSTANTE_EMPLEADO_MENOR = "El Empleado Debe Ser Mayor de 18 años";  
+    public final String CONSTANTE_MENSAJE_EMPLEADO_ENCONTRADO = "Empleado encontrado";
+    public final String CONSTANTE_MENSAJE_PAGO_EXITOSO = "Pago exitoso";
+    public final String CONSTANTE_MENSAJE_PAGO_NO_EXITOSO = "Posee Pendientes con el almacen";
+    public final String CONSTANTE_MENSAJE_PRODUCTO_ENCONTRADO = "Producto encontrado";
+    public final String CONSTANTE_MENSAJE_PRODUCTO_NO_ENCONTRADO = "Producto no existe";
+    public final String CONSTANTE_MENSAJE_EXISTE_PROVEEDOR = "Proveedor encontrado";   
 }

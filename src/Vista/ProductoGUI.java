@@ -10,6 +10,7 @@ import Control.TipoProductoDAO;
 import Control.Validaciones;
 import Facade.FacadeProducto;
 import Modelo.Producto;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
@@ -44,6 +45,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         modificarBtn.setEnabled(false);
         fechaIngresoDate.setEnabled(false);
         fechaIngresoDate.setDate(new Date());
+        jButton1.setEnabled(false);
     }
 
     /**
@@ -548,6 +550,18 @@ public class ProductoGUI extends javax.swing.JDialog {
                     tipoProductoCombo).equals("") && 
                     facadeProducto.consultarProducto(producto) == null) {
                 facadeProducto.registrarProducto(mapearProducto());
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_REGISTRO_EXITOSO);
+                
+                jButton1.setEnabled(false);
+                modificarBtn.setEnabled(false);
+                
+                mensajeLbl.setForeground(Color.green);
+                validaciones.limpiarCamposProducto(nombreProductoTxt, valorProductoTxt,
+                                                   fabricanteTxt, cantidadProductoTxt,
+                                                   descripcionTxtArea, fechaIngresoDate,
+                                                   tipoProductoCombo);
+
+                
             } else {
                 mensajeLbl.setText(validaciones.validarCamposProducto(nombreProductoTxt, valorProductoTxt,
                         fabricanteTxt, cantidadProductoTxt, descripcionTxtArea, fechaIngresoDate,
@@ -574,9 +588,17 @@ public class ProductoGUI extends javax.swing.JDialog {
                         nombreProductoTxt, descripcionTxtArea, tipoProductoCombo,
                         cantidadProductoTxt, fechaIngresoDate,
                         valorProductoTxt, fabricanteTxt);
+                jButton1.setEnabled(false);
                 modificarBtn.setEnabled(true);
+                mensajeLbl.setForeground(Color.green);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PRODUCTO_ENCONTRADO);
+                cantidadProductoTxt.setEnabled(false);
             } else {
                 modificarBtn.setEnabled(false);
+                jButton1.setEnabled(true);
+                mensajeLbl.setForeground(Color.red);
+                mensajeLbl.setText(constantes.CONSTANTE_MENSAJE_PRODUCTO_NO_ENCONTRADO);
+                cantidadProductoTxt.setEnabled(true);
             }
 
         } catch (SQLException ex) {
@@ -584,6 +606,7 @@ public class ProductoGUI extends javax.swing.JDialog {
         } catch (ParseException ex) {
             Logger.getLogger(ProductoGUIJF.class.getName()).log(Level.SEVERE, null, ex);
         }
+        validaciones.notificarMensajeconTimer(mensajeLbl);
     }//GEN-LAST:event_consultarBtnActionPerformed
 
     private void modificarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarBtnActionPerformed
