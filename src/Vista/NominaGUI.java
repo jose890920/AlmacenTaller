@@ -10,7 +10,7 @@ import Control.DetalleAjusteDAO;
 import Control.DetallePagoDAO;
 import Control.PagoEmpleadoDAO;
 import Control.ProductoDAO;
-
+import Control.MotocicletaDAO;
 
 import Control.Validaciones;
 
@@ -21,6 +21,7 @@ import Facade.FacadeEmpleado;
 
 import Control.TipoServicioDAO;
 import Facade.FacadePagoEmpleado;
+import Modelo.Cliente;
 import Modelo.PagoEmpleado;
 
 
@@ -53,7 +54,7 @@ import org.jvnet.substance.SubstanceLookAndFeel;
  * @author jose luis Rodriguez
  */
 public class NominaGUI extends javax.swing.JDialog {
-    
+    MotocicletaDAO motocicletaDAO = new MotocicletaDAO();
     Validaciones validaciones = new Validaciones();
     ConstantesAlmacenyTaller constantes = new ConstantesAlmacenyTaller();
     FacadeEmpleado facadeEmpleado = new FacadeEmpleado();
@@ -61,7 +62,7 @@ public class NominaGUI extends javax.swing.JDialog {
     Persona persona = new Persona();
     List<ParametrosPagoEmpleado> listaParametrosPagoEmpleado;
     
-    String[] columnasTablaServiciosSeleccionados = {"SERVICIO","VLR SERVICIO","DESCUENTO","DESCRIPCION"};
+    String[] columnasTablaServiciosSeleccionados = {"SERVICIO","VLR SERVICIO","DESCUENTO","DESCRIPCION","PLACA"};
     String[] columnasTablaPagoServicios = {"SERVICIO","DESCRIPCION","VLR SERVICIO","DSCTO SERVICIO","FECHA SERVICIO"};
     
     DefaultTableModel modeloTablaServiciosSeleccionados = new DefaultTableModel();
@@ -86,24 +87,31 @@ public class NominaGUI extends javax.swing.JDialog {
     /**
      * Creates new form MotocicletaGUI
      */
-    public NominaGUI(java.awt.Frame parent, boolean modal) {
+    public NominaGUI(java.awt.Frame parent, boolean modal){
         super(parent, modal);
-        initComponents();
-
-        pagarNominaBtn.setVisible(false);
-        registrarBtn.setEnabled(true);
-        this.setTitle("Gestion Pago Servicios");
-        this.setLocationRelativeTo(null);
+        try {
+            initComponents();
+            
+            pagarNominaBtn.setVisible(false);
+            registrarBtn.setEnabled(true);
+            this.setTitle("Gestion Pago Servicios");
+            this.setLocationRelativeTo(null);
+            panelRegistrar.setVisible(false);
+            
+            
+            modeloTablaServiciosSeleccionados.setColumnIdentifiers(columnasTablaServiciosSeleccionados);
+            
+            serviciosSeleccionadosTabla.setModel(modeloTablaServiciosSeleccionados);
+            modeloTablaServiciosPagar.setColumnIdentifiers(columnasTablaPagoServicios);
+            serviciosPagarTabla.setModel(modeloTablaServiciosPagar);
+            registrarBtn.setEnabled(false);
+            validaciones.adicionarItems(tipoServicioCombo,
+                    tipoServicioDAO.consultarTiposServicio());
+            motocicletaDAO.consultarPlacaMotocicleta(placaCombo);
+        } catch (SQLException ex) {
+            Logger.getLogger(NominaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-       
-        modeloTablaServiciosSeleccionados.setColumnIdentifiers(columnasTablaServiciosSeleccionados);
-        
-        serviciosSeleccionadosTabla.setModel(modeloTablaServiciosSeleccionados);
-        modeloTablaServiciosPagar.setColumnIdentifiers(columnasTablaPagoServicios);
-        serviciosPagarTabla.setModel(modeloTablaServiciosPagar);
-        registrarBtn.setEnabled(false);
-        validaciones.adicionarItems(tipoServicioCombo,
-        tipoServicioDAO.consultarTiposServicio());
 
     }
 
@@ -132,7 +140,6 @@ public class NominaGUI extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         tipoServicioCombo = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
         descripcionServicioSeleccionadoTxt = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         descuentoServicioSeleccionadoTxt = new javax.swing.JTextField();
@@ -145,6 +152,12 @@ public class NominaGUI extends javax.swing.JDialog {
         serviciosSeleccionadosTabla = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         totalParcialLbl = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        placaCombo = new javax.swing.JComboBox<>();
+        panelRegistrar = new javax.swing.JPanel();
+        clienteBtn = new javax.swing.JButton();
+        motoBtn = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         fechaFinDate = new com.toedter.calendar.JDateChooser();
         fechaInicioDate = new com.toedter.calendar.JDateChooser();
@@ -310,13 +323,8 @@ public class NominaGUI extends javax.swing.JDialog {
         jPanel2.add(tipoServicioCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 200, -1));
 
         jLabel10.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
-        jLabel10.setText("Tipo de Servicio");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
-
-        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel25.setText("*");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, -1, 10));
+        jLabel10.setText("Placa");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
 
         descripcionServicioSeleccionadoTxt.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         descripcionServicioSeleccionadoTxt.setMaximumSize(new java.awt.Dimension(6, 10));
@@ -409,7 +417,7 @@ public class NominaGUI extends javax.swing.JDialog {
         ));
         jScrollPane1.setViewportView(serviciosSeleccionadosTabla);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, 110));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 530, 110));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrarRegistro.png"))); // NOI18N
         jButton1.setToolTipText("ELIMINAR REGISTRO");
@@ -418,10 +426,60 @@ public class NominaGUI extends javax.swing.JDialog {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 270, -1, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 270, -1, -1));
 
         totalParcialLbl.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
         jPanel2.add(totalParcialLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 140, 30));
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel29.setText("*");
+        jPanel2.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 70, -1, 10));
+
+        jLabel30.setFont(new java.awt.Font("Tempus Sans ITC", 1, 14)); // NOI18N
+        jLabel30.setText("Tipo de Servicio");
+        jPanel2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
+
+        placaCombo.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        placaCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-- Select --", "OTRA" }));
+        placaCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                placaComboItemStateChanged(evt);
+            }
+        });
+        placaCombo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                placaComboFocusLost(evt);
+            }
+        });
+        placaCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                placaComboActionPerformed(evt);
+            }
+        });
+        jPanel2.add(placaCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 200, -1));
+
+        panelRegistrar.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Registrar", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Trebuchet MS", 1, 14))); // NOI18N
+
+        clienteBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        clienteBtn.setText("CLIENTE");
+        clienteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clienteBtnActionPerformed(evt);
+            }
+        });
+        panelRegistrar.add(clienteBtn);
+
+        motoBtn.setFont(new java.awt.Font("Trebuchet MS", 1, 14)); // NOI18N
+        motoBtn.setText("MOTO");
+        motoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                motoBtnActionPerformed(evt);
+            }
+        });
+        panelRegistrar.add(motoBtn);
+
+        jPanel2.add(panelRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 120, 110));
 
         jTabbedPane1.addTab("Datos Servicios", jPanel2);
 
@@ -550,7 +608,7 @@ public class NominaGUI extends javax.swing.JDialog {
 
         jTabbedPane1.addTab("Pago Empleado", jPanel4);
 
-        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 500));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 600, 500));
 
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -591,7 +649,7 @@ public class NominaGUI extends javax.swing.JDialog {
         });
         jPanel3.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 145, 55));
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 160, 300));
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 150, 160, 300));
 
         mensajeLbl.setFont(new java.awt.Font("Vani", 1, 18)); // NOI18N
         mensajeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -938,6 +996,37 @@ public class NominaGUI extends javax.swing.JDialog {
         
     }//GEN-LAST:event_pagarNominaBtnActionPerformed
 
+    private void placaComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_placaComboItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_placaComboItemStateChanged
+
+    private void placaComboFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_placaComboFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_placaComboFocusLost
+
+    private void placaComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placaComboActionPerformed
+        try {
+            motocicletaDAO.consultarPlacaMotocicleta(placaCombo);
+            if (placaCombo.getSelectedItem().toString().equals("OTRA")) {
+                panelRegistrar.setVisible(true);
+            }else{
+                panelRegistrar.setVisible(false);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NominaGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_placaComboActionPerformed
+
+    private void motoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_motoBtnActionPerformed
+             MotocicletaGUI motocicletaGUI = new MotocicletaGUI(null,true, new Cliente());
+             motocicletaGUI.setVisible(true);  
+    }//GEN-LAST:event_motoBtnActionPerformed
+
+    private void clienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteBtnActionPerformed
+              ClienteGUI clienteGUI = new ClienteGUI(null, true);
+              clienteGUI.setVisible(true);
+    }//GEN-LAST:event_clienteBtnActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -960,6 +1049,7 @@ public class NominaGUI extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clienteBtn;
     private javax.swing.JButton consultarBtn;
     private javax.swing.JButton consultarServiciosPagarBtn;
     private javax.swing.JTextField descripcionServicioSeleccionadoTxt;
@@ -988,10 +1078,11 @@ public class NominaGUI extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -1002,11 +1093,14 @@ public class NominaGUI extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel mensajeLbl;
+    private javax.swing.JButton motoBtn;
     private javax.swing.JLabel nombreEmpleadoLbl;
     private javax.swing.JTextField nombresEmpleadoTxt;
     private javax.swing.JTextField numeroDocumentoEmpleadoPagoTxt;
     private javax.swing.JTextField numeroDocumentoEmpleadoTxt;
     private javax.swing.JButton pagarNominaBtn;
+    private javax.swing.JPanel panelRegistrar;
+    private javax.swing.JComboBox<String> placaCombo;
     private javax.swing.JButton registrarBtn;
     private javax.swing.JTable serviciosPagarTabla;
     private javax.swing.JTable serviciosSeleccionadosTabla;
@@ -1051,16 +1145,17 @@ public class NominaGUI extends javax.swing.JDialog {
      
      public void mapeoProductoSeleccionado(){
      
-                Object[] servicioAgregar = new Object[4];
+                Object[] servicioAgregar = new Object[5];
                 servicioAgregar[0] = tipoServicioCombo.getSelectedItem().toString().trim();
                 servicioAgregar[1] = valorServicioSeleccionadoTxt.getText();
                 servicioAgregar[2] = validaciones.calcularDescuento(
                                      Double.parseDouble(descuentoServicioSeleccionadoTxt.getText()),
                                      Double.parseDouble(valorServicioSeleccionadoTxt.getText()) );
                servicioAgregar[3] = descripcionServicioSeleccionadoTxt.getText();
-                
+               servicioAgregar[4] = placaCombo.getSelectedItem().toString().trim();
                 modeloTablaServiciosSeleccionados.addRow(servicioAgregar);
                 serviciosSeleccionadosTabla.setModel(modeloTablaServiciosSeleccionados);
+                
      
      }
      
@@ -1073,6 +1168,7 @@ public class NominaGUI extends javax.swing.JDialog {
              detallePago.setValorServicio(Double.parseDouble(servicios.getValueAt(i, 1).toString()));
              detallePago.setDescuentoServicio(Double.parseDouble(servicios.getValueAt(i, 2).toString()));
              detallePago.setDescripcion(servicios.getValueAt(i, 3).toString());
+             detallePago.setPlaca(servicios.getValueAt(i, 4).toString());
              detallePagoDAO.registrarDetallePago(detallePago);
  
              
@@ -1169,6 +1265,8 @@ public class NominaGUI extends javax.swing.JDialog {
         descuentoTallerLbl.setText("");
         totalPagoLbl.setText("");
         totalParcialLbl.setText("");
+        placaCombo.setSelectedItem(constantes.CONSTANTE_COMBO_POR_DEFECTO);
+        panelRegistrar.setVisible(false);
     }
 
 

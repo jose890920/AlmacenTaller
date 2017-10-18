@@ -44,7 +44,7 @@ public class ProveedorGUI extends javax.swing.JDialog {
         initComponents();
         validaciones.adicionarItems(tipoDocumentoCombo,
         tipoDocumentoDAO.consultarTiposDocumento());
-        this.setTitle("Gestion Empleados");
+        this.setTitle("Gestion Proveedores");
         this.setLocationRelativeTo(null);        
         registrarBtn.setEnabled(false);
         modificarBtn.setEnabled(false);

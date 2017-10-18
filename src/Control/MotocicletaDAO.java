@@ -2,11 +2,13 @@
 package Control;
 
 import Modelo.Motocicleta;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -191,7 +193,21 @@ public class MotocicletaDAO extends ConstantesAlmacenyTaller{
         return motocicleta;
         }
     
-    
+        public void consultarPlacaMotocicleta(JComboBox combo) throws SQLException{
+            
+            query =  "SELECT placa "
+                    +" FROM motocicleta "
+                    + " ORDER BY placa ASC";
+            
+            resultset = sentencia.gestionarConsulta(query);
+
+            while (resultset.next()) {                
+
+                combo.addItem(resultset.getString("placa"));
+            }
+   
+           
+    }    
     
     public static void main(String[] args) throws SQLException, ParseException {
         MotocicletaDAO p = new MotocicletaDAO();

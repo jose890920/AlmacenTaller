@@ -78,7 +78,7 @@ public class VentaDAO extends ConstantesAlmacenyTaller{
         
             query = "SELECT cod_venta, cod_cliente_v, cod_empleado_v,"
                     + " fecha_venta, valor_venta, estado " 
-                    +" FROM venta WHERE estado = 'Activo' ORDER BY cod_venta ASC";
+                    +" FROM venta WHERE estado = '"+CONSTANTE_ESTADO_POR_DEFECTO+"' ORDER BY cod_venta ASC";
             
             resultset = sentencia.gestionarConsulta(query);
             

@@ -273,7 +273,9 @@ CatalogoDAO catalogoDao = new CatalogoDAO();
     }//GEN-LAST:event_llaveTxtKeyReleased
 
     private void llaveTxtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_llaveTxtKeyTyped
-        // TODO add your handling code here:
+        validaciones.minusculaToMayuscula(evt);
+                validaciones.validarCantidadCaracteresTexto(evt, llaveTxt,
+            5);
     }//GEN-LAST:event_llaveTxtKeyTyped
 
     private void registrarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarBtnActionPerformed

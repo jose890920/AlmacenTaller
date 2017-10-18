@@ -38,12 +38,13 @@ public class DetallePagoDAO {
         
         query = "INSERT INTO detalle_pago( " 
                 +" cod_detalle_pago, cod_pago_d, tipo_servicio,"
-                + " valor_servicio, descuento_servicio, descripcion)" 
+                + " valor_servicio, descuento_servicio, descripcion, placa_p)" 
                 +" VALUES ( "+detallePago.getCodDetallePago()+","
                 + " "+detallePago.getCodPago()+",'"+detallePago.getTipoServicio()+"',"
                 + " "+detallePago.getValorServicio()+","
                 + " "+detallePago.getDescuentoServicio()+","
-                + " '"+detallePago.getDescripcion()+"' "
+                + " '"+detallePago.getDescripcion()+"', "
+                + " '"+detallePago.getPlaca()+"' "
                 + " )";
         
          sentencia.gestionarRegistro(query);
